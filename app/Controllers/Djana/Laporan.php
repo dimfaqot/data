@@ -184,7 +184,7 @@ class Laporan extends BaseController
 
         $data = get_laporan($val['tahun'], $val['bulan']);
 
-        $judul = 'LAPORAN DJANA TAHUN ' . ($val['tahun'] == 'All' ? 'SEMUA TAHUN ' : $val['tahun'] . ' ') . ($val['bulan'] == 'All' ? 'SEMUA BULAN.' : strtoupper(bulan($val['bulan'])['bulan']));
+        $judul = 'LAPORAN DJANA ' . ($val['bulan'] == 'All' ? 'SEMUA BULAN.' : 'BULAN ' . strtoupper(bulan($val['bulan'])['bulan'])) . ($val['tahun'] == 'All' ? ' SEMUA TAHUN' : ' TAHUN ' . $val['tahun']);
 
 
         if ($order == 'pdf') {
