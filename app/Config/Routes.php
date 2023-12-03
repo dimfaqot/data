@@ -339,6 +339,7 @@ $routes->post('pesanan/data_belum', 'Djana\Pesanan::data_belum');
 $routes->post('pesanan/detail_js', 'Djana\Pesanan::detail_js');
 $routes->post('pesanan/insert_to_laporan', 'Djana\Pesanan::insert_to_laporan');
 $routes->post('pesanan/add_image', 'Djana\Pesanan::add_image');
+$routes->post('pesanan/saldo', 'Djana\Pesanan::saldo');
 
 // tugasku
 $routes->get('tugasku/(:any)/(:any)/(:any)', 'Djana\Tugasku::index/$1/$2/$3');

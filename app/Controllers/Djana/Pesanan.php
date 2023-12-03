@@ -214,9 +214,10 @@ class Pesanan extends BaseController
 
 
         $tgl_laporan = [];
-        $datas = [];
+
         foreach ($data as $i) {
             $q = $dbl->where('barang_id', $i)->get()->getRowArray();
+
             if (!$q) {
                 $d = $db->where('id', $i)->get()->getRowArray();
                 if (count($tgl_laporan) == 0) {
@@ -235,7 +236,7 @@ class Pesanan extends BaseController
                     'created_at' => time(),
                     'updated_at' => time()
                 ];
-                $datas[] = $val;
+
                 $dbl->insert($val);
             }
         }
@@ -258,5 +259,37 @@ class Pesanan extends BaseController
         } else {
             gagal_js('File gagal dihapus.');
         }
+    }
+    public function saldo()
+    {
+        $db = db('laporan', 'djana');
+
+        $q = $db->orderBy('tgl_laporan', 'ASC')->get()->getResultArray();
+
+        $tgl = [];
+
+        foreach ($q as $i) {
+            $date = date('m', $i['tgl_laporan']) . ' ' . date('Y', $i['tgl_laporan']);
+            if (!in_array($date, $tgl)) {
+                $tgl[] = $date;
+            }
+        }
+
+        $data = [];
+        $data[] = ['bulan' => '11', 'tahun' => '2022', 'keluar' => 8000000, 'masuk' => 0, 'saldo' => rupiah(0 - 8000000)];
+        foreach ($tgl as $t) {
+            $exp = explode(" ", $t);
+            $keluar = 0;
+            $masuk = 0;
+            foreach ($q as $i) {
+                if (date('m', $i['tgl_laporan']) == $exp[0] && date('Y', $i['tgl_laporan']) == $exp[1]) {
+                    $masuk += $i['masuk'];
+                    $keluar += $i['keluar'];
+                }
+            }
+            $data[] = ['bulan' => $exp[0], 'tahun' => $exp[1], 'keluar' => rupiah($keluar), 'masuk' => rupiah($masuk), 'saldo' => rupiah($masuk - $keluar)];
+        }
+
+        sukses_js('Ok', $data);
     }
 }

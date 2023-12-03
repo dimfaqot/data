@@ -179,6 +179,10 @@
         <div class="input-group input-group-sm">
             <span style="width: 92px;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cari daftar data di bawah." class="input-group-text">Cari <?= menu()['menu']; ?></span>
             <input data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cari daftar data di bawah." type="text" class="form-control cari" placeholder="...">
+
+            <?php if (session('role') == 'Root') : ?>
+                <button class="btn btn-outline-secondary saldo" type="button"><i class="fa-brands fa-get-pocket"></i></button>
+            <?php endif; ?>
         </div>
         <?php if (session('role') == 'Root' || session('role') == 'Admin') : ?>
             <div class="check_all_pesanan d-none mt-2 d-flex gap-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Check All">
@@ -529,6 +533,41 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal saldo-->
+    <div class="modal fade" id="saldo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex justify-content-between">
+                        <div class="main_color" style="font-weight: bold;"><i class="fa-brands fa-get-pocket"></i> Saldo</div>
+                        <div><a type="button" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark main_color"></i></a></div>
+                    </div>
+                    <hr class="dark_color" style="border: 1px solid;">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Tgl</th>
+                                        <th scope="col">Masuk</th>
+                                        <th scope="col">Keluar</th>
+                                        <th scope="col">Saldo</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="body_saldo">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <?= $this->endSection() ?>

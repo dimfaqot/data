@@ -600,6 +600,34 @@
 
             })
     });
+    $(document).on('click', '.saldo', function(e) {
+        e.preventDefault();
+
+        post('pesanan/saldo', {
+                id: ''
+            })
+            .then(res => {
+                if (res.status == '200') {
+                    let html = '';
+                    for (let i = 0; i < res.data.length; i++) {
+                        html += '<tr>';
+                        html += '<th scope="row">' + (i + 1) + '</th>';
+                        html += '<td style="text-align:right;">' + res.data[i].bulan + '/' + res.data[i].tahun + '</td>';
+                        html += '<td style="text-align:right;">' + res.data[i].masuk + '</td>';
+                        html += '<td style="text-align:right;">' + res.data[i].keluar + '</td>';
+                        html += '<td style="text-align:right;">' + res.data[i].saldo + '</td>';
+                        html += '</tr>';
+                    }
+                    $('.body_saldo').html(html);
+                    let myModal = document.getElementById('saldo');
+                    let modal = bootstrap.Modal.getOrCreateInstance(myModal)
+                    modal.show();
+                } else {
+                    gagal(res.message);
+                }
+
+            })
+    });
 
 
     <?php if (url() == 'public') : ?>
