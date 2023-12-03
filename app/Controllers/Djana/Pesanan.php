@@ -16,24 +16,6 @@ class Pesanan extends BaseController
     }
     public function index($tahun, $bulan): string
     {
-        $db = db('laporan', 'djana');
-        $q = $db->get()->getResultArray();
-
-        $tgl_laporan = [];
-        foreach ($q as $i) {
-            if (date('m', $i['tgl_laporan']) == 12 && date('Y', $i['tgl_laporan']) == 2023) {
-                if (count($tgl_laporan) == 0) {
-                    $tgl_lap = cal_days_in_month(CAL_GREGORIAN, 11, 2023);
-                    $t = 2023 . '-' . 11 . '-' . $tgl_lap;
-                    $tgl_laporan[] = strtotime($t);
-                }
-
-                $i['tgl_laporan'] = $tgl_laporan[0];
-
-                $db->where('id', $i['id']);
-                $db->update($i);
-            }
-        }
 
         return view('djana/' . menu()['controller'], ['judul' => menu()['menu'], 'data' => get_pesanan($tahun, $bulan)]);
     }
