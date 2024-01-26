@@ -97,7 +97,7 @@ class Karyawan extends BaseController
     public function add()
     {
         $tahun_masuk = clear($this->request->getVar('tahun_masuk'));
-        $nama = upper_first(clear($this->request->getVar('nama')));
+        $nama = upper_first($this->request->getVar('nama'));
         $gender = clear($this->request->getVar('gender'));
         $sub = clear($this->request->getVar('sub'));
         $url = clear($this->request->getVar('url'));
@@ -208,7 +208,7 @@ class Karyawan extends BaseController
                 $q[$i] = ($val == '' || $val == 0 ? $q[$i] : $val);
             } elseif ($i == 'nama') {
                 $q[$i] = (upper_first($this->request->getVar($i))) == '' ? $q[$i] : upper_first($this->request->getVar($i));
-            } elseif ($i == 'nama' || $i == 'kota_lahir' || $i == 'alamat' || $i == 'kelurahan' || $i == 'kecamatan' || $i == 'kabupaten' || $i == 'provinsi' || $i == 'kampus_s1' || $i == 'fakultas_s1' || $i == 'jurusan_s1' || $i == 'kampus_s2' || $i == 'fakultas_s2' || $i == 'jurusan_s2' || $i == 'kampus_s3' || $i == 'fakultas_s3' || $i == 'jurusan_s3') {
+            } elseif ($i == 'kota_lahir' || $i == 'alamat' || $i == 'kelurahan' || $i == 'kecamatan' || $i == 'kabupaten' || $i == 'provinsi' || $i == 'kampus_s1' || $i == 'fakultas_s1' || $i == 'jurusan_s1' || $i == 'kampus_s2' || $i == 'fakultas_s2' || $i == 'jurusan_s2' || $i == 'kampus_s3' || $i == 'fakultas_s3' || $i == 'jurusan_s3') {
                 $q[$i] = (upper_first(clear($this->request->getVar($i))) == '' ? $q[$i] : upper_first(clear($this->request->getVar($i))));
             } elseif ($i == 'email') {
                 $q[$i] = (strtolower(clear($this->request->getVar($i))) == '' ? $q[$i] : strtolower(clear($this->request->getVar($i))));

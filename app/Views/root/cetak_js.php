@@ -122,6 +122,19 @@
                         html += '</div>';
                     }
                     html += '</div>';
+                } else if (data[i].filter == 'ultah') {
+                    const today = new Date();
+                    let month = today.getMonth() + 1;
+                    html += '<div class="row g-2">'; //row
+                    html += '<div class="d-flex gap-1">';
+                    html += '<select class="form-select form-select-sm ultah">';
+                    for (let d = 0; d < data[i].detail.length; d++) {
+                        html += '<option value="' + data[i].detail[d].angka + '" ' + (month == data[i].detail[d].angka ? 'selected' : '') + '>' + data[i].detail[d].bulan + '</option>';
+                    }
+                    html += '</select>';
+                    html += '<button class="btn_main btn_ultah">Download</button>';
+                    html += '</div>'
+                    html += '</div>';
                 } else {
                     html += '<div class="row g-2">'; //row
                     for (let d = 0; d < data[i].detail.length; d++) {
@@ -141,16 +154,25 @@
 
                         }
                     }
+
+
+
+
                     html += '</div>';
 
                 }
                 html += '</div>';
+
                 html += '</div>';
+
 
                 html += '</div>';
             }
 
+
             html += '</div>';
+
+
             html += '</div>';
 
         }
@@ -737,5 +759,14 @@
             $('.body_custome_header').html('');
 
         }
+    })
+
+    // ultah
+    $(document).on('click', '.btn_ultah', function(e) {
+        e.preventDefault();
+        let bulan = $('.ultah').val();
+        let db = $('input[name="database"]:checked').val();
+        window.open("<?= base_url('cetak/ultah'); ?>/" + db + "/" + bulan, '_blank');
+
     })
 </script>

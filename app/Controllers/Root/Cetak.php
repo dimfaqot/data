@@ -96,6 +96,11 @@ class Cetak extends BaseController
                     'detail' => ['Ikut', 'Tidak']
                 ];
             }
+
+            $data[] =   [
+                'filter' => 'ultah',
+                'detail' => bulan()
+            ];
         }
         if ($table == 'sk') {
             $db = db('sk', 'karyawan');
@@ -584,5 +589,66 @@ class Cetak extends BaseController
 
             exit;
         }
+    }
+
+    public function ultah($db, $bl)
+    {
+        $judul = "Ultah " . upper_first($db) . " Bulan " . bulan($bl)['bulan'];
+        $db = db($db, $db);
+        $q = $db->where('status', 'Aktif')->get()->getResultArray();
+
+        $data = [];
+
+        foreach ($q as $i) {
+            $tgl_lahir = $i['tgl_lahir'];
+            if ($tgl_lahir !== 0) {
+                if (date('m', $tgl_lahir) == $bl) {
+                    $i['ttl'] = ttl($i);
+                    $data[] = $i;
+                }
+            }
+        }
+
+
+        // reset index cols after unset
+        $new_cols = ['nama', 'ttl', 'sub'];
+        $spreadsheet = new Spreadsheet();
+
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $huruf = 'Z';
+
+        foreach ($new_cols as $k => $c) {
+            $huruf++;
+            if ($k < 26) {
+                $sheet->setCellValue(substr($huruf, -1) . '1', upper_first(str_replace("_", " ", $c)));
+            } else {
+                $sheet->setCellValue('A' . substr($huruf, -1) . '1', upper_first(str_replace("_", " ", $c)));
+            }
+        }
+
+        $rows = 2;
+        $huruf = 'Z';
+        foreach ($data as $i) {
+            foreach ($new_cols as $k => $c) {
+                $val = $i[$c];
+                $huruf++;
+                if ($k < 26) {
+                    $sheet->setCellValue(substr($huruf, -1) . $rows, $val);
+                } else {
+                    $sheet->setCellValue('A' . substr($huruf, -1) . $rows, $val);
+                }
+            }
+            $huruf = 'Z';
+            $rows++;
+        }
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename=' . $judul . '.xlsx');
+        header('Cache-Control: maxe-age=0');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+
+        exit;
     }
 }
