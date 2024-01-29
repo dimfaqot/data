@@ -65,7 +65,6 @@ class Mapel extends BaseController
         $no_urut = clear($this->request->getVar('no_urut'));
         $mapel = upper_first(clear($this->request->getVar('mapel')));
         $sks = clear($this->request->getVar('sks'));
-
         $url = base_url(menu()['controller']) . '/' . $ekstra;
 
 
@@ -79,12 +78,12 @@ class Mapel extends BaseController
 
         $eks = db('ekstra', get_db('ekstra'));
 
-        $db_ekstra = $eks->where('ekstra', $ekstra)->get()->getRowArray();
+        $db_ekstra = $eks->where('singkatan', $ekstra)->get()->getRowArray();
 
         if ($ekstra !== $q['ekstra']) {
             $q['ekstra'] = $db_ekstra['ekstra'];
             $q['singkatan'] = $db_ekstra['singkatan'];
-            $q['kepala'] = $ekstra['kepala'];
+            $q['kepala'] = $db_ekstra['kepala'];
         }
 
         $q['no_urut'] = $no_urut;
