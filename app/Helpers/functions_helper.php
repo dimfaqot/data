@@ -628,21 +628,20 @@ function last_no_ekstra($time, $ekstra, $tahun)
 
     $db = db('nilai', 'ekstra');
 
-    $q = $db->where('singkatan', $ekstra)->orderBy('tgl', 'DESC')->get()->getResultArray();
 
-    $no = '001/' . $ekstra . '/' . bulan(date('m', $time))['romawi'] . '/' . date('Y', $time);
+    $bulan_rmw = 'VI';
+    $no = '001/' . $ekstra . '/' . $bulan_rmw . '/' . date('Y', $time);
 
-    if ($q) {
-        $kode = '';
 
-        foreach ($q as $i) {
-            if (date('Y', $i['tgl']) == $tahun) {
-                $kode = $i['kode'];
-            }
-        }
+    $exist = $db->where('kode', $no)->get()->getRowArray();
 
-        $exp = explode("/", $kode);
-        $next = $exp[0] + 1;
+    if ($exist) {
+        $q = $db->where('singkatan', $ekstra)->orderBy('tgl', 'DESC')->get()->getRowArray();
+
+
+        $next = explode("/", $q['kode']);
+
+        $next = $next[0] + 1;
 
         if (strlen($next) == 1) {
             $next = '00' . $next;
@@ -651,8 +650,36 @@ function last_no_ekstra($time, $ekstra, $tahun)
             $next = '0' . $next;
         }
 
-        $no = $next . '/' . $ekstra . '/' . bulan(date('m', $time))['romawi'] . '/' . date('Y', $time);
+
+        $no = $next . '/' . $ekstra . '/' . $bulan_rmw . '/' . date('Y', $time);
+
+        $next_kode = $db->where('kode', $no)->get()->getRowArray();
+
+        if ($next_kode) {
+            for ($i = 1; $i < 20; $i++) {
+                $new_next = '';
+                $new_next = explode("/", $no);
+
+                $new_next = $new_next[0] + $i;
+
+                if (strlen($new_next) == 1) {
+                    $new_next = '00' . $new_next;
+                }
+                if (strlen($new_next) == 2) {
+                    $new_next = '0' . $new_next;
+                }
+
+                $last = $next . '/' . $ekstra . '/' . $bulan_rmw . '/' . date('Y', $time);
+
+                $last_kode = $db->where('kode', $last)->get()->getRowArray();
+
+                if (!$last_kode) {
+                    $no = $last_kode;
+                }
+            }
+        }
     }
+
 
     return $no;
 }
