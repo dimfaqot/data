@@ -363,6 +363,12 @@ $routes->post('nota/update_qty', 'Djana\Nota::update_qty');
 $routes->post('nota/cari_barang', 'Djana\Nota::cari_barang');
 $routes->post('nota/create', 'Djana\Nota::create');
 
+// kamera
+$routes->get('kamera/(:any)/(:any)', 'Djana\Kamera::index/$1/$2');
+$routes->post('kamera/add', 'Djana\Kamera::add');
+$routes->post('kamera/update', 'Djana\Kamera::update');
+$routes->post('kamera/delete', 'Djana\Kamera::delete');
+
 // kamar
 $routes->get('kamar', 'Kamar\Kamar::index');
 if (session('role') == 'Root') {
