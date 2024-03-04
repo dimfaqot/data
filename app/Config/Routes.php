@@ -236,8 +236,9 @@ $routes->post('/cetak/db', 'Root\Cetak::db');
 $routes->post('/cetak/col', 'Root\Cetak::col');
 $routes->post('/cetak/filter', 'Root\Cetak::filter');
 $routes->post('/cetak/get_data', 'Root\Cetak::get_data');
-$routes->get('/cetak/cetak/(:any)/(:any)', 'Root\Cetak::cetak/$1/$2');
+$routes->get('/cetak/cetak', 'Root\Cetak::cetak');
 $routes->get('/cetak/ultah/(:any)/(:num)', 'Root\Cetak::ultah/$1/$2');
+
 
 
 // rental

@@ -536,20 +536,22 @@
         } else {
             datas = collect_data();
         }
-
         let data = {
             datas,
             remove,
             ttd,
             tabel,
+            order,
+            url: 'cetak',
             cols: arr_cols
         }
+
 
         post("encode", {
             data
         }).then((res) => {
             if (res.status == '200') {
-                window.open('<?= base_url(); ?><?= menu()['controller']; ?>/cetak/' + order + '/' + res.data, '_blank');
+                window.open('<?= base_url(); ?><?= menu()['controller']; ?>/cetak', '_blank');
             } else {
                 gagal(res.message);
             }

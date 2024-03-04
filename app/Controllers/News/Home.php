@@ -201,7 +201,6 @@ class Home extends BaseController
         // }
 
 
-
         return view('news/' . menu()['controller'], ['judul' => 'Home']);
     }
 
@@ -635,10 +634,17 @@ class Home extends BaseController
     public function encode()
     {
         $data = json_decode(json_encode($this->request->getVar('data')), true);
+        $encode = encode_jwt($data);
+
         $res = [
             'status' => '200',
-            'data' => encode_jwt($data)
+            'message' => 'Sukses',
+            'data' => $encode
         ];
+
+        if ($data['url'] == 'cetak') {
+            token_cetak($encode);
+        }
 
         echo json_encode($res);
         die;

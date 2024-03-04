@@ -1549,3 +1549,28 @@ function get_informasi()
 
     return $q;
 }
+
+
+function token_cetak($content, $order = null)
+{
+    if (file_exists('token_cetak.txt')) {
+        if ($order == null) {
+            unlink('token_cetak.txt');
+            $fp = fopen("token_cetak.txt", "wb");
+            fwrite($fp, $content);
+            fclose($fp);
+        } else {
+            $filename = 'token_cetak.txt';
+            $fp = fopen($filename, "r");
+            if ($fp) {
+                $token = fread($fp, filesize($filename));
+                fclose($fp);
+                return $token;
+            }
+        }
+    } else {
+        $fp = fopen("token_cetak.txt", "wb");
+        fwrite($fp, $content);
+        fclose($fp);
+    }
+}

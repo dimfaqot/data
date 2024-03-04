@@ -4,6 +4,7 @@
 namespace App\Controllers\Root;
 
 use App\Controllers\BaseController;
+use Mpdf\Tag\Tr;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -337,9 +338,13 @@ class Cetak extends BaseController
         sukses_js('Ok', $last, get_default_cetak($dbs, $tabel)['id']);
     }
 
-    public function cetak($order, $jwt)
+    public function cetak()
     {
+
+        $jwt = token_cetak('', 'b');
         $decode_jwt = decode_jwt($jwt);
+
+        $order = $decode_jwt['order'];
 
         $datas = json_decode(json_encode($decode_jwt['datas']), true);
         $tabel = $decode_jwt['tabel'];
@@ -590,6 +595,7 @@ class Cetak extends BaseController
             exit;
         }
     }
+
 
     public function ultah($db, $bl)
     {
