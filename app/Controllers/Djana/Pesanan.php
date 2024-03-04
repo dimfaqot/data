@@ -277,6 +277,7 @@ class Pesanan extends BaseController
 
         $data = [];
         $data[] = ['bulan' => '11', 'tahun' => '2022', 'keluar' => 8000000, 'masuk' => 0, 'saldo' => rupiah(0 - 8000000)];
+        $total_saldo = -8000000;
         foreach ($tgl as $t) {
             $exp = explode(" ", $t);
             $keluar = 0;
@@ -287,9 +288,10 @@ class Pesanan extends BaseController
                     $keluar += $i['keluar'];
                 }
             }
+            $total_saldo += ($masuk - $keluar);
             $data[] = ['bulan' => $exp[0], 'tahun' => $exp[1], 'keluar' => rupiah($keluar), 'masuk' => rupiah($masuk), 'saldo' => rupiah($masuk - $keluar)];
         }
 
-        sukses_js('Ok', $data);
+        sukses_js('Ok', $data, rupiah($total_saldo));
     }
 }
