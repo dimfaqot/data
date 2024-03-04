@@ -158,7 +158,7 @@
                             <div class="row g-2">
                                 <div class="col-md-6">
                                     <div class="input-group input-group-sm">
-                                        <label style="width: 120px;" class="input-group-text">Tgl. Order</label>
+                                        <label style="width: 120px;" class="input-group-text">Tgl</label>
                                         <input type="date" data-date="" class="form-control test input_date" style="padding-bottom: 25px;" name="tgl" data-date-format="DD/MM/YYYY" value="<?= date('Y-m-d'); ?>">
                                     </div>
                                 </div>
