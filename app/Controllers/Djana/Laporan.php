@@ -186,9 +186,12 @@ class Laporan extends BaseController
 
         $judul = 'LAPORAN DJANA ' . ($val['bulan'] == 'All' ? 'SEMUA BULAN.' : 'BULAN ' . strtoupper(bulan($val['bulan'])['bulan'])) . ($val['tahun'] == 'All' ? ' SEMUA TAHUN' : ' TAHUN ' . $val['tahun']);
 
+        // dd($data);
 
         if ($order == 'pdf') {
             $saldo_bulan_lalu = get_saldo_bulan_lalu($val['tahun'], $val['bulan']);
+
+
             $set = [
                 'mode' => 'utf-8',
                 'format' => [215, 330],

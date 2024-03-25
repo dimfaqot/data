@@ -262,36 +262,9 @@ class Pesanan extends BaseController
     }
     public function saldo()
     {
-        $db = db('laporan', 'djana');
 
-        $q = $db->orderBy('tgl_laporan', 'ASC')->get()->getResultArray();
+        $data = total_saldo();
 
-        $tgl = [];
-
-        foreach ($q as $i) {
-            $date = date('m', $i['tgl_laporan']) . ' ' . date('Y', $i['tgl_laporan']);
-            if (!in_array($date, $tgl)) {
-                $tgl[] = $date;
-            }
-        }
-
-        $data = [];
-        $data[] = ['bulan' => '11', 'tahun' => '2022', 'keluar' => 8000000, 'masuk' => 0, 'saldo' => rupiah(0 - 8000000)];
-        $total_saldo = -8000000;
-        foreach ($tgl as $t) {
-            $exp = explode(" ", $t);
-            $keluar = 0;
-            $masuk = 0;
-            foreach ($q as $i) {
-                if (date('m', $i['tgl_laporan']) == $exp[0] && date('Y', $i['tgl_laporan']) == $exp[1]) {
-                    $masuk += $i['masuk'];
-                    $keluar += $i['keluar'];
-                }
-            }
-            $total_saldo += ($masuk - $keluar);
-            $data[] = ['bulan' => $exp[0], 'tahun' => $exp[1], 'keluar' => rupiah($keluar), 'masuk' => rupiah($masuk), 'saldo' => rupiah($masuk - $keluar)];
-        }
-
-        sukses_js('Ok', $data, rupiah($total_saldo));
+        sukses_js('Ok', $data['data'], rupiah($data['total_saldo']));
     }
 }

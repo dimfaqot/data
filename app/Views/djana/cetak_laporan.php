@@ -50,12 +50,21 @@
         </tr>
         <tr>
             <td style="text-align: center;">2.</td>
+            <td>Saldo Bulan Ini</td>
+            <td style="text-align: right;"><?= $data['totalLaba']; ?></td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">3.</td>
             <td>Pemasukan Lain</td>
             <td style="text-align: right;">Rp. 0</td>
         </tr>
         <tr>
             <td colspan="2" style="font-weight: bold;text-align:center;">TOTAL</td>
             <td style="font-weight: bold;text-align:right"><?= rupiah($saldo_bulan_lalu['saldo']); ?></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="font-weight: bold;text-align:center;">TOTAL SALDO</td>
+            <td style="font-weight: bold;text-align:right"><?= rupiah(total_saldo()['total_saldo']); ?></td>
         </tr>
     </table>
     <br>
