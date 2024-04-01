@@ -168,6 +168,7 @@ class Piagam extends BaseController
     }
     public function cetak($order, $ttd, $jwt)
     {
+
         $ttd = false;
 
         if ($ttd == '2') {
@@ -183,7 +184,6 @@ class Piagam extends BaseController
         foreach ($decode_jwt as $i) {
 
             $q = $db->where('id', $i)->get()->getRowArray();
-
 
             $th = db('tahun');
             $t = $th->where('tahun', $q['tahun'])->get()->getRowArray();

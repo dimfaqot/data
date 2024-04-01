@@ -642,11 +642,16 @@ class Home extends BaseController
             'data' => $encode
         ];
 
-        if ($data['url'] == 'cetak') {
-            token_cetak($encode);
+        if (array_key_exists('url', $data)) {
+            if ($data['url'] == 'cetak') {
+                token_cetak($encode);
+            } else {
+                echo json_encode($res);
+            }
+        } else {
+            echo json_encode($res);
         }
 
-        echo json_encode($res);
         die;
     }
 
