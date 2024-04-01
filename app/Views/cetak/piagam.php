@@ -71,7 +71,6 @@ if (count($exp) > 8) {
 
     <div style="text-align: center;">Mengetahui,</div>
 
-
     <table style="width: 100%;">
         <tr>
             <td style="text-align: center; width:50%;"></td>
@@ -79,7 +78,7 @@ if (count($exp) > 8) {
         </tr>
         <tr>
             <td style="text-align: center; width:50%;">Ketua Yayasan</td>
-            <td style="text-align: center; width:50%;">Kepala Sekolah</td>
+            <td style="text-align: center; width:50%;"><?= $data['text_kepala']; ?></td>
         </tr>
         <tr>
             <td style="text-align:center;"><?= ($data['is_ttd']  ? $data['ttd_ketua_ypp'] : '<br><br><br><br><br><br>'); ?></td>

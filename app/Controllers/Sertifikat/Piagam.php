@@ -166,15 +166,15 @@ class Piagam extends BaseController
             sukses_js('Data gagal diupdate.');
         }
     }
-    public function cetak($order, $ttd, $jwt)
+    public function cetak($order, $ttd_kep, $jwt)
     {
+
 
         $ttd = false;
 
-        if ($ttd == '2') {
+        if ($ttd_kep == '2') {
             $ttd = true;
         }
-
         $decode_jwt = decode_jwt($jwt);
 
         $db = db(menu()['tabel'], get_db(menu()['tabel']));
@@ -201,12 +201,15 @@ class Piagam extends BaseController
 
                 $q['kepala'] = $kep;
                 $q['ttd_kepala'] = '<img width="110px" src="' .  'berkas/ttd/' . get_ttd($kep) . '" alt="Ttd"/>';
+                $q['text_kepala'] = 'Kepala ' . upper_first($q['sub']);
             } else {
                 if ($q['sub'] == 'Yayasan') {
+                    $q['text_kepala'] = 'Ketua Yayasan';
                     $q['kepala'] = $t['ketua_ypp'];
                     $q['ttd_kepala'] = '<img width="110px" src="' .  'berkas/ttd/' . get_ttd($t['ketua_ypp']) . '" alt="Ttd"/>';
                 } else {
                     $q['kepala'] = $t['kepala_' . strtolower($q['sub'])];
+                    $q['text_kepala'] = 'Kepala ' . upper_first($q['sub']);
                     $q['ttd_kepala'] = '<img width="110px" src="' .  'berkas/ttd/' . get_ttd($t['kepala_' . strtolower($q['sub'])]) . '" alt="Ttd"/>';
                 }
             }
