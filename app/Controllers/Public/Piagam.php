@@ -38,11 +38,14 @@ class Piagam extends BaseController
 
                 $q['kepala'] = $kep;
                 $q['ttd_kepala'] = '<img width="110px" src="' .  'berkas/ttd/' . get_ttd($kep) . '" alt="Ttd"/>';
+                $q['text_kepala'] = 'Kepala ' . upper_first($q['sub']);
             } else {
                 if ($q['sub'] == 'Yayasan') {
                     $q['kepala'] = $t['ketua_ypp'];
+                    $q['text_kepala'] = 'Ketua Yayasan';
                     $q['ttd_kepala'] = '<img width="110px" src="' .  'berkas/ttd/' . get_ttd($t['ketua_ypp']) . '" alt="Ttd"/>';
                 } else {
+                    $q['text_kepala'] = 'Kepala ' . upper_first($q['sub']);
                     $q['kepala'] = $t['kepala_' . strtolower($q['sub'])];
                     $q['ttd_kepala'] = '<img width="110px" src="' .  'berkas/ttd/' . get_ttd($t['kepala_' . strtolower($q['sub'])]) . '" alt="Ttd"/>';
                 }
