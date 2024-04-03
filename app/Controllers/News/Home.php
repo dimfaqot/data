@@ -635,24 +635,36 @@ class Home extends BaseController
     {
         $data = json_decode(json_encode($this->request->getVar('data')), true);
         $encode = encode_jwt($data);
-
-        $res = [
-            'status' => '200',
-            'message' => 'Sukses',
-            'data' => $encode
-        ];
+        $res = [];
 
         if (array_key_exists('url', $data)) {
             if ($data['url'] == 'cetak') {
-                token_cetak($encode);
+
+                $res = [
+                    'status' => '200',
+                    'message' => 'Sukses',
+                    'data' => token_cetak($encode)
+                ];
+                sukses_js('Ok', $res);
             } else {
+                $res = [
+                    'status' => '200',
+                    'message' => 'Sukses',
+                    'data' => $encode
+                ];
+
                 echo json_encode($res);
+                die;
             }
         } else {
+            $res = [
+                'status' => '200',
+                'message' => 'Sukses',
+                'data' => $encode
+            ];
             echo json_encode($res);
+            die;
         }
-
-        die;
     }
 
 
