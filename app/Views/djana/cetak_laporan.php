@@ -49,7 +49,7 @@
             <td style="text-align: right;"><?= rupiah($saldo_bulan_lalu['saldo']); ?></td>
         </tr>
         <tr>
-            <td style="text-align: center;">3.</td>
+            <td style="text-align: center;">2.</td>
             <td>Pemasukan Lain</td>
             <td style="text-align: right;">Rp. 0</td>
         </tr>
