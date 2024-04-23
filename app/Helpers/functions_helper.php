@@ -482,7 +482,7 @@ function last_no_id_kar($tahun_masuk, $sub)
         if (!$isExist) {
             break;
         } else {
-            $no_id++;
+            $no_id += $i;
         }
     }
     return $no_id;
@@ -519,7 +519,7 @@ function last_no_id_rec($tahun_masuk, $sub)
         if (!$isExist) {
             break;
         } else {
-            $no_id++;
+            $no_id += $i;
         }
     }
     return $no_id;
@@ -552,7 +552,7 @@ function last_no_id_santri($tahun_masuk, $sub)
         if (!$isExist) {
             break;
         } else {
-            $no_id++;
+            $no_id += $i;
         }
     }
     return $no_id;
@@ -584,9 +584,10 @@ function last_no_id_ppdb($tahun_masuk, $sub)
         if (!$isExist) {
             break;
         } else {
-            $no_id++;
+            $no_id += $i;
         }
     }
+
     return $no_id;
 }
 
@@ -1075,14 +1076,14 @@ function rupiah($uang)
 function tahun_santri($order)
 {
     if ($order == 'santri') {
-        if (date('l') < 7) {
+        if (date('n') < 7) {
             return date('Y') - 1;
         } else {
             return date('Y');
         }
     }
     if ($order == 'ppdb') {
-        if (date('l') < 7) {
+        if (date('n') < 7) {
             return date('Y');
         } else {
             return date('Y') + 1;

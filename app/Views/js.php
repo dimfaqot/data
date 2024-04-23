@@ -487,7 +487,6 @@
         let ppdb_bersyarat = ($(".ppdb_bersyarat").prop("checked") ? 'Bersyarat' : 'Lulus');
         let tabel = '<?= (url(6) == '' ? 'Bus' : url(6)); ?>';
 
-
         post('<?= url(); ?>/' + method, {
                 id,
                 ppdb_bersyarat,

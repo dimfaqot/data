@@ -445,7 +445,6 @@ class Ppdb extends BaseController
             gagal_js('Peserta belum lulus. ' . $q['status']);
         }
 
-
         $cols = get_fields(menu()['tabel']);
 
         $data = [];
@@ -464,6 +463,10 @@ class Ppdb extends BaseController
                 }
             }
         }
+
+        $data['petugas'] = session('nama');
+        $data['created_at'] = time();
+        $data['updated_at'] = time();
 
         // santri santri
         $dbk = db(get_db(menu()['tabel']), get_db(menu()['tabel']));
