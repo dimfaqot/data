@@ -112,6 +112,7 @@
                                 <th scope="col">P/L</th>
                                 <th scope="col">Sub</th>
                                 <th scope="col">Alamat</th>
+                                <th scope="col">Ket</th>
                             </tr>
                         </thead>
                         <tbody class="tabel_search">
@@ -122,6 +123,7 @@
                                     <td><?= $i['gender']; ?></td>
                                     <td><?= $i['sub']; ?></td>
                                     <td><?= $i['kabupaten']; ?></td>
+                                    <td><?= $i['status']; ?></td>
                                 </tr>
 
                             <?php endforeach; ?>

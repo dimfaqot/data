@@ -16,7 +16,7 @@ class Ppdb extends BaseController
         $gender = ($gender == null ? 'L' : $gender);
 
         $db = db('ppdb', 'santri');
-        $db->select('no_id,nama,gender,sub,kabupaten');
+        $db->select('no_id,nama,gender,sub,kabupaten,status')->where('deleted', 0);
 
         if ($tahun !== 'All') {
             $db->where('tahun_masuk', $tahun);
