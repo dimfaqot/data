@@ -887,7 +887,7 @@ function total_saldo()
         $data[] = ['bulan' => $exp[0], 'tahun' => $exp[1], 'keluar' => rupiah($keluar), 'masuk' => rupiah($masuk), 'saldo' => rupiah($masuk - $keluar)];
     }
 
-    $data_bl_ini = get_pesanan(2023, date('m'))['data'];
+    $data_bl_ini = get_pesanan(date('Y'), date('m'))['data'];
 
 
     $masuk_bulan_ini = 0;
