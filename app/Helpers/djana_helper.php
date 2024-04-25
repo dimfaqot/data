@@ -887,6 +887,19 @@ function total_saldo()
         $data[] = ['bulan' => $exp[0], 'tahun' => $exp[1], 'keluar' => rupiah($keluar), 'masuk' => rupiah($masuk), 'saldo' => rupiah($masuk - $keluar)];
     }
 
-    $res = ['data' => $data, 'total_saldo' => $total_saldo];
+    $data_bl_ini = get_pesanan(2023, date('m'))['data'];
+
+
+    $masuk_bulan_ini = 0;
+    $keluar_bulan_ini = 0;
+
+    foreach ($data_bl_ini as $i) {
+        if ($i['selesai'] == 1) {
+            $masuk_bulan_ini += $i['jml'];
+            $keluar_bulan_ini += $i['jml_lunas'];
+        }
+    }
+
+    $res = ['data' => $data, 'total_saldo' => $total_saldo, 'masuk_bulan_ini' => $masuk_bulan_ini, 'keluar_bulan_ini' => $keluar_bulan_ini];
     return $res;
 }

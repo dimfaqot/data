@@ -4,6 +4,7 @@
 
 <div class="container" style="margin-top: 60px;">
 
+
     <div class="modal_confirm position-absolute top-50 start-50 translate-middle btn_main_inactive message_info" style="z-index:9999;left:15px;right:15px;display:none;max-width:max-content;">
         <div class="d-flex gap-2 justify-content-center">
             <span style="font-weight:200;" class="body_get_status"></span>
@@ -535,7 +536,10 @@
     </div>
 
     <!-- Modal saldo-->
-    <div class="modal fade" id="saldo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <?php if (session('role') == 'Root') : ?>
+        <div class="modal fade" id="saldo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+        <?php endif; ?>
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
@@ -566,7 +570,7 @@
                 </div>
             </div>
         </div>
-    </div>
+        </div>
 
 </div>
 

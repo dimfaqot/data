@@ -264,7 +264,8 @@ class Pesanan extends BaseController
     {
 
         $data = total_saldo();
+        $saldo_bulan_ini = ['masuk_bulan_ini' => rupiah($data['masuk_bulan_ini']), 'keluar_bulan_ini' => rupiah($data['keluar_bulan_ini']), 'saldo_bulan_ini' => rupiah($data['masuk_bulan_ini'] - $data['keluar_bulan_ini']), 'total_saldo' => rupiah($data['total_saldo'] + (($data['masuk_bulan_ini'] - $data['keluar_bulan_ini'])))];
 
-        sukses_js('Ok', $data['data'], rupiah($data['total_saldo']));
+        sukses_js('Ok', $data['data'], rupiah($data['total_saldo']), $saldo_bulan_ini);
     }
 }

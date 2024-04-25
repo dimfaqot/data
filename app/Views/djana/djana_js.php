@@ -625,6 +625,19 @@
                     html += '<th scope="row" style="text-align:center" colspan="4">TOTAL</th>';
                     html += '<th style="text-align:right;">' + res.data2 + '</th>';
                     html += '</tr>';
+                    // bulan ini
+                    html += '<tr>';
+                    html += '<th scope="row">' + (res.data.length + 1) + '</th>';
+                    html += '<td style="text-align:right;color:red;">Bulan Ini</td>';
+                    html += '<td style="text-align:right;color:red;">' + res.data3['masuk_bulan_ini'] + '</td>';
+                    html += '<td style="text-align:right;color:red;">' + res.data3['keluar_bulan_ini'] + '</td>';
+                    html += '<td style="text-align:right;color:red;">' + res.data3['saldo_bulan_ini'] + '</td>';
+                    html += '</tr>';
+
+                    html += '<tr>';
+                    html += '<th scope="row" style="text-align:center;color:red" colspan="4">TOTAL</th>';
+                    html += '<th style="text-align:right;color:red">' + res.data3['total_saldo'] + '</th>';
+                    html += '</tr>';
 
                     $('.body_saldo').html(html);
                     let myModal = document.getElementById('saldo');
