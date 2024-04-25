@@ -204,7 +204,7 @@ class Laporan extends BaseController
 
             $mpdf = new \Mpdf\Mpdf($set);
             $logo = '<img width="80px" src="' .  'berkas/djana/logo.png" alt="Logo Djana"/>';
-            $html = view('djana/cetak_laporan', ['judul' => $judul, 'data' => $data, 'logo' => $logo, 'jwt' => $jwt, 'cols' => $cols, 'saldo_bulan_lalu' => $saldo_bulan_lalu]);
+            $html = view('djana/cetak_laporan', ['judul' => $judul, 'data' => $data, 'logo' => $logo, 'jwt' => $jwt, 'cols' => $cols, 'saldo_bulan_lalu' => $saldo_bulan_lalu, 'bulan_ini' => bulan($val['bulan'])['bulan']]);
             $mpdf->AddPage();
             $mpdf->WriteHTML($html);
 

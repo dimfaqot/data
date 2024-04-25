@@ -31,7 +31,6 @@
 </head>
 
 <body style="font-size: 12px;">
-
     <p style="text-align: center;margin-top:-100px;"><?= $logo; ?></p>
     <div style="text-align: center;font-weight:bold;"><?= $judul; ?></div>
     <br>
@@ -46,12 +45,12 @@
         <tr>
             <td style="text-align: center;">1.</td>
             <td><?= $saldo_bulan_lalu['text']; ?></td>
-            <td style="text-align: right;"><?= rupiah($saldo_bulan_lalu['saldo']); ?></td>
+            <td style="text-align: right;"><?= rupiah(total_saldo()['total_saldo'] - $data['totalLabaInt']); ?></td>
         </tr>
         <tr>
             <td style="text-align: center;">2.</td>
-            <td>Pemasukan Lain</td>
-            <td style="text-align: right;">Rp. 0</td>
+            <td>Saldo Bulan <?= $bulan_ini; ?></td>
+            <td style="text-align: right;"><?= $data['totalLaba']; ?></td>
         </tr>
         <tr>
             <td colspan="2" style="font-weight: bold;text-align:center;">TOTAL SALDO</td>

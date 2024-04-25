@@ -1553,4 +1553,23 @@
 
 
     });
+
+    $(document).on('click', '.cetak_kuitansi_ppdb', function(e) {
+        e.preventDefault();
+        let url = $(this).data('url');
+        let no_id = $(this).data('no_id');
+        let data = {
+            url,
+            no_id
+        };
+        post("encode", {
+            data
+        }).then((res) => {
+            if (res.status == '200') {
+                window.open('<?= base_url('public/ppdb/kuitansi/'); ?>' + res.data, '_blank');
+            } else {
+                gagal(res.message);
+            }
+        })
+    })
 </script>

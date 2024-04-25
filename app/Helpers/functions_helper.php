@@ -1575,3 +1575,15 @@ function token_cetak($content, $order = null)
         fclose($fp);
     }
 }
+
+function tahun($tahun)
+{
+    $db = db('tahun', 'data');
+
+    $q = $db->where('tahun', $tahun)->get()->getRowArray();
+
+    if (!$q) {
+        $q = $db->orderBy('tahun', 'DESC')->get()->getRowArray();
+    }
+    return $q;
+}

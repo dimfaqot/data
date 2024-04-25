@@ -278,6 +278,7 @@ $routes->get('/public/rebana', 'Public\Rebana::index');
 $routes->get('/public/rebana/(:any)/(:any)', 'Public\Rebana::index/$1/$2');
 
 // ppdb
+$routes->get('/public/ppdb/kuitansi/(:any)', 'Public\Ppdb::kuitansi/$1');
 $routes->get('/public/ppdb', 'Public\Ppdb::index');
 $routes->get('/public/ppdb/(:any)/(:any)', 'Public\Ppdb::index/$1/$2');
 

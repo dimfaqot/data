@@ -24,7 +24,7 @@ class Ppdb extends BaseController
         $db = db(menu()['tabel'], get_db(menu()['tabel']));
 
         $limit = 0;
-        $db->select('no_id,nama,gender,status,tgl_lahir,sub,hp_ayah,updated_at,deleted');
+        $db->select('no_id,nama,ket_pendaftaran,bukti_pendaftaran,gender,status,tgl_lahir,sub,hp_ayah,updated_at,deleted');
 
         if ($filter !== 'All') {
             $filt = 0;

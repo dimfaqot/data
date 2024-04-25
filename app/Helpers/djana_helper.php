@@ -88,6 +88,7 @@ function get_laporan($tahun, $bulan)
         'totalMasuk' => 'Rp. ' . number_format($totalMasuk, 0, ",", "."),
         'totalKeluar' => 'Rp. ' . number_format($totalKeluar, 0, ",", "."),
         'totalLaba' => 'Rp. ' . number_format($totalLaba, 0, ",", "."),
+        'totalLabaInt' => $totalLaba,
         'laba' => $totalLaba,
         'disable' => (date('m') == bulan($bulan)['angka'] && date('Y') == $tahun ? 'true' : 'false'),
         'data' => $value

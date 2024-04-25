@@ -23,7 +23,7 @@ function set_qr_code($url, $logo, $text)
     // ->setBackgroundColor(new Color(255, 255, 255));
 
     $logo = Logo::create('berkas/menu/' . $logo . '.png')
-        ->setResizeToWidth(25)
+        ->setResizeToWidth(($text == 'Ppdb' ? 5 : 25))
         ->setPunchoutBackground(false);
 
     $label = Label::create($text)

@@ -6,10 +6,10 @@ $asc_icon = '<i class="fa-solid fa-arrow-down-short-wide secondary_dark_color"><
 $desc_icon = '<i class="fa-solid fa-arrow-down-wide-short"></i>';
 $filter_by = ['Existing', 'Deleted', 'All'];
 $gender = ['L', 'P', 'All'];
+
 ?>
 
 <div class="container" style="margin-top: 60px;">
-
     <div class="input-group input-group-sm mb-3">
         <!-- Button trigger modal -->
         <button type="button" class="btn-sm btn_main" data-bs-toggle="modal" data-bs-target="#<?= menu()['controller']; ?>">
@@ -274,7 +274,13 @@ $gender = ['L', 'P', 'All'];
                         <td><?= $i['umur']; ?></td>
                         <td><?= $i['status']; ?></td>
                         <td>
-                            <span class="btn_main_inactive"><a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit data." class="main_color" href="<?= base_url() . url(3); ?>/detail/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/<?= url(8); ?>/<?= url(9); ?>/<?= url(10); ?>/<?= url(11); ?>/<?= $i['no_id']; ?>/Profile" style="font-size: medium;"><i class="fa-solid fa-square-pen"></i></a> <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cetak pdf." style="font-size: 14px;" target="_blank" href="<?= base_url(menu()['controller']); ?>/cetak/single/<?= $i['no_id']; ?>/<?= url(6); ?>/<?= url(7); ?>/<?= url(8); ?>/<?= url(9); ?>/<?= url(10); ?>/<?= url(11); ?>/pdf" class="dark_color"><i class="fa-solid fa-file-pdf"></i></a>
+                            <span class="btn_main_inactive">
+                                <?php if ($i['ket_pendaftaran'] == 'Lunas' && $i['bukti_pendaftaran'] !== 'file_not_found.jpg') : ?>
+                                    <a class="cetak_kuitansi_ppdb" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cetak kuitansi" href="" data-url="<?= base_url(); ?><?= url() . '/' . url(4) . '/' . url(5) . '/' . url(6) . '/' . url(7) . '/' . url(8) . '/' . url(9) . '/' . url(10) . '/' . url(11); ?>" data-no_id="<?= $i['no_id']; ?>" style="font-size: medium;"><i class="fa-solid fa-qrcode"></i></a>
+                                <?php else : ?>
+                                    <a style="font-size: medium;"><i class="fa-solid fa-triangle-exclamation"></i></a>
+                                <?php endif; ?>
+                                <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit data." class="main_color" href="<?= base_url() . url(3); ?>/detail/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/<?= url(8); ?>/<?= url(9); ?>/<?= url(10); ?>/<?= url(11); ?>/<?= $i['no_id']; ?>/Profile" style="font-size: medium;"><i class="fa-solid fa-square-pen"></i></a> <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cetak pdf." style="font-size: 14px;" target="_blank" href="<?= base_url(menu()['controller']); ?>/cetak/single/<?= $i['no_id']; ?>/<?= url(6); ?>/<?= url(7); ?>/<?= url(8); ?>/<?= url(9); ?>/<?= url(10); ?>/<?= url(11); ?>/pdf" class="dark_color"><i class="fa-solid fa-file-pdf"></i></a>
 
                                 <?php if ($i['deleted'] == 0) : ?>
                                     <?php if ($i['status'] == 'Lulus') : ?>
@@ -299,6 +305,7 @@ $gender = ['L', 'P', 'All'];
                                     <?php if ($i['status'] !== 'Lulus' && $i['status'] !== 'Bersyarat') : ?>
                                         <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove data ini." href="" class="confirm" data-order="remove" data-method="remove" data-id="<?= $i['no_id']; ?>" style="font-size: medium;"><i class="fa-solid fa-square-xmark danger_color"></i></a>
                                     <?php endif; ?>
+
                                 <?php else : ?>
 
                                     <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Restore data ini." href="" class="confirm secondary_dark_color" data-order="restore" data-method="restore" data-id="<?= $i['no_id']; ?>" style="font-size: medium;"><i class="fa-solid fa-rotate-left"></i></a> <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete permanen data ini." href="" class="confirm text-danger" data-order="delete" data-method="delete" data-id="<?= $i['no_id']; ?>" style="font-size: medium;"><i class="fa-solid fa-trash"></i></a>
