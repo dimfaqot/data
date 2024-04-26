@@ -198,12 +198,20 @@ $gender = ['L', 'P', 'All'];
             <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tampilkan semua sub." href="<?= base_url(url()); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/All/<?= url(8); ?>/<?= url(9); ?>/<?= url(10); ?>/<?= url(11); ?>" class="<?= (url(7) == 'All' ? 'btn_secondary' : 'btn_main_inactive'); ?>">
                 <i class="fa-solid fa-sitemap"></i> All
             </a>
+            <?php if (url(10) == 'Interview') : ?>
+                <a target="_blank" class="btn_main" href="<?= base_url('ppdb/cetak_form_interview/'); ?><?= url(4); ?>/<?= url(7); ?>"><i class="fa-regular fa-file-pdf"></i> Cetak Form Interview</a>
+                <a target="_blank" class="btn_secondary_inactive pembagian_ruang_seleksi_ppdb" data-tahun="<?= url(4); ?>" href="<?= base_url('ppdb/pembagian_ruang'); ?>"><i class="fa-solid fa-people-roof"></i> Pembagian Ruang</a>
+            <?php endif; ?>
         </div>
     </div>
 
     <!-- sub menu sm -->
-    <div class="d-block d-md-none d-sm-block mt-2">
+    <div class="d-block d-md-none d-sm-block my-2">
         <button class="btn-sm btn_main_inactive" type="button" data-bs-toggle="offcanvas" data-bs-target="#sub_menu" aria-controls="sub_menu"><i class="fa-solid fa-bars"></i> Filter</button>
+        <?php if (url(10) == 'Interview') : ?>
+            <a target="_blank" class="btn_main" href="<?= base_url('ppdb/cetak_form_interview/'); ?><?= url(4); ?>/<?= url(7); ?>"><i class="fa-regular fa-file-pdf"></i> Cetak Form Interview</a>
+            <a target="_blank" class="btn_secondary_inactive pembagian_ruang_seleksi_ppdb" data-tahun="<?= url(4); ?>" href="<?= base_url('ppdb/pembagian_ruang'); ?>"><i class="fa-solid fa-people-roof"></i> Pembagian Ruang</a>
+        <?php endif; ?>
     </div>
 
     <!-- off canvas sub menu -->
@@ -331,5 +339,62 @@ $gender = ['L', 'P', 'All'];
             <?php endif; ?>
         </div>
     <?php endif; ?>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal_pembagian_ruang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-grid mb-2">
+                        <a target="_blank" href="<?= base_url('ppdb/cetak_pembagian_ruang'); ?>/<?= url(4); ?>" class="btn btn-sm btn-success"><i class="fa-regular fa-file-pdf"></i> Cetak Pembagian Ruang</a>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-md-4">
+                            <div class="list-group canvas_body_penguji">
+
+                            </div>
+
+                            <!-- canvas list penguji -->
+                            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasPenguji" aria-labelledby="offcanvasExampleLabel">
+                                <div class="offcanvas-body canvas_body_daftar_capel_by_penguji">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group input-group-sm mb-2">
+                                <span class="input-group-text" style="width: 80px;">Ruang</span>
+                                <input type="text" class="form-control ruang" placeholder="Nama ruang">
+                            </div>
+                            <div class="input-group input-group-sm mb-2">
+                                <span class="input-group-text" style="width: 80px;">Penguji</span>
+                                <input type="text" class="form-control penguji" placeholder="Nama penguji">
+                            </div>
+                            <div class="warning_pembagian_kamar"></div>
+                            <div class="body_name_listed"></div>
+
+                            <!-- <input type="text" class="form-control form-control-sm cari_nama_pembagian_ruang" placeholder="Cari nama..."> -->
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">No. Id</th>
+                                        <th scope="col">Nama</th>
+                                        <th scope="col">Sub</th>
+                                        <!-- <th scope="col">Daerah</th> -->
+                                        <th scope="col">Act</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="body_pembagian_ruang">
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <?= $this->endSection() ?>

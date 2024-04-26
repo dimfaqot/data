@@ -1554,6 +1554,8 @@
 
     });
 
+    // ppdb
+
     $(document).on('click', '.cetak_kuitansi_ppdb', function(e) {
         e.preventDefault();
         let url = $(this).data('url');
@@ -1572,4 +1574,303 @@
             }
         })
     })
+    $(document).on('click', '.pembagian_ruang_seleksi_ppdb', function(e) {
+        e.preventDefault();
+        let tahun = $(this).data('tahun');
+
+        post("ppdb/pembagian_ruang_seleksi_ppdb", {
+            tahun
+        }).then((res) => {
+            if (res.status == '200') {
+
+                let html = '';
+                for (let i = 0; i < res.data.length; i++) {
+                    let data = res.data[i];
+                    html += '<tr class="row_' + i + '">';
+                    html += '<th scope="row">' + (i + 1) + '</th>';
+                    html += '<td>' + data.no_id + '</td>';
+                    html += '<td>' + data.nama + '</td>';
+                    html += '<td>' + data.sub + '</td>';
+                    // html += '<td>' + (data.kabupaten !== '' && data.kecamatan !== '' ? data.kecamatan + '/' + data.kabupaten : (data.kabupaten !== '' ? data.kabupaten : (data.kecamatan !== '' ? data.kecamatan : '-'))) + '</td>';
+                    html += '<td><a data-index="' + i + '" style="font-size:medium" data-no_id="' + data.no_id + '" data-nama="' + data.nama + '" data-sub="' + data.sub + '" data-daerah="' + (data.kabupaten !== '' && data.kecamatan !== '' ? data.kecamatan + '/' + data.kabupaten : (data.kabupaten !== '' ? data.kabupaten : (data.kecamatan !== '' ? data.kecamatan : '-'))) + '" href="" class="masukkan_data_pembagian_ruang"><i class="fa-solid fa-circle-arrow-up"></i></a></td>';
+                    html += '</tr>';
+                }
+                $('.body_pembagian_ruang').html(html);
+
+                let html_penguji = '';
+                for (let x = 0; x < res.data2.length; x++) {
+                    let datax = res.data2[x];
+                    html_penguji += '<a href="#" data-tahun="<?= url(4); ?>" class="list-group-item list-group-item-action btn_canvas_penguji" data-penguji="' + datax.penguji + '">' + datax.penguji + '</a>';
+                }
+                $('.canvas_body_penguji').html(html_penguji);
+
+                let myModal = document.getElementById('modal_pembagian_ruang');
+                let modal = bootstrap.Modal.getOrCreateInstance(myModal)
+                modal.show();
+            } else {
+                gagal(res.message);
+            }
+        })
+    })
+
+    // $(document).on('keyup', '.cari_nama_pembagian_ruang', function(e) {
+    //     e.preventDefault();
+
+    //     let value = $(this).val().toLowerCase();
+
+    //     $('.body_pembagian_ruang tr').filter(function() {
+    //         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+    //     });
+
+    // });
+    $(document).on('click', '.masukkan_data_pembagian_ruang', function(e) {
+        e.preventDefault();
+
+        let exist = $('.name_listed').length;
+        let no_id = $(this).data('no_id');
+        let nama = $(this).data('nama');
+        let sub = $(this).data('sub');
+        let daerah = $(this).data('daerah');
+        let idx = $(this).data('index');
+
+        let datas = [];
+        $('.name_listed').each(function() {
+            let index = $(this).data('index');
+            let no_id_exist = $('.no_id_' + index).text();
+            if (no_id == no_id_exist) {
+                let html = '';
+                html += '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+                html += '<strong>Nama sudah ada!.</strong>';
+                html += '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                html += '</div>';
+                $('.warning_pembagian_kamar').html(html);
+                return false;
+            } else {
+                datas.push({
+                    nama: $('.nama_' + index).text(),
+                    no_id: no_id_exist,
+                    sub: $('.sub_' + index).text()
+                });
+
+            }
+        })
+
+        datas.push({
+            no_id,
+            nama,
+            sub
+        })
+
+        let html = '';
+        html += '<table class="table">';
+        html += '<tbody>';
+        for (let i = 0; i < datas.length; i++) {
+            html += '<tr class="name_listed row_name_listed_' + i + '" data-index="' + i + '">';
+            html += '<td>' + (i + 1) + '</td>';
+            html += '<td class="no_id_' + i + '">' + datas[i].no_id + '</td>';
+            html += '<td class="nama_' + i + '">' + datas[i].nama + '</td>';
+            html += '<td class="sub_' + i + '">' + datas[i].sub + '</td>';
+            html += '<td><a data-index="' + i + '" class="del_list_pembagian_kamar" href="" data-idx="' + idx + '"><i class="fa-solid fa-xmark text-danger"></i></a></td>';
+            html += '</tr>';
+        }
+
+        html += '</tbody>';
+        html += '</table>';
+
+        html += '<div class="d-grid mb-2">';
+        html += '<button data-count="' + datas.length + '" class="btn_main save_pembagian_ruang">Save</button>';
+        html += '</div>';
+
+        $('.body_name_listed').html(html);
+
+        $('.row_' + idx).hide();
+
+    });
+
+    $(document).on('click', '.del_list_pembagian_kamar', function(e) {
+        e.preventDefault();
+
+        let idx = $(this).data('idx');
+        let index = $(this).data('index');
+
+        $('.row_' + idx).show();
+        $('.row_name_listed_' + index).remove();
+
+    });
+    $(document).on('click', '.btn_canvas_penguji', function(e) {
+        e.preventDefault();
+        let penguji = $(this).data('penguji');
+        let tahun = $(this).data('tahun');
+        if (tahun == 'All') {
+            gagal('Tahun tidak boleh All!.');
+            return false;
+        }
+        post("ppdb/daftar_capel_by_penguji", {
+            tahun,
+            penguji
+        }).then((res) => {
+            if (res.status == '200') {
+
+                let html = '';
+                html += '<div style="font-size:large;font-weight:bold;">Penguji: ' + penguji + '</div>';
+                html += '<div style="font-size:medium;">Daftar Calon Santri Ruang ' + res.data[0].ruang + '</div>';
+                html += '<table class="table tabel_daftar_capel">';
+                for (let i = 0; i < res.data.length; i++) {
+                    let data = res.data[i];
+                    html += '<tr class="row_' + i + '">';
+                    html += '<th scope="row">' + (i + 1) + '</th>';
+                    html += '<td>' + data.no_id + '</td>';
+                    html += '<td>' + data.nama + '</td>';
+                    html += '<td>' + data.sub + '</td>';
+                    html += '<td><a style="font-size:medium" data-id="' + data.id + '" href="" data-penguji="' + penguji + '" class="del_daftar_capel"><i class="fa-solid fa-trash text-danger"></i></a></td>';
+                    html += '</tr>';
+                }
+                html += '</table>';
+
+                html += '<div class="d-grid mt-2">';
+                html += '<button data-penguji="' + penguji + '" data-ruang="' + res.data[0].ruang + '" class="btn_bright_sm tambah_data_peserta_seleksi py-1"><i class="fa-solid fa-square-plus"></i> Tambah Data</button>'
+                html += '</div>';
+
+                $('.btn_canvas_penguji').each(function() {
+                    $(this).removeClass('active');
+                })
+                $(this).addClass('active');
+
+                $('.canvas_body_daftar_capel_by_penguji').html(html);
+
+                let canvas = document.getElementById('offcanvasPenguji');
+                let myCanvas = new bootstrap.Offcanvas(canvas);
+                myCanvas.show();
+
+
+
+
+            } else {
+                gagal(res.message);
+            }
+        })
+
+
+    });
+    $(document).on('click', '.save_pembagian_ruang', function(e) {
+        e.preventDefault();
+        let ruang = $('.ruang').val();
+        let penguji = $('.penguji').val();
+        let tahun = "<?= url(4); ?>";
+        let count = $(this).data('count');
+
+        if (count == 0) {
+            gagal('Daftar masih kosong!.');
+            return false;
+        }
+        if (ruang == '') {
+            gagal('Ruang harus diisi!.');
+            return false;
+        }
+        if (penguji == '') {
+            gagal('Penguji harus diisi!.');
+            return false;
+        }
+        if (tahun == 'All') {
+            gagal('Tahun tidak boleh All!.');
+            return false;
+        }
+        let datas = [];
+
+
+        for (let i = 0; i < count; i++) {
+
+            let no_id = $('.no_id_' + i).text();
+
+            let nama = $('.nama_' + i).text();
+            let sub = $('.sub_' + i).text();
+            datas.push({
+                no_id,
+                nama,
+                sub
+            });
+        }
+
+        post("ppdb/save_pembagian_ruang", {
+            tahun,
+            penguji,
+            ruang,
+            datas
+        }).then((res) => {
+            if (res.status == '200') {
+                location.reload();
+
+            } else {
+                gagal(res.message);
+            }
+        })
+
+
+    });
+    $(document).on('click', '.del_daftar_capel', function(e) {
+        e.preventDefault();
+        let id = $(this).data('id');
+        let penguji = $(this).data('penguji');
+        let tahun = "<?= url(4); ?>";
+
+        post("ppdb/del_daftar_capel", {
+            id,
+            penguji,
+            tahun
+        }).then((res) => {
+            if (res.status == '200') {
+                let html = "";
+                html += '<tbody>';
+                for (let i = 0; i < res.data.length; i++) {
+                    let data = res.data[i];
+                    html += '<tr class="row_' + i + '">';
+                    html += '<th scope="row">' + (i + 1) + '</th>';
+                    html += '<td>' + data.no_id + '</td>';
+                    html += '<td>' + data.nama + '</td>';
+                    html += '<td>' + data.sub + '</td>';
+                    html += '<td><a style="font-size:medium" data-id="' + data.id + '" data-penguji="' + penguji + '" href="" class="del_daftar_capel"><i class="fa-solid fa-trash text-danger"></i></a></td>';
+                    html += '</tr>';
+                }
+                html += '</tbody>';
+                $('.tabel_daftar_capel').html(html);
+
+                let html2 = '';
+                for (let i = 0; i < res.data2.length; i++) {
+                    let data = res.data2[i];
+                    html2 += '<tr class="row_' + i + '">';
+                    html2 += '<th scope="row">' + (i + 1) + '</th>';
+                    html2 += '<td>' + data.no_id + '</td>';
+                    html2 += '<td>' + data.nama + '</td>';
+                    html2 += '<td>' + data.sub + '</td>';
+                    // html2 += '<td>' + (data.kabupaten !== '' && data.kecamatan !== '' ? data.kecamatan + '/' + data.kabupaten : (data.kabupaten !== '' ? data.kabupaten : (data.kecamatan !== '' ? data.kecamatan : '-'))) + '</td>';
+                    html2 += '<td><a data-index="' + i + '" style="font-size:medium" data-no_id="' + data.no_id + '" data-nama="' + data.nama + '" data-sub="' + data.sub + '" data-daerah="' + (data.kabupaten !== '' && data.kecamatan !== '' ? data.kecamatan + '/' + data.kabupaten : (data.kabupaten !== '' ? data.kabupaten : (data.kecamatan !== '' ? data.kecamatan : '-'))) + '" href="" class="masukkan_data_pembagian_ruang"><i class="fa-solid fa-circle-arrow-up"></i></a></td>';
+                    html2 += '</tr>';
+                }
+                $('.body_pembagian_ruang').html(html2);
+
+            } else {
+                gagal(res.message);
+            }
+        })
+
+
+    });
+    $(document).on('click', '.tambah_data_peserta_seleksi', function(e) {
+        e.preventDefault();
+        let ruang = $(this).data('ruang');
+        let penguji = $(this).data('penguji');
+
+        $('.ruang').val(ruang);
+        $('.penguji').val(penguji);
+
+        const myOffcanvas = document.getElementById('offcanvasPenguji')
+        myOffcanvas.addEventListener('hidden.bs.offcanvas', event => {
+            // do something...
+        })
+
+        // const bsOffcanvas = new bootstrap.Offcanvas('#offcanvasPenguji');
+        let myCanvas = document.getElementById('offcanvasPenguji');
+        let canvas = bootstrap.Offcanvas.getOrCreateInstance(myCanvas)
+        canvas.hide();
+    });
 </script>

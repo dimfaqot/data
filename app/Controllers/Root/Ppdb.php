@@ -642,6 +642,44 @@ class Ppdb extends BaseController
             exit;
         }
     }
+    public function cetak_form_interview($tahun, $sub)
+    {
+
+        $set = [
+            'mode' => 'utf-8',
+            'format' => [215, 330],
+            'orientation' => 'P',
+            'margin_left' => 5,
+            'margin_right' => 5,
+            'margin_top' => 5,
+            'margin_bottom' => 5,
+        ];
+
+        $mpdf = new \Mpdf\Mpdf($set);
+
+
+
+        $res = [];
+        if ($tahun !== 'All' && $sub !== 'All') {
+            $db = db('ppdb', 'santri');
+            $q = $db->where('tahun_masuk', $tahun)->where('status', 'Interview')->where('sub', $sub)->orderBy('no_id', 'ASC')->get()->getResultArray();
+            foreach ($q as $i) {
+                $i['ttl'] = ttl($i);
+                $res[] = $i;
+            }
+        }
+
+        foreach ($res as $i) {
+
+            $i['logo'] = '<img width="100px" src="berkas/menu/ppdb.png" alt="Logo"/>';
+            $i['alamat_lengkap'] = alamat_lengkap($i);
+            $html = view('cetak/ppdb_form_interview', ['judul' => $i['nama'], 'data' => $i]);
+            $mpdf->AddPage();
+            $mpdf->WriteHTML($html);
+        }
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $mpdf->Output('Data ' . menu()['controller'] . '.pdf', 'I');
+    }
 
     public function add_image()
     {
@@ -658,5 +696,131 @@ class Ppdb extends BaseController
         } else {
             gagal_js('File gagal dihapus.');
         }
+    }
+
+    public function pembagian_ruang_seleksi_ppdb()
+    {
+        $tahun = clear($this->request->getVar('tahun'));
+
+        $db = db('ppdb', 'santri');
+
+        $q = $db->where('status', 'Interview')->where('tahun_masuk', $tahun)->orderBy('nama', 'ASC')->get()->getResultArray();
+
+        $dbr = db('pembagian_ruang', 'santri');
+        $res = [];
+
+        $penguji = $dbr->where('tahun', $tahun)->groupBy('penguji')->orderBy('penguji', 'ASC')->get()->getResultArray();
+
+        foreach ($q as $i) {
+            $x = $dbr->where('tahun', $tahun)->where('no_id', $i['no_id'])->get()->getRowArray();
+            if (!$x) {
+                $res[] = $i;
+            }
+        }
+
+        sukses_js('Ok', $res, $penguji);
+    }
+
+    public function daftar_capel_by_penguji()
+    {
+        $tahun = clear($this->request->getVar('tahun'));
+        $penguji = clear($this->request->getVar('penguji'));
+        $db = db('pembagian_ruang', 'santri');
+
+        $q = $db->where('tahun', $tahun)->where('penguji', $penguji)->get()->getResultArray();
+
+        sukses_js('Ok', $q);
+    }
+    public function save_pembagian_ruang()
+    {
+        $tahun = clear($this->request->getVar('tahun'));
+        $penguji = strtoupper(clear($this->request->getVar('penguji')));
+        $ruang = strtoupper(clear($this->request->getVar('ruang')));
+        $datas = json_decode(json_encode($this->request->getVar('datas')), true);
+
+        $db = db('pembagian_ruang', 'santri');
+
+        foreach ($datas as $i) {
+            $q = $db->where('tahun', $tahun)->where('no_id', $i['no_id'])->get()->getRowArray();
+
+            if (!$q) {
+                $data = [
+                    'tahun' => $tahun,
+                    'ruang' => $ruang,
+                    'penguji' => $penguji,
+                    'no_id' => $i['no_id'],
+                    'nama' => $i['nama'],
+                    'sub' => $i['sub'],
+                ];
+
+                $db->insert($data);
+            }
+        }
+
+        sukses_js('Ok');
+    }
+
+    public function del_daftar_capel()
+    {
+        $id = clear($this->request->getVar('id'));
+        $penguji = clear($this->request->getVar('penguji'));
+        $tahun = clear($this->request->getVar('tahun'));
+
+        $db = db('pembagian_ruang', 'santri');
+        $q = $db->where('id', $id)->get()->getResultArray();
+
+        if (!$q) {
+            gagal_js('Id tidak ditemukan!.');
+        }
+
+        $db->where('id', $id);
+        $db->delete();
+        $q = $db->where('penguji', $penguji)->get()->getResultArray();
+
+        $dbs = db('ppdb', 'santri');
+
+        $san = $dbs->where('status', 'Interview')->where('tahun_masuk', $tahun)->orderBy('nama', 'ASC')->get()->getResultArray();
+
+        $res = [];
+        foreach ($san as $i) {
+            $x = $db->where('tahun', $tahun)->where('no_id', $i['no_id'])->get()->getRowArray();
+            if (!$x) {
+                $res[] = $i;
+            }
+        }
+
+        sukses_js('Ok', $q, $res);
+    }
+
+    public function cetak_pembagian_ruang($tahun)
+    {
+        if ($tahun == 'All') {
+            gagal(base_url('home'), 'Tahun tidak boleh "All"!.');
+        }
+
+        $set = [
+            'mode' => 'utf-8',
+            'format' => [215, 330],
+            'orientation' => 'P',
+            'margin_left' => 5,
+            'margin_right' => 5,
+            'margin_top' => 5,
+            'margin_bottom' => 5,
+        ];
+
+        $mpdf = new \Mpdf\Mpdf($set);
+
+        $db = db('pembagian_ruang', 'santri');
+        $q = $db->where('tahun', $tahun)->groupBy('penguji')->orderBy('penguji', 'ASC')->get()->getResultArray();
+
+        foreach ($q as $i) {
+            $data_capel = $db->where('tahun', $tahun)->where('penguji', $i['penguji'])->orderBy('nama', 'ASC')->get()->getResultArray();
+            $logo = '<img width="100px" src="berkas/menu/ppdb.png" alt="Logo"/>';
+            $html = view('cetak/ppdb_pembagian_ruang', ['judul' => $i['penguji'] . ' ' . $i['ruang'], 'data' => $data_capel, 'logo' => $logo, 'penguji' => $i['penguji'], 'ruang' => $i['ruang']]);
+            $mpdf->AddPage();
+            $mpdf->WriteHTML($html);
+        }
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $mpdf->Output('Data ' . menu()['controller'] . '.pdf', 'I');
     }
 }

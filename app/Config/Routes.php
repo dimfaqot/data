@@ -115,7 +115,9 @@ $routes->post('/santri/delete', 'Root\Santri::delete');
 // ppdb
 $routes->get('/ppdb/detail/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:num)/(:any)', 'Root\Ppdb::detail/$1/$2/$3/$4/$5/$6/$7/$8/$9/$10');
 $routes->get('/ppdb/cetak/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)', 'Root\Ppdb::cetak/$1/$2/$3/$4/$5/$6/$7/$8/$9');
+$routes->get('ppdb/cetak_form_interview/(:any)/(:any)', 'Root\Ppdb::cetak_form_interview/$1/$2');
 $routes->get('/ppdb/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)', 'Root\Ppdb::index/$1/$2/$3/$4/$5/$6/$7/$8');
+$routes->get('ppdb/cetak_pembagian_ruang/(:any)', 'Root\Ppdb::cetak_pembagian_ruang/$1');
 $routes->post('/ppdb/add', 'Root\Ppdb::add');
 $routes->post('/ppdb/update', 'Root\Ppdb::update');
 $routes->post('/ppdb/remove', 'Root\Ppdb::remove');
@@ -127,6 +129,10 @@ $routes->post('/ppdb/back', 'Root\Ppdb::back');
 $routes->post('/ppdb/gagal', 'Root\Ppdb::gagal');
 $routes->post('ppdb/add_image', 'Root\Ppdb::add_image');
 $routes->post('ppdb/delete_file', 'Root\Ppdb::delete_file');
+$routes->post('ppdb/pembagian_ruang_seleksi_ppdb', 'Root\Ppdb::pembagian_ruang_seleksi_ppdb');
+$routes->post('ppdb/daftar_capel_by_penguji', 'Root\Ppdb::daftar_capel_by_penguji');
+$routes->post('ppdb/save_pembagian_ruang', 'Root\Ppdb::save_pembagian_ruang');
+$routes->post('ppdb/del_daftar_capel', 'Root\Ppdb::del_daftar_capel');
 
 // sk
 $routes->get('/sk/dtl/(:any)/(:any)/(:any)/(:any)/(:num)', 'Root\Sk::detail/$1/$2/$3/$4/$5');
