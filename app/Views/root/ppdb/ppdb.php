@@ -201,6 +201,7 @@ $gender = ['L', 'P', 'All'];
             <?php if (url(10) == 'Interview') : ?>
                 <a target="_blank" class="btn_main" href="<?= base_url('ppdb/cetak_form_interview/'); ?><?= url(4); ?>/<?= url(7); ?>"><i class="fa-regular fa-file-pdf"></i> Cetak Form Interview</a>
                 <a target="_blank" class="btn_secondary_inactive pembagian_ruang_seleksi_ppdb" data-tahun="<?= url(4); ?>" href="<?= base_url('ppdb/pembagian_ruang'); ?>"><i class="fa-solid fa-people-roof"></i> Pembagian Ruang</a>
+                <a type="button" data-bs-toggle="modal" data-bs-target="#modal_docs" class="btn_danger" href=""><i class="fa-solid fa-folder-tree"></i> Docs</a>
             <?php endif; ?>
         </div>
     </div>
@@ -209,8 +210,9 @@ $gender = ['L', 'P', 'All'];
     <div class="d-block d-md-none d-sm-block my-2">
         <button class="btn-sm btn_main_inactive" type="button" data-bs-toggle="offcanvas" data-bs-target="#sub_menu" aria-controls="sub_menu"><i class="fa-solid fa-bars"></i> Filter</button>
         <?php if (url(10) == 'Interview') : ?>
-            <a target="_blank" class="btn_main" href="<?= base_url('ppdb/cetak_form_interview/'); ?><?= url(4); ?>/<?= url(7); ?>"><i class="fa-regular fa-file-pdf"></i> Cetak Form Interview</a>
-            <a target="_blank" class="btn_secondary_inactive pembagian_ruang_seleksi_ppdb" data-tahun="<?= url(4); ?>" href="<?= base_url('ppdb/pembagian_ruang'); ?>"><i class="fa-solid fa-people-roof"></i> Pembagian Ruang</a>
+            <a target="_blank" class="btn_main" href="<?= base_url('ppdb/cetak_form_interview/'); ?><?= url(4); ?>/<?= url(7); ?>"><i class="fa-regular fa-file-pdf"></i></a>
+            <a target="_blank" class="btn_secondary_inactive pembagian_ruang_seleksi_ppdb" data-tahun="<?= url(4); ?>" href="<?= base_url('ppdb/pembagian_ruang'); ?>"><i class="fa-solid fa-people-roof"></i></a>
+            <a type="button" data-bs-toggle="modal" data-bs-target="#modal_docs" class="btn_danger" href=""><i class="fa-solid fa-folder-tree"></i></a>
         <?php endif; ?>
     </div>
 
@@ -340,7 +342,7 @@ $gender = ['L', 'P', 'All'];
         </div>
     <?php endif; ?>
 
-    <!-- Modal -->
+    <!-- Modal pembagian ruang -->
     <div class="modal fade" id="modal_pembagian_ruang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -392,6 +394,19 @@ $gender = ['L', 'P', 'All'];
 
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal absen-->
+    <div class="modal fade" id="modal_docs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content" style="background-color: transparent;border:none">
+                <div class="modal-body">
+                    <a target="_blank" class="menu_cetak_ppdb" href="<?= base_url('ppdb/absen/'); ?><?= url(7); ?>/<?= url(4); ?>/santri"><i class="fa-regular fa-file-lines"></i> Absen Calon Santri</a>
+                    <a target="_blank" class="menu_cetak_ppdb" href="<?= base_url('ppdb/absen/'); ?><?= url(7); ?>/<?= url(4); ?>/ortu"><i class="fa-solid fa-file-lines"></i> Absen Calon Wali Santri</a>
+                    <a target="_blank" class="menu_cetak_ppdb" href="<?= base_url('ppdb/absen/'); ?><?= url(7); ?>/<?= url(4); ?>/tahapan"><i class="fa-solid fa-signature"></i> Ttd Tahapan</a>
                 </div>
             </div>
         </div>

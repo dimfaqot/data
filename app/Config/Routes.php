@@ -118,6 +118,7 @@ $routes->get('/ppdb/cetak/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any
 $routes->get('ppdb/cetak_form_interview/(:any)/(:any)', 'Root\Ppdb::cetak_form_interview/$1/$2');
 $routes->get('/ppdb/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)', 'Root\Ppdb::index/$1/$2/$3/$4/$5/$6/$7/$8');
 $routes->get('ppdb/cetak_pembagian_ruang/(:any)', 'Root\Ppdb::cetak_pembagian_ruang/$1');
+$routes->get('ppdb/absen/(:any)/(:num)/(:any)', 'Root\Ppdb::absen/$1/$2/$3');
 $routes->post('/ppdb/add', 'Root\Ppdb::add');
 $routes->post('/ppdb/update', 'Root\Ppdb::update');
 $routes->post('/ppdb/remove', 'Root\Ppdb::remove');

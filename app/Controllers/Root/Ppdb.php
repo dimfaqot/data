@@ -823,4 +823,46 @@ class Ppdb extends BaseController
         $this->response->setHeader('Content-Type', 'application/pdf');
         $mpdf->Output('Data ' . menu()['controller'] . '.pdf', 'I');
     }
+
+    public function absen($sub, $tahun, $order)
+    {
+        $db = db('ppdb', 'santri');
+
+        $q = $db->where('tahun_masuk', $tahun)->where('sub', $sub)->where('status', 'Interview')->get()->getResultArray();
+
+        $set = [
+            'mode' => 'utf-8',
+            'format' => [215, 330],
+            'orientation' => 'P',
+            'margin_left' => 5,
+            'margin_right' => 5,
+            'margin_top' => 5,
+            'margin_bottom' => 5,
+        ];
+
+        if ($order == 'tahapan') {
+            $set['format'] = [215, 165];
+        }
+
+        $mpdf = new \Mpdf\Mpdf($set);
+
+        if ($order == 'tahapan') {
+
+            foreach ($q as $i) {
+                $logo = '<img width="100px" src="berkas/menu/ppdb.png" alt="Logo"/>';
+                $html = view('cetak/ppdb_absen', ['judul' => $i['no_id'] . ' ' . $i['nama'], 'data' => $i, 'logo' => $logo, 'order' => $order, 'sub' => $sub]);
+                $mpdf->AddPage();
+                $mpdf->WriteHTML($html);
+            }
+        } else {
+            $logo = '<img width="100px" src="berkas/menu/ppdb.png" alt="Logo"/>';
+            $html = view('cetak/ppdb_absen', ['judul' => upper_first($order), 'data' => $q, 'logo' => $logo, 'sub' => $sub, 'order' => $order]);
+            $mpdf->AddPage();
+            $mpdf->WriteHTML($html);
+        }
+
+
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $mpdf->Output('Data ' . menu()['controller'] . '.pdf', 'I');
+    }
 }
