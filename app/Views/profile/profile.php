@@ -6,7 +6,7 @@
     }
 
     $type = 'text';
-    if ($i == 'hp' || $i == 'nik' || $i == 'no_kk') {
+    if ($i == 'hp') {
         $type = 'number';
     }
     if ($i == 'email') {
