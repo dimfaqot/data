@@ -562,33 +562,21 @@ function last_no_id_ppdb($tahun_masuk, $sub)
     $db = db('ppdb', get_db(menu()['tabel']));
     $q = $db->where('tahun_masuk', $tahun_masuk)->where('sub', $sub)->orderBy('no_id', 'DESC')->get()->getRowArray();
     $sb = sub($sub)['kode'];
-    $no_id = substr($tahun_masuk, -2)  . $sb . '001';
+    $rentang = substr($tahun_masuk, -2) . $sb . '000';
+    $rentang = (int)$rentang;
+    $max = substr($tahun_masuk, -2) . ($sb + 1) . '000';
+    $max = (int)$max;
 
-    if ($q) {
-        $last = substr($q['no_id'], -3) + 1;
+    for ($i = 0; $i < 1000; $i++) {
+        $no_id = ($rentang + $i);
+        if ($rentang < $max) {
+            $q = $db->where('no_id', $no_id)->get()->getRowArray();
 
-        if (strlen($last) == 1) {
-            $no_id = substr($tahun_masuk, -2) . $sb . '00' . $last;
-        }
-        if (strlen($last) == 2) {
-            $no_id = substr($tahun_masuk, -2) . $sb . '0' . $last;
-        }
-        if (strlen($last) == 3) {
-            $no_id = substr($tahun_masuk, -2) . $sb . $last;
-        }
-    }
-
-    for ($i = 0; $i < 90; $i++) {
-        $isExist = $db->where('no_id', $no_id)->get()->getRowArray();
-
-        if (!$isExist) {
-            break;
-        } else {
-            $no_id += $i;
+            if (!$q) {
+                return $no_id;
+            }
         }
     }
-
-    return $no_id;
 }
 
 function last_no_piagam($time)
