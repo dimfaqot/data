@@ -260,10 +260,16 @@ if ($logo == 'pondok') {
                                 <button type="button" class="btn_main_inactive tebal" style="font-weight:bold;">B</button>
                                 <button type="button" class="btn_main_inactive enter" style="font-weight:bold;"><i class="fa-solid fa-arrow-turn-down"></i></button>
                             </div>
+                            <div class="d-flex justify-content-end gap-2">
+                                <div class="form-check form-switch form-check-reverse">
+                                    <input class="form-check-input wa_template_link" type="checkbox" role="switch">
+                                    <label class="form-check-label">Link</label>
+                                </div>
+                                <div class="form-check form-switch form-check-reverse">
+                                    <input class="form-check-input radio_sapaan" type="checkbox" role="switch">
+                                    <label class="form-check-label">Sapaan</label>
+                                </div>
 
-                            <div class="form-check form-switch form-check-reverse">
-                                <input class="form-check-input radio_sapaan" type="checkbox" role="switch">
-                                <label class="form-check-label">Sapaan</label>
                             </div>
                             <div class="input-group input-group-sm mb-2">
                                 <input data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pembuka." type="text" class="form-control selection selection_pembuka" data-class="pembuka" placeholder="Pembuka" name="pembuka" value="<?= template_wa()['pembuka']; ?>">

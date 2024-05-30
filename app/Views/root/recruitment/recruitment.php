@@ -103,7 +103,7 @@ $gender = ['L', 'P', 'All'];
                                     </div>
                                 </div>
                                 <div class="form-floating mb-2">
-                                    <input type="number" class="form-control check_hp" name="hp" placeholder="No. Hp" required>
+                                    <input type="text" class="form-control check_hp" name="hp" placeholder="No. Hp" required>
                                     <label>No. Hp</label>
                                     <div class="body_feedback_hp invalid-feedback">
 
@@ -248,11 +248,12 @@ $gender = ['L', 'P', 'All'];
             <tbody class="tabel_search">
                 <?php foreach ($data['data'] as $k => $i) : ?>
                     <?php $sapaan = ($i['gender'] == 'L' ? 'Bapak' : 'Ibu'); ?>
+                    <?php $no = "+62" . substr($i['hp'], 1); ?>
                     <tr>
                         <th scope="row"><?= ($k + 1); ?></th>
                         <td><?= $i['no_id']; ?></td>
-                        <td><?= $i['nama']; ?></td>
-                        <td><?= ($i['hp'] == '' || strlen($i['hp']) < 11 ? '-' : '<a class="btn_main send_wa" data-col="hp" data-order-id="' . $i['no_id'] . '" data-sapaan="' . $sapaan . '" data-nama="' . $i['nama'] . '" data-no="+62' . substr($i['hp'], 1) . '" style="font-size:10px;" href=""><i class="fa-brands fa-whatsapp"></i> ' . $i['hp'] . '</a>'); ?></td>
+                        <td><a href="" data-tabel="karyawan" data-id="<?= $i['no_id']; ?>" data-no="<?= $no; ?>" data-section="Recruitment" data-role="Member" data-nama="<?= $i['nama']; ?>" data-gender="<?= $i['gender']; ?>" class="auth_url" style="text-decoration: none;"><?= $i['nama']; ?></a></td>
+                        <td><?= ($i['hp'] == '' || strlen($i['hp']) < 11 ? '-' : '<a class="btn_main send_wa" data-col="hp" data-role="Member" data-gender="' . $i['gender'] . '" data-section="Recruitment" data-order-id="' . $i['no_id'] . '" data-sapaan="' . $sapaan . '" data-nama="' . $i['nama'] . '" data-no="+62' . substr($i['hp'], 1) . '" style="font-size:10px;" href=""><i class="fa-brands fa-whatsapp"></i> ' . $i['hp'] . '</a>'); ?></td>
                         <td><?= $i['umur']; ?></td>
                         <td><a target="_blank" class="btn_main" style="font-size:10px;" href="<?= base_url(); ?>berkas/<?= menu()['controller']; ?>/<?= $i['cv']; ?>"><i class="fa-regular fa-file-pdf"></i> Cv</a></td>
                         <td><?= $i['status']; ?></td>

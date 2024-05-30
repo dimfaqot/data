@@ -765,8 +765,8 @@ class Home extends BaseController
         $role = clear($this->request->getVar('role'));
         $nama = clear($this->request->getVar('nama'));
 
-        $encode = encode_jwt(['id' => $id, 'section' => $section, 'role' => $role, 'gender' => $gender, 'nama' => $nama]);
-        $url = base_url() . 'public/a/' . $tabel . '/' . $encode;
+        $encode = encode_jwt(['id' => $id, 'section' => $section, 'tabel' => $tabel, 'role' => $role, 'gender' => $gender, 'nama' => $nama]);
+        $url = base_url() . 'public/a/' . $encode;
         sukses_js('Koneksi ok', $url);
     }
     public function change_status()

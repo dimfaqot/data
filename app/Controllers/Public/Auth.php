@@ -9,7 +9,7 @@ use App\Controllers\BaseController;
 class Auth extends BaseController
 {
 
-    public function index($tabel, $jwt)
+    public function index($jwt)
     {
         $decode = decode_jwt($jwt);
         if (session('id')) {

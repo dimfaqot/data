@@ -317,7 +317,7 @@ $routes->get('/public/sertifikat', 'Public\Sertifikat::index');
 $routes->post('/public/sertifikat/get_data', 'Public\Sertifikat::get_data');
 
 // auth
-$routes->get('/public/a/(:any)/(:any)', 'Public\Auth::index/$1/$2');
+$routes->get('/public/a/(:any)', 'Public\Auth::index/$1');
 
 // djana
 $routes->get('/public/djana/nota/(:any)', 'Public\Djana::nota/$1');

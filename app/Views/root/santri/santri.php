@@ -59,7 +59,7 @@ $gender = ['L', 'P', 'All'];
                                     <div class="body_feedback_nama invalid-feedback"></div>
                                 </div>
                                 <div class="form-floating mb-2">
-                                    <input type="number" class="form-control check_hp_ayah" name="hp_ayah" placeholder="No. Hp Ayah" required>
+                                    <input type="text" class="form-control check_hp_ayah" name="hp_ayah" placeholder="No. Hp Ayah" required>
                                     <label>No. Hp Ayah</label>
                                     <div class="body_feedback_hp_ayah invalid-feedback"></div>
                                 </div>

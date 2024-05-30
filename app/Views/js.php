@@ -1507,7 +1507,7 @@
         let gender = $(this).data('gender');
         let nama = $(this).data('nama');
         let role = $(this).data('role');
-
+        let no = $(this).data('no');
         post("auth_url", {
             tabel,
             id,
@@ -1517,11 +1517,12 @@
             role
         }).then((res) => {
             if (res.status == '200') {
-                let html = res.data;
+                let html = '<div>' + res.data + ' <a href="" data-no="' + no + '" data-nama="' + nama + '" data-link="' + res.data + '" class="btn_send_wa_with_link"><i class="fa-brands fa-whatsapp"></i></a></div>';
                 $('.body_auth_url').html(html);
                 let myModal = document.getElementById('modal_auth_url');
                 let modal = bootstrap.Modal.getOrCreateInstance(myModal)
                 modal.show();
+
             } else {
                 gagal(res.message);
             }
@@ -1530,6 +1531,34 @@
 
 
     });
+
+
+    $(document).on('click', '.btn_send_wa_with_link', function(e) {
+        e.preventDefault();
+
+        let link = $(this).data('link');
+        let nama = $(this).data('nama');
+        let no = $(this).data('no');
+
+        let text = 'Assalamualaikum wr.wb%0a';
+        text += 'Yth: ' + nama + '%0a%0a';
+        text += 'Silahkan kunjungi link di bawah ini:%0a%0a';
+        text += link;
+        text += '%0a%0aKemudian isi seluruh data dengan lengkap!.%0a';
+        text += '*KAMI HANYA MEMPROSES DATA YANG SUDAH DIISI LENGKAP!.*%0a';
+        text += '%0aJika Menggunakan HP:';
+        text += '%0aKlik icon menu di pojok kanan atas lalu klik profile lalu isi semua data!!.%0a';
+        text += '%0aNB:%0a';
+        text += '*_JANGAN BAGIKAN LINK TERSEBUT KEPADA SIAPAPUN!_*%0a';
+        text += '%0a%0a%0aTTD%0a%0a';
+        text += 'PANITIA';
+
+        window.location.href = 'whatsapp://send/?phone=' + no + '&text=' + text; //Will take you to Google.
+
+    })
+
+
+
     $(document).on('change', '.change_status', function(e) {
         e.preventDefault();
         let tabel = $(this).data('tabel');

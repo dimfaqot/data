@@ -100,6 +100,7 @@ class Recruitment extends BaseController
         $gender = clear($this->request->getVar('gender'));
         $sub = clear($this->request->getVar('sub'));
         $bidang_pekerjaan = clear($this->request->getVar('bidang_pekerjaan'));
+        $hp = clear($this->request->getVar('hp'));
         $url = clear($this->request->getVar('url'));
 
         $db = db(menu()['tabel'], get_db(menu()['tabel']));
@@ -113,6 +114,7 @@ class Recruitment extends BaseController
         $data['gender'] = $gender;
         $data['sub'] = $sub;
         $data['bidang_pekerjaan'] = $bidang_pekerjaan;
+        $data['hp'] = $hp;
         $data['tgl_lahir'] = time();
         $data['status'] = 'Register';
         $data['created_at'] = time();
