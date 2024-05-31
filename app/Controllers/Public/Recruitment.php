@@ -25,7 +25,7 @@ class Recruitment extends BaseController
             $db->where('sub', $sub);
         }
 
-        $q = $db->get()->getResultArray();
+        $q = $db->where('status', 'Register')->get()->getResultArray();
 
         return view('root/recruitment/landing', ['judul' => 'Recruitment', 'data' => $q, 'tahun' => $tahun,  'sub' => ($sub == 'All' ? 'All' : $sub), 'pekerjaan' => ($pekerjaan == 'All' ? 'All' : str_replace(" ", "-", $pekerjaan))]);
     }
