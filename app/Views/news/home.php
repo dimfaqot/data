@@ -32,7 +32,35 @@
                 <p class="card-text"><small class="text-muted">Username: <?= (session('username') == '' ? '-' : session('username')); ?> | No. Id: <?= (session('no_id') == 0 ? '-' : session('no_id')); ?></small></p>
             </div>
 
+            <?php if (session('role') == 'Root') : ?>
 
+                <div class="mt-3">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn_secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Make Temp Auth
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <select class="form-select section" required>
+                                        <?php foreach (options('Section') as $b) : ?>
+                                            <option value="<?= $b['value']; ?>"><?= $b['value']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+
+                                    <div class="d-grid mt-3">
+                                        <button data-tabel="karyawan" data-id="000000000" data-section="Recruitment" data-role="Temp" data-nama="Temporary User" data-gender="L" data-no="00000" class="btn_main_inactive auth_url">Get Token</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <?php endif; ?>
             <div class="mt-3">
                 <h6 class="judul mb-2" style="margin-bottom:-15px;">Informasi</h6>
                 <p>
@@ -124,5 +152,15 @@
     </div>
 
 </div>
+
+<script>
+    let section = document.querySelector('.section');
+    section.addEventListener('change', function(e) {
+        e.preventDefault();
+        let val = section.value;
+        let auth_url = document.querySelector('.auth_url');
+        auth_url.setAttribute('data-section', val);
+    })
+</script>
 
 <?= $this->endSection() ?>

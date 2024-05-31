@@ -113,7 +113,6 @@ $routes->post('/santri/restore', 'Root\Santri::restore');
 $routes->post('/santri/delete', 'Root\Santri::delete');
 
 // ppdb
-$routes->get('/ppdb/detail/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:num)/(:any)', 'Root\Ppdb::detail/$1/$2/$3/$4/$5/$6/$7/$8/$9/$10');
 $routes->get('/ppdb/cetak/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)', 'Root\Ppdb::cetak/$1/$2/$3/$4/$5/$6/$7/$8/$9');
 $routes->get('ppdb/cetak_form_interview/(:any)/(:any)', 'Root\Ppdb::cetak_form_interview/$1/$2');
 $routes->get('/ppdb/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)', 'Root\Ppdb::index/$1/$2/$3/$4/$5/$6/$7/$8');
@@ -276,6 +275,7 @@ $routes->get('/identitas/member/ppdb/(:any)', 'Member\Ppdb::identitas/$1');
 $routes->post('/identitas/member/ppdb/update', 'Member\Ppdb::update');
 
 // identitas untuk member recruitment
+$routes->get('/recruitment', 'Public\Recruitment::index');
 $routes->get('/identitas/member/recruitment/(:any)', 'Member\Recruitment::identitas/$1');
 $routes->post('/identitas/member/recruitment/update', 'Member\Recruitment::update');
 
@@ -285,6 +285,7 @@ $routes->get('/public/rebana', 'Public\Rebana::index');
 $routes->get('/public/rebana/(:any)/(:any)', 'Public\Rebana::index/$1/$2');
 
 // ppdb
+$routes->get('/ppdb', 'Public\Ppdb::index');
 $routes->get('/public/ppdb/kuitansi/(:any)', 'Public\Ppdb::kuitansi/$1');
 $routes->get('/public/ppdb', 'Public\Ppdb::index');
 $routes->get('/public/ppdb/(:any)/(:any)', 'Public\Ppdb::index/$1/$2');
