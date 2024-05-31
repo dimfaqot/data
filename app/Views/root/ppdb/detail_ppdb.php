@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="d-grid p-3">
-                    <button type="submit" class="btn-sm btn_check btn_main"><i class="fa-solid fa-file-pen"></i> Update <?= url(14); ?></button>
+                    <button type="submit" class="btn-sm btn_check btn_update btn_main"><i class="fa-solid fa-file-pen"></i> Update <?= url(14); ?></button>
                 </div>
 
             <?php else : ?>
@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="d-grid p-3">
-                    <button type="submit" class="btn-sm btn_main btn_check"><i class="fa-solid fa-file-pen"></i> Update <?= url(14); ?></button>
+                    <button type="submit" class="btn-sm btn_main btn_check btn_update"><i class="fa-solid fa-file-pen"></i> Update <?= url(14); ?></button>
                 </div>
             <?php endif; ?>
         </form>
