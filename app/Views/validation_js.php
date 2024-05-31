@@ -538,6 +538,7 @@
                 let value = $(this).val();
 
                 if (value == '') {
+                    console.log('kosong');
                     gagal_check(label[i] + '_s' + x, upper_first(label[i]) + ' S' + x + ' harus diisi!.');
 
                     // jika val kosong dan seluruhnya kosong maka kembali ke default
@@ -578,6 +579,7 @@
 
 
                 } else {
+                    console.log('sukses');
                     sukses_check(label[i] + '_s' + x, '');
                     $('.btn_update').attr('type', 'submit');
                     // jika keyup salah satu input maka jika yang lainnya kosong akan merah
