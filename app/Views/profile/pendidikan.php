@@ -4,9 +4,9 @@
         continue;
     }
     $type = 'text';
-    if ($i == 'ipk_s1' || $i == 'ipk_s2' || $i == 'ipk_s3') {
-        $type = 'number';
-    }
+    // if ($i == 'ipk_s1' || $i == 'ipk_s2' || $i == 'ipk_s3') {
+    //     $type = 'number';
+    // }
     ?>
     <?php if ($i == 'pendidikan_terakhir') : ?>
 
