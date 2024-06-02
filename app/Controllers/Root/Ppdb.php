@@ -20,7 +20,6 @@ class Ppdb extends BaseController
 
     public function index($tahun, $filter, $page, $sub, $col, $asc, $status, $gender)
     {
-
         $db = db(menu()['tabel'], get_db(menu()['tabel']));
 
         $limit = 0;
@@ -146,7 +145,6 @@ class Ppdb extends BaseController
 
     public function detail($tahun, $filter, $page, $sub, $col, $asc, $status, $gender, $no_id, $sub_menu)
     {
-
         $db = db(menu()['tabel'], get_db(menu()['tabel']));
         $exist = $db->where('no_id', $no_id)->get()->getRowArray();
 

@@ -113,6 +113,7 @@ $routes->post('/santri/restore', 'Root\Santri::restore');
 $routes->post('/santri/delete', 'Root\Santri::delete');
 
 // ppdb
+$routes->get('/ppdb/detail/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:num)/(:any)', 'Root\Ppdb::detail/$1/$2/$3/$4/$5/$6/$7/$8/$9/$10');
 $routes->get('/ppdb/cetak/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)', 'Root\Ppdb::cetak/$1/$2/$3/$4/$5/$6/$7/$8/$9');
 $routes->get('ppdb/cetak_form_interview/(:any)/(:any)', 'Root\Ppdb::cetak_form_interview/$1/$2');
 $routes->get('/ppdb/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)', 'Root\Ppdb::index/$1/$2/$3/$4/$5/$6/$7/$8');
