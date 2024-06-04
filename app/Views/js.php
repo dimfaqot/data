@@ -636,7 +636,7 @@
 
             } else {
                 for (let i = 0; i < data.length; i++) {
-                    html += '<button style="font-size: small;" data-tahun="' + tahun + '" data-kategori="' + kategori + '" type="button" data-id="' + data[i].id + '" data-order="' + order + '" data-ekstra="' + ekstra + '" data-tabel_db="' + tabel_db + '" data-no_id="' + data[i].no_id + '" data-nama="' + data[i].nama + '" class="list-group-item list-group-item-action insert_hasil_cari_db">' + data[i][col] + '</button>';
+                    html += '<button style="font-size: small;" data-tahun="' + tahun + '" data-kategori="' + kategori + '" type="button" data-id="' + data[i].no_id + '" data-order="' + order + '" data-ekstra="' + ekstra + '" data-tabel_db="' + tabel_db + '" data-no_id="' + data[i].no_id + '" data-nama="' + data[i].nama + '" class="list-group-item list-group-item-action insert_hasil_cari_db">' + data[i][col] + '</button>';
                 }
             }
             $('.body_hasil_cari_db').html(html);
@@ -674,6 +674,7 @@
         } else {
             post("add_data_from_db", {
                 no_id,
+                id,
                 tabel_db,
                 tahun,
                 controller,

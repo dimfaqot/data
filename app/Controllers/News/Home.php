@@ -429,50 +429,46 @@ class Home extends BaseController
         if ($controller == 'sk') {
             $db = db('sk', 'karyawan');
             $q = $db->where('no_id', $no_id)->orderBy('tahun', 'DESC')->orderBy('created_at', 'DESC')->get()->getRowArray(); //sk
-            $q['created_at'] = time();
-            $q['updated_at'] = time();
-            $q['petugas'] = session('nama');
-            unset($q['id']);
-
             $th = db('tahun');
             $thn = $th->where('tahun', $tahun)->get()->getRowArray(); //tahun
 
-            // jika sk dan tahun ada
-            if ($q && $thn) {
-                $q['no_sk'] = last_sk($thn['penetapan']);
-                $q['tahun'] = $tahun;
-
-                if ($db->insert($q)) {
-                    sukses_js('Sk berhasil dibuat.');
-                } else {
-                    gagal_js('Sk gagal dibuat.');
-                }
+            if (!$tahun) {
+                gagal_js('Buat dulu tahun penetapan di tahun ' . $tahun . "!.");
             }
-            // jika hanya ada sk
+
+
             if ($q) {
-                $q['tahun'] = $tahun;
-
-                if ($db->insert($q)) {
-                    sukses_js('Sk berhasil dibuat.');
-                } else {
-                    gagal_js('Sk gagal dibuat.');
-                }
-            }
-
-            // jika hanya ada tahun
-            if ($thn) {
-                $user = db('karyawan', 'karyawan');
-                $usr = $user->where('no_id', $no_id)->get()->getRowArray();
-
-
-
                 $data = [
                     'tahun' => $tahun,
-                    'nama' => nama_gelar($user),
-                    'ttl' => ttl($user),
+                    'nama' => $q['nama'],
+                    'no_id' => $q['no_id'],
+                    'ttl' => $q['ttl'],
                     'no_sk' => last_sk($thn['penetapan']),
-                    'sub' => sub($usr['sub'])['lengkap'],
-                    'pendidikan' => pendidikan_sk($usr),
+                    'sub' => $q['sub'],
+                    'pendidikan' => $q['pendidikan'],
+                    'penetapan' => $thn['penetapan'],
+                    'rapat' => $thn['rapat'],
+                    'ketua_ypp' => $thn['ketua_ypp'],
+                    'kop' => $thn['kop'],
+                    'jabatan' => $q['jabatan'],
+                    'diangkat' => $q['diangkat'],
+                    'tugas' => $q['tugas'],
+                    'ttd' => get_ttd($thn['ketua_ypp']),
+                    'created_at' => time(),
+                    'updated_at' => time(),
+                    'petugas' => session('nama')
+                ];
+            } else {
+                $dbk = db('karyawan', 'karyawan');
+                $q = $dbk->where('no_id', $no_id)->get()->getRowArray(); //karyawan
+                $data = [
+                    'tahun' => $tahun,
+                    'nama' => nama_gelar($q),
+                    'no_id' => $q['no_id'],
+                    'ttl' => ttl($q),
+                    'no_sk' => last_sk($thn['penetapan']),
+                    'sub' => sub($q['sub'])['lengkap'],
+                    'pendidikan' => pendidikan_sk($q),
                     'penetapan' => $thn['penetapan'],
                     'rapat' => $thn['rapat'],
                     'ketua_ypp' => $thn['ketua_ypp'],
@@ -482,12 +478,12 @@ class Home extends BaseController
                     'updated_at' => time(),
                     'petugas' => session('nama')
                 ];
+            }
 
-                if ($user->insert($data)) {
-                    sukses_js('Sk berhasil dibuat.');
-                } else {
-                    gagal_js('Sk gagal dibuat.');
-                }
+            if ($db->insert($data)) {
+                sukses_js('Sk berhasil dibuat.');
+            } else {
+                gagal_js('Sk gagal dibuat.');
             }
         }
     }
