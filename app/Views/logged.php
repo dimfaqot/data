@@ -245,6 +245,7 @@ if ($logo == 'pondok') {
         </div>
     </div>
 
+
     <!-- template whatsapp -->
     <div class="modal fade" id="template_wa" tabindex="-1" aria-labelledby="template_waLabel" aria-hidden="true">
         <div class="modal-dialog">
