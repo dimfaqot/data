@@ -1063,7 +1063,7 @@
         e.preventDefault();
         let order = $(this).data('order');
         let id = $(this).data('id');
-        console.log(id);
+
         let data = ['2006.jpg', '2013.jpg', '2021.jpg'];
 
         let html = "";
@@ -1077,7 +1077,7 @@
         html += '</div>';
         html += '</div>';
         html += '</div>';
-
+        console.log((order == 'add' ? order : order + '_' + id));
         $('.body_kop_' + (order == 'add' ? order : order + '_' + id)).html(html);
 
     });

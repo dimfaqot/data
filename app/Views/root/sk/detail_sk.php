@@ -162,7 +162,7 @@
                     <input value="<?= $data['kop']; ?>" name="kop" type="text" data-order="update" data-id="<?= $data['id']; ?>" class="form-control kop update_kop_<?= $data['id']; ?>" placeholder="Kop" readonly>
                     <label>Kop</label>
                 </div>
-                <div class="modal-body position-absolute top-50 start-50 translate-middle body_kop body_kop_update_<?= $i['id']; ?>" style="z-index: 999;">
+                <div class="modal-body position-absolute top-50 start-50 translate-middle body_kop body_kop_update_<?= $data['id']; ?>" style="z-index: 999;">
 
                 </div>
 
