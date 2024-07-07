@@ -91,6 +91,9 @@ phpunit
 
 
 app/Config/Database.php
+Database.php
+/Database
+Database/
 tests
 tests/
 
