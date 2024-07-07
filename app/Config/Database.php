@@ -24,6 +24,9 @@ class Database extends Config
     /**
      * The default database connection.
      */
+
+
+
     public array $default = [
         'DSN'          => '',
         'hostname'     => 'localhost',
@@ -44,12 +47,14 @@ class Database extends Config
         'port'         => 3306,
         'numberNative' => false,
     ];
+
+
     public array $karyawan = [
         'DSN'          => '',
         'hostname'     => 'localhost',
-        'username'     => 'u1733924_karyawan',
-        'password'     => '5xn)h0^oL%{l',
-        'database'     => 'u1733924_karyawan',
+        'username'     => 'root',
+        'password'     => '',
+        'database'     => 'karyawan',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
@@ -341,6 +346,64 @@ class Database extends Config
         // we don't overwrite live data on accident.
         if (ENVIRONMENT === 'testing') {
             $this->defaultGroup = 'tests';
+        }
+        if (getenv('ONLINE') == 1) {
+            $this->default['hostname'] = getenv('database.default.hostname');
+            $this->default['username'] = getenv('database.default.username');
+            $this->default['password'] = getenv('database.default.password');
+            $this->default['database'] = getenv('database.default.database');
+
+            $this->karyawan['database'] = getenv('db_name_karyawan');
+            $this->karyawan['username'] = getenv('db_username_karyawan');
+            $this->karyawan['password'] = getenv('db_pass_karyawan');
+
+            $this->indonesia['database'] = getenv('db_name_indonesia');
+            $this->indonesia['username'] = getenv('db_username_indonesia');
+            $this->indonesia['password'] = getenv('db_pass_indonesia');
+
+            $this->santri['database'] = getenv('db_name_santri');
+            $this->santri['username'] = getenv('db_username_santri');
+            $this->santri['password'] = getenv('db_pass_santri');
+
+            $this->sertifikat['database'] = getenv('db_name_sertifikat');
+            $this->sertifikat['username'] = getenv('db_username_sertifikat');
+            $this->sertifikat['password'] = getenv('db_pass_sertifikat');
+
+            $this->ekstra['database'] = getenv('db_name_ekstra');
+            $this->ekstra['username'] = getenv('db_username_ekstra');
+            $this->ekstra['password'] = getenv('db_pass_ekstra');
+
+            $this->pemilu['database'] = getenv('db_name_pemilu');
+            $this->pemilu['username'] = getenv('db_username_pemilu');
+            $this->pemilu['password'] = getenv('db_pass_pemilu');
+
+            $this->walisongo_api['database'] = getenv('db_name_walisongo_api');
+            $this->walisongo_api['username'] = getenv('db_username_walisongo_api');
+            $this->walisongo_api['password'] = getenv('db_pass_walisongo_api');
+
+            $this->news['database'] = getenv('db_name_news');
+            $this->news['username'] = getenv('db_username_news');
+            $this->news['password'] = getenv('db_pass_news');
+
+            $this->rental['database'] = getenv('db_name_rental');
+            $this->rental['username'] = getenv('db_username_rental');
+            $this->rental['password'] = getenv('db_pass_rental');
+
+            $this->rebana['database'] = getenv('db_name_rebana');
+            $this->rebana['username'] = getenv('db_username_rebana');
+            $this->rebana['password'] = getenv('db_pass_rebana');
+
+            $this->djana['database'] = getenv('db_name_djana');
+            $this->djana['username'] = getenv('db_username_djana');
+            $this->djana['password'] = getenv('db_pass_djana');
+
+            $this->anggota_kelas['database'] = getenv('db_name_anggota_kelas');
+            $this->anggota_kelas['username'] = getenv('db_username_anggota_kelas');
+            $this->anggota_kelas['password'] = getenv('db_pass_anggota_kelas');
+
+            $this->lpk['database'] = getenv('db_name_lpk');
+            $this->lpk['username'] = getenv('db_username_lpk');
+            $this->lpk['password'] = getenv('db_pass_lpk');
         }
     }
 }
