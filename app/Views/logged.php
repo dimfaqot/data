@@ -1,5 +1,6 @@
 <?php
 $logo = strtolower(session('section'));
+
 if ($logo == 'root' || $logo == 'member' || $logo == 'yayasan') {
     $logo = 'karyawan';
 }
@@ -22,10 +23,30 @@ if ($logo == 'pondok') {
     <?= (in_array(url(get_db(menu()['tabel']) == 'karyawan' ? 13 : 14), ck_editor()) ? '<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>' : ''); ?>
     <?= (in_array(url(), ck_editor()) ? '<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>' : ''); ?>
     <?= (url() == 'identitas' && in_array(url(6), ck_editor()) ? '<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>' : ''); ?>
+    <?php if (get_db(menu()['tabel']) == 'djana' || get_db(menu()['tabel']) == 'lpk') : ?>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <?php endif; ?>
 </head>
 
 
 <body style="margin-bottom: 70px;" class="bg-light">
+    <!-- warning alert message -->
+    <div class="box_warning" style="position:fixed;z-index:999999;display:none;">
+
+    </div>
+    <!-- warning alert message with button -->
+    <div class="box_warning_with_button" style="position:fixed;z-index:999999;display:none;">
+
+    </div>
+    <!-- warning confirm -->
+    <div class="box_confirm" style="position:fixed;z-index:999999;display:none;">
+
+    </div>
+
+    <!-- zoom_image -->
+    <div class="box_zoom_image" style="position:fixed;z-index:999999;display:none;">
+
+    </div>
 
     <!-- loading -->
     <div class="blur waiting" style="display:none">
@@ -42,16 +63,7 @@ if ($logo == 'pondok') {
     </div>
 
 
-    <!-- sukses php -->
-    <?php if (session()->getFlashdata('sukses')) : ?>
-        <div class="sukses middlecenter">
-            <div class="wrapper"> <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
-                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
-                </svg>
-            </div>
-        </div>
-    <?php endif; ?>
+
 
     <!-- sukses js -->
     <div class="sukses middlecenter" style="display: none;">
@@ -62,24 +74,7 @@ if ($logo == 'pondok') {
         </div>
     </div>
 
-    <!-- gagal php -->
-    <?php if (session()->getFlashdata('gagal')) : ?>
 
-        <div class="gagal blur" style="border-radius: 10px;">
-            <div class="middlecenter">
-                <div class="d-flex justify-content-between bg-danger px-1" style="border-radius: 10px;width:300px; color:lightpink;font-size:12px;">
-
-                    <div class="toast-body p-2" style="border-radius: 10px; font-size:12px;">
-                        <?= session()->getFlashdata('gagal'); ?>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-sm m-auto btnclose" style="color:lightpink;"><i class="fa fa-times-circle"></i></button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
 
     <!-- gagal js -->
     <div class="gagal blur" style="border-radius: 10px; z-index:99999999; display:none">
@@ -367,9 +362,7 @@ if ($logo == 'pondok') {
     <?php if (url() == 'rebana' || url() == 'rental') : ?>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <?php endif; ?>
-    <?php if (get_db(menu()['tabel']) == 'djana') : ?>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <?php endif; ?>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <?= view('js'); ?>
@@ -378,6 +371,7 @@ if ($logo == 'pondok') {
 
     <?= (url() == 'cetak' ? view('root/cetak_js') : (url() == 'rebana' ? view('rebana/rebana_js') : (url() == 'rental' ? view('rental/rental_js') : ''))); ?>
     <?= (get_db(menu()['tabel']) == 'djana' ? view('djana/djana_js') : ''); ?>
+    <?= (get_db(menu()['tabel']) == 'lpk' ? view('lpk/lpk_js') : ''); ?>
 
 
 

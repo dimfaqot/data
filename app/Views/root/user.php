@@ -12,7 +12,7 @@
         <button type="button" class="btn-sm btn_secondary modal_cari_db"><i class="fa-solid fa-user-plus"></i> Database</button>
         <select class="form-select filter_by" aria-label="Example select with button addon">
             <?php foreach ($sections as $i) : ?>
-                <option <?= ($i['section'] == url(4) ? 'selected' : ''); ?> value="<?= $i['section']; ?>"><?= $i['section']; ?></option>
+                <option <?= ($i['value'] == url(4) ? 'selected' : ''); ?> value="<?= $i['value']; ?>"><?= $i['value']; ?></option>
             <?php endforeach; ?>
             <option <?= (url(4) == 'All' ? 'selected' : ''); ?> value="All">All</option>
         </select>

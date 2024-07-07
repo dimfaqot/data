@@ -22,12 +22,14 @@ class User extends BaseController
 
         $db = db(menu()['tabel']);
 
-        $sections = $db->select('section')->groupBy('section')->orderBy('section', 'ASC')->get()->getResultArray();
+        $dbs = db('options', 'data');
+        $sections = $dbs->where('kategori', 'Section')->orderBy('value', 'ASC')->get()->getResultArray();
 
         $db;
         if ($section !== 'All') {
             $db->where('section', $section);
         }
+
         $data = $db->orderBy('section', 'ASC')->orderBy('nama', 'ASC')->get()->getResultArray();
         return view('root/' .  menu()['controller'], ['judul' => menu()['menu'], 'data' => $data, 'section' => $section, 'sections' => $sections]);
     }

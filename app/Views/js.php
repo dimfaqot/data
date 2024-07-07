@@ -1903,4 +1903,227 @@
         let canvas = bootstrap.Offcanvas.getOrCreateInstance(myCanvas)
         canvas.hide();
     });
+
+
+    // lpk
+    const gagal_js = (alert) => {
+        let html = '';
+        html += '<div class="d-flex flex-column min-vh-100 min-vw-100">';
+        html += '<div class="d-flex flex-grow-1 justify-content-center align-items-center">';
+        html += '<div class="d-flex gap-3" style="border:2px solid #FF9FA1;border-radius:8px;padding:5px;background-color:#FFC9C9;color:#A90020">';
+        html += '<div class="px-2"><i class="fa-solid fa-circle-xmark"></i> ' + alert + '</div>';
+        html += '</div>';
+        html += '</div>';
+        html += '</div>';
+
+        $('.box_warning').html(html)
+        $('.box_warning').fadeIn();
+        $('.box_confirm').fadeOut();
+
+        setTimeout(() => {
+            $('.box_warning').fadeOut();
+        }, 1000);
+
+    }
+
+    const gagal_with_button = (alert) => {
+        let html = '';
+        html += '<div class="d-flex flex-column min-vh-100 min-vw-100">';
+        html += '<div class="d-flex flex-grow-1 justify-content-center align-items-center">';
+        html += '<div class="d-flex gap-3" style="border:2px solid #FF9FA1;border-radius:8px;padding:5px;background-color:#FFC9C9;color:#A90020">';
+        html += '<div class="d-flex">';
+        html += '<div class="px-2"><i class="fa-solid fa-triangle-exclamation" style="color: #cc0000;"></i> ' + alert + '</div>';
+        html += '<a class="btn_close_warning" style="text-decoration: none;color:#A90020" href=""><i class="fa-solid fa-circle-xmark"></i></a>';
+        html += '</div>';
+        html += '</div>';
+        html += '</div>';
+        html += '</div>';
+
+        $('.box_warning_with_button').html(html);
+
+        $('.box_warning_with_button').show();
+
+        $(document).on('click', '.btn_close_warning', function(e) {
+            e.preventDefault();
+            $('.box_warning_with_button').fadeOut();
+        });
+
+    }
+
+    $(document).on('click', '.btn_close_warning', function(e) {
+        e.preventDefault();
+        $('.box_warning_with_button').fadeOut();
+    });
+
+
+    const object_to_array = (obj) => {
+
+        let data = [];
+        for (const [key, value] of Object.entries(obj)) {
+            data.push({
+                key,
+                value
+            });
+        }
+
+        return data;
+    }
+
+    const confirm = (obj) => {
+        let args = object_to_array(obj);
+        let args_values = '';
+        let alert = '';
+        args.forEach(elm => {
+            args_values += 'data-' + elm.key + '="' + elm.value + '" ';
+            if (elm.key == 'alert') {
+                alert = elm.value;
+            }
+        });
+
+        let html = '';
+        html += '<div class="d-flex flex-column min-vh-100 min-vw-100">';
+        html += '<div class="d-flex flex-grow-1 justify-content-center align-items-center">';
+        html += '<div class="d-flex gap-3" style="border:2px solid #ff9933;border-radius:8px;padding:5px;background-color:#ffe6cc;color:#cc6600">';
+        html += '<div class="d-flex gap-2">';
+        html += '<div class="px-2" style="font-weight: 700;"><i class="fa-solid fa-triangle-exclamation" style="color: #ff9933;"></i> ' + alert + '</div>';
+        html += '<a class="btn_close_confirm" style="text-decoration: none;color:#ff8000" href=""><i class="fa-solid fa-circle-xmark"></i></a>';
+        html += '<a class="btn_execute_confirm" ' + args_values + ' style="text-decoration: none;color:green" href=""><i class="fa-solid fa-circle-check"></i></i></a>';
+        html += '</div>';
+        html += '</div>';
+        html += '</div>';
+        html += '</div>';
+
+        $('.box_confirm').html(html);
+
+        $('.box_confirm').show();
+
+        $(document).on('click', '.btn_close_confirm', function(e) {
+            e.preventDefault();
+            $('.box_confirm').fadeOut();
+        });
+
+
+    }
+
+    $(document).on('click', '.btn_execute_confirm', function(e) {
+        e.preventDefault();
+        let data = $(this).data();
+        $('.box_confirm').fadeOut();
+        if (data.tabel == 'pembayaran') {
+            delete_tabel_pembayaran(data);
+            return false;
+        }
+        post(data.url, {
+                data
+            })
+            .then(res => {
+                if (res.status == '200') {
+                    sukses_js(res.message);
+
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                } else {
+                    gagal_with_button(res.message);
+                }
+
+            })
+
+    });
+
+    $(document).on('click', '.btn_confirm', function(e) {
+        e.preventDefault();
+        confirm($(this).data());
+    });
+
+
+
+
+    const sukses_js = (alert) => {
+        let html = '';
+        html += '<div class="d-flex flex-column min-vh-100 min-vw-100">';
+        html += '<div class="d-flex flex-grow-1 justify-content-center align-items-center">';
+        html += '<div class="d-flex gap-3" style="border:2px solid #9fffc4;border-radius:8px;padding:5px;background-color:#c9ffde;color:#00a939">';
+        html += '<div class="px-2"><i class="fa-solid fa-circle-check"></i> ' + alert + '</div>';
+        html += '</div>';
+        html += '</div>';
+        html += '</div>';
+
+        $('.box_warning').html(html)
+        $('.box_warning').fadeIn();
+        $('.box_confirm').fadeOut();
+
+        setTimeout(() => {
+            $('.box_warning').fadeOut();
+        }, 1000);
+
+    }
+
+    <?php if (session()->getFlashdata('sukses')) : ?>
+
+        let msg = '<?= session()->getFlashdata('sukses'); ?>';
+        sukses_js(msg);
+
+    <?php endif; ?>
+
+    <?php if (session()->getFlashdata('gagal')) : ?>
+        let msg = '<?= session()->getFlashdata('gagal'); ?>';
+        gagal_js(msg);
+
+    <?php endif; ?>
+
+    <?php if (session()->getFlashdata('gagal_with_button')) : ?>
+
+        let msg = '<?= session()->getFlashdata('gagal_with_button'); ?>';
+        gagal_with_button(msg);
+
+    <?php endif; ?>
+
+    const body_warning = (warning_text, url, id, order, table) => {
+        let html = '';
+
+        html += '<div class="d-flex flex-column min-vh-100 min-vw-100">';
+        html += '<div class="d-flex flex-grow-1 justify-content-center align-items-center">';
+        html += '<div class="d-flex gap-3" style="border:1px solid red;border-radius:8px;padding:10px 20px;background-color:#eee">';
+        html += '<div>' + warning_text + '</div>';
+        html += '<div><a class="del_execute text_success" data-id="' + id + '" data-url="' + url + '" data-order="' + order + '" data-table="' + table + '" href=""><i class="fa-regular fa-circle-check" style="font-size:large"></i></a></div>';
+        html += '</div>';
+        html += '</div>';
+        html += '</div>';
+
+        return html;
+    }
+
+    $(document).on('click', '.warning', function(e) {
+        e.preventDefault();
+        let id = $(this).data('id');
+        let url = $(this).data('url');
+        let tabel = $(this).data('tabel');
+        let order = $(this).data('order');
+
+        $('.box_warning').html(body_warning('Are you sure to <b class="text_danger">' + order + '</b> this data!.', url, id, order, tabel));
+
+
+    });
+    $(document).on('click', '.del_execute', function(e) {
+        e.preventDefault();
+        let id = $(this).data('id');
+        let url = $(this).data('url');
+        let table = $(this).data('table');
+
+        $('.box_warning').html('');
+        post(url, {
+                id,
+                table
+            })
+            .then(res => {
+                if (res.status == '200') {
+                    location.reload();
+                } else {
+                    gagal_js(res.message);
+                }
+
+            })
+
+    });
 </script>

@@ -6,13 +6,16 @@
       <?php $pemilu = ['partai', 'calon', 'kategori', 'pemilih', 'hasil', 'pemilu']; ?>
       <?php $news = ['label', 'artikel']; ?>
       <?php $djanasquad = ['pesanan', 'tugasku', 'laporan', 'inventaris', 'nota', 'kamera']; ?>
+      <?php $lpk = ['program', 'biaya', 'pembayaran', 'siswa', 'pemberangkatan', 'setoran']; ?>
 
 
 
       <?php foreach (menus() as $k => $i) : ?>
-          <?php if ($i['controller'] !== 'menu' && $i['controller'] !== 'user' && $i['controller'] !== 'options' && $i['controller'] !== 'recruitment' && $i['controller'] !== 'ppdb' && $i['controller'] !== 'images' && $i['controller'] !== 'informasi' && $i['controller'] !== 'piagam' && $i['controller'] !== 'pilangsari' && $i['controller'] !== 'mapel' && $i['controller'] !== 'nilai' && $i['controller'] !== 'calon' && $i['controller'] !== 'kategori' && $i['controller'] !== 'pemilih' && $i['controller'] !== 'hasil' && $i['controller'] !== 'pemilu' && $i['controller'] !== 'label' && $i['controller'] !== 'sk' && $i['controller'] !== 'cetak' && $i['controller'] !== 'rebana' &&  $i['controller'] !== 'rental' &&  $i['controller'] !== 'kamar' &&  $i['controller'] !== 'kelas' &&  $i['controller'] !== 'iswa' &&  $i['controller'] !== 'laporan' &&  $i['controller'] !== 'tugasku' &&  $i['controller'] !== 'inventaris' &&  $i['controller'] !== 'nota' &&  $i['controller'] !== 'kamera' &&  $i['controller'] !== 'tujuh' &&  $i['controller'] !== 'delapan' &&  $i['controller'] !== 'sembilan' &&  $i['controller'] !== 'sepuluh' &&  $i['controller'] !== 'sebelas' &&  $i['controller'] !== 'duabelas') : ?>
+
+          <?php if ($i['controller'] !== 'menu' && $i['controller'] !== 'user' && $i['controller'] !== 'options' && $i['controller'] !== 'recruitment' && $i['controller'] !== 'ppdb' && $i['controller'] !== 'images' && $i['controller'] !== 'informasi' && $i['controller'] !== 'piagam' && $i['controller'] !== 'pilangsari' && $i['controller'] !== 'mapel' && $i['controller'] !== 'nilai' && $i['controller'] !== 'calon' && $i['controller'] !== 'kategori' && $i['controller'] !== 'pemilih' && $i['controller'] !== 'hasil' && $i['controller'] !== 'pemilu' && $i['controller'] !== 'label' && $i['controller'] !== 'sk' && $i['controller'] !== 'cetak' && $i['controller'] !== 'rebana' &&  $i['controller'] !== 'rental' &&  $i['controller'] !== 'kamar' &&  $i['controller'] !== 'kelas' &&  $i['controller'] !== 'iswa' &&  $i['controller'] !== 'laporan' &&  $i['controller'] !== 'tugasku' &&  $i['controller'] !== 'inventaris' &&  $i['controller'] !== 'nota' &&  $i['controller'] !== 'kamera' &&  $i['controller'] !== 'tujuh' &&  $i['controller'] !== 'delapan' &&  $i['controller'] !== 'sembilan' &&  $i['controller'] !== 'sepuluh' &&  $i['controller'] !== 'sebelas' &&  $i['controller'] !== 'duabelas' &&  $i['controller'] !== 'biaya' &&  $i['controller'] !== 'pembayaran' &&  $i['controller'] !== 'siswa' &&  $i['controller'] !== 'pemberangkatan' &&  $i['controller'] !== 'setoran') : ?>
 
               <?php if ($i['controller'] == 'settings' || $i['controller'] == 'karyawan' || $i['controller'] == 'santri' || $i['controller'] == 'ekstra' || $i['controller'] == 'partai' || $i['controller'] == 'artikel') : ?>
+
                   <?php if ($i['controller'] == 'settings') : ?>
                       <a href="" class="<?= (in_array(url(), $settings) ? 'btn_main' : 'btn_main_inactive'); ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?= (url() == 'menu' || url() == 'user' || url() == 'options' || url() == 'settings' || url() == 'images' || url() == 'informasi' || url() == 'cetak' || url() == 'rebana' || url() == 'rental' || url() == 'kamar' || url() == 'kelas' || url() == 'iswa' ? '<i class="' . menu()['icon'] . '"></i>' . ' ' . menu()['menu'] : '<i class="' . $i['icon'] . '"></i>' . ' ' . $i['menu']); ?> <i class="fa-solid fa-angles-down"></i></a>
                       <ul class="dropdown-menu px-2">
@@ -66,12 +69,22 @@
                   <?php endif; ?>
 
               <?php else : ?>
-                  <?php if ($i['controller'] == 'pesanan' || $i['controller'] == 'tugasku' || $i['controller'] == 'laporan' || $i['controller'] == 'inventaris' || $i['controller'] == 'kamera') : ?>
+
+                  <?php if ($i['controller'] == 'pesanan' || $i['controller'] == 'tugasku' || $i['controller'] == 'laporan' || $i['controller'] == 'inventaris' || $i['controller'] == 'nota' || $i['controller'] == 'kamera') : ?>
                       <a href="" class="<?= (in_array(url(), $djanasquad) ? 'btn_main' : 'btn_main_inactive'); ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?= (url() == 'pesanan' || url() == 'tugasku' || url() == 'laporan' || url() == 'inventaris' || url() == 'nota' || url() == 'kamera' ? '<i class="' . menu()['icon'] . '"></i>' . ' ' . menu()['menu'] : '<i class="' . $i['icon'] . '"></i>' . ' ' . $i['menu']); ?> <i class="fa-solid fa-angles-down"></i></a>
                       <ul class="dropdown-menu px-2">
                           <?php foreach (menus() as $i) : ?>
                               <?php if (in_array($i['controller'], $djanasquad)) : ?>
                                   <li class="d-grid"><a style="border-radius: 3px;" class="<?= (url() == $i['controller'] ? 'btn_main' : 'btn_main_inactive'); ?> mb-1" href="<?= base_url(); ?><?= $i['controller']; ?><?= ($i['controller'] == 'pesanan' || $i['controller'] == 'laporan' || $i['controller'] == 'inventaris' || $i['controller'] == 'nota' ? '/' . date('Y') . '/' . date('m') : ($i['controller'] == 'tugasku' ? '/' . date('Y') . '/' . date('m') . '/All' : ($i['controller'] == 'tugasku' || $i['controller'] == 'kamera' ? '/' . date('Y') . '/' . date('m') : ''))); ?>"><i class="<?= $i['icon']; ?>"></i> <?= $i['menu']; ?></a></li>
+                              <?php endif; ?>
+                          <?php endforeach; ?>
+                      </ul>
+                  <?php elseif ($i['controller'] == 'program' || $i['controller'] == 'biaya' || $i['controller'] == 'pembayaran' || $i['controller'] == 'siswa' || $i['controller'] == 'pemberangkatan' || $i['controller'] == 'setoran') : ?>
+                      <a href="" class="<?= (in_array(url(), $lpk) ? 'btn_main' : 'btn_main_inactive'); ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?= (url() == 'program' || url() == 'biaya' || url() == 'pembayaran' || url() == 'siswa' || url() == 'pemberangkatan' || url() == 'setoran' ? '<i class="' . menu()['icon'] . '"></i>' . ' ' . menu()['menu'] : '<i class="' . $i['icon'] . '"></i>' . ' ' . $i['menu']); ?> <i class="fa-solid fa-angles-down"></i></a>
+                      <ul class="dropdown-menu px-2">
+                          <?php foreach (menus() as $i) : ?>
+                              <?php if (in_array($i['controller'], $lpk)) : ?>
+                                  <li class="d-grid"><a style="border-radius: 3px;" class="<?= (url() == $i['controller'] ? 'btn_main' : 'btn_main_inactive'); ?> mb-1" href="<?= base_url(); ?><?= $i['controller']; ?>"><i class="<?= $i['icon']; ?>"></i> <?= $i['menu']; ?></a></li>
                               <?php endif; ?>
                           <?php endforeach; ?>
                       </ul>

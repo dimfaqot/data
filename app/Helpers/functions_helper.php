@@ -207,9 +207,9 @@ function sukses($url, $pesan)
     die;
 }
 
-function gagal($url, $pesan)
+function gagal($url, $pesan, $order = null)
 {
-    session()->setFlashdata('gagal', "Gagal!. " . $pesan);
+    session()->setFlashdata(($order == null ? 'gagal_with_button' : 'gagal'), "Gagal!. " . $pesan);
     header("Location: " . $url);
     die;
 }
@@ -763,8 +763,10 @@ function alamat_lengkap($req)
     if ($req['provinsi'] !== '') {
         $alamat .= ' Prov. ' . $req['provinsi'];
     }
-    if ($req['kode_pos'] !== '') {
-        $alamat .= ' ' . $req['kode_pos'];
+    if (array_key_exists('kode_pos', $req)) {
+        if ($req['kode_pos'] !== '') {
+            $alamat .= ' ' . $req['kode_pos'];
+        }
     }
     return $alamat;
 }

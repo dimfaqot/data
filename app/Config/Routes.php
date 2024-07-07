@@ -11,6 +11,8 @@ $routes->get('/', 'News\Landing::index');
 
 // cari
 $routes->post('/cari_nama_db', 'Cari\Cari::cari_nama_db');
+$routes->post('/cari_daerah_db', 'Cari\Cari::cari_daerah_db');
+$routes->post('/cari_lpk_db', 'Cari\Cari::cari_lpk_db');
 
 // label
 $routes->get('/label', 'News\Label::index');
@@ -326,6 +328,9 @@ $routes->get('/public/djana/nota/(:any)', 'Public\Djana::nota/$1');
 $routes->get('/public/djana', 'Public\Djana::index');
 $routes->get('/public/djana/(:any)/(:any)', 'Public\Djana::index/$1/$2');
 
+// lpk
+$routes->get('lpk', 'Public\Lpk::index');
+$routes->get('public/lpk', 'Public\Lpk::index');
 
 
 // ________________________________________________________________________________________
@@ -406,3 +411,36 @@ $routes->post('kelas/delete', 'Kelas\Kelas::delete');
 
 // anggotakelas
 $routes->get('anggotakelas', 'Anggotakelas\Anggotakelas::index');
+
+// lpk
+$routes->get('/program', 'Lpk\Program::index');
+$routes->post('program/add', 'Lpk\Program::add');
+$routes->post('program/update', 'Lpk\Program::update');
+$routes->post('/program/delete', 'Lpk\Program::delete');
+
+$routes->get('/biaya', 'Lpk\Biaya::index');
+$routes->post('biaya/add', 'Lpk\Biaya::add');
+$routes->post('biaya/update', 'Lpk\Biaya::update');
+$routes->post('/biaya/delete', 'Lpk\Biaya::delete');
+
+$routes->get('/siswa', 'Lpk\Siswa::index');
+$routes->post('siswa/add', 'Lpk\Siswa::add');
+$routes->post('siswa/update', 'Lpk\Siswa::update');
+$routes->post('/siswa/delete', 'Lpk\Siswa::delete');
+
+$routes->get('/pemberangkatan', 'Lpk\Pemberangkatan::index');
+$routes->post('pemberangkatan/add', 'Lpk\Pemberangkatan::add');
+$routes->post('pemberangkatan/update', 'Lpk\Pemberangkatan::update');
+$routes->post('/pemberangkatan/delete', 'Lpk\Pemberangkatan::delete');
+
+$routes->get('/pembayaran', 'Lpk\Pembayaran::index');
+$routes->post('pembayaran/add', 'Lpk\Pembayaran::add');
+$routes->post('pembayaran/add_rincian_pembayaran', 'Lpk\Pembayaran::add_rincian_pembayaran');
+$routes->post('pembayaran/update_nota_lpk', 'Lpk\Pembayaran::update_nota_lpk');
+$routes->post('pembayaran/update', 'Lpk\Pembayaran::update');
+$routes->post('/pembayaran/delete', 'Lpk\Pembayaran::delete');
+$routes->post('/pembayaran/delete_nota_lpk', 'Lpk\Pembayaran::delete_nota_lpk');
+
+$routes->get('/setoran', 'Lpk\Setoran::index');
+$routes->get('/setoran/detail_setoran/(:num)', 'Lpk\Setoran::detail/$1');
+$routes->post('setoran/update', 'Lpk\Setoran::update');
