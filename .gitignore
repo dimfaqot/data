@@ -85,7 +85,7 @@ phpunit
 #-------------------------
 vendor/
 /public
-/Config
+Config/*
 Database.php
 
 
