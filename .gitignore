@@ -92,7 +92,7 @@ phpunit
 
 app/Config/Database.php
 tests
-/tests
+tests/
 
 
 #-------------------------
