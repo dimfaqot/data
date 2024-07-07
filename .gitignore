@@ -45,6 +45,8 @@ $RECYCLE.BIN/
 .vagrant
 Vagrantfile
 
+
+
 #-------------------------
 # Temporary Files
 #-------------------------
@@ -83,10 +85,15 @@ phpunit
 #-------------------------
 # Composer
 #-------------------------
-vendor/
+/vendor
 /public
+/tests
 
-Database.php
+
+app/Config/Database.php
+tests
+/tests
+
 
 #-------------------------
 # IDE / Development Files
