@@ -47,9 +47,9 @@ class Database extends Config
     public array $karyawan = [
         'DSN'          => '',
         'hostname'     => 'localhost',
-        'username'     => 'root',
-        'password'     => '',
-        'database'     => 'karyawan',
+        'username'     => 'u1733924_karyawan',
+        'password'     => '5xn)h0^oL%{l',
+        'database'     => 'u1733924_karyawan',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
