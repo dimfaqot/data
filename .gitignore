@@ -87,6 +87,7 @@ vendor/
 /public
 
 Config/
+Database.php
 
 #-------------------------
 # IDE / Development Files
