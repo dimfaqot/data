@@ -86,8 +86,7 @@ phpunit
 vendor/
 /public
 
-/Config/Boot/Database.php
-
+Config/
 
 #-------------------------
 # IDE / Development Files
