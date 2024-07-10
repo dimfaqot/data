@@ -13,8 +13,8 @@ $routes->get('/', 'News\Landing::index');
 $routes->post('/cari_nama_db', 'Cari\Cari::cari_nama_db');
 $routes->post('/cari_daerah_db', 'Cari\Cari::cari_daerah_db');
 $routes->post('/cari_lpk_db', 'Cari\Cari::cari_lpk_db');
-$routes->post('alumni/cari_nama_santri', 'Cari\cari::cari_nama_santri');
-$routes->post('alumni/is_nama_alumni_exist', 'Cari\cari::is_nama_alumni_exist');
+$routes->post('alumni/cari_nama_santri', 'Cari\Cari::cari_nama_santri');
+$routes->post('alumni/is_nama_alumni_exist', 'Cari\Cari::is_nama_alumni_exist');
 
 // label
 $routes->get('/label', 'News\Label::index');
