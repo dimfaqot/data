@@ -621,4 +621,50 @@ class Recruitment extends BaseController
             gagal_js('File gagal dihapus.');
         }
     }
+
+    public function custome_view()
+    {
+        $tahun = clear($this->request->getVar('tahun'));
+        $deleted = clear($this->request->getVar('deleted'));
+        $tahun = clear($this->request->getVar('tahun'));
+        $proses = clear($this->request->getVar('proses'));
+        $pekerjaan = clear($this->request->getVar('pekerjaan'));
+        $sub = clear($this->request->getVar('sub'));
+        $cols = json_decode(json_encode($this->request->getVar('cols')), true);
+
+        $db = db('recruitment', 'karyawan');
+        $db;
+        if ($deleted == 'Deleted') {
+            $db->where('deleted', 1);
+        }
+        if ($deleted == 'Existing') {
+            $db->where('deleted', 0);
+        }
+        if ($tahun !== 'All') {
+            $db->where('tahun_masuk', $tahun);
+        }
+        if ($proses !== 'All') {
+            $db->where('status', $proses);
+        }
+        if ($sub !== 'All') {
+            $db->where('sub', $sub);
+        }
+        if ($pekerjaan !== 'All') {
+            $db->where('bidang_pekerjaan', $pekerjaan);
+        }
+        $q = $db->orderBy('nama', 'ASC')->get()->getResultArray();
+
+        $data = [];
+
+        if ($q) {
+            foreach ($q as $i) {
+                $i['ttl'] = ttl($i);
+                $i['alamat_lengkap'] = alamat_lengkap($i);
+                $i['pendidikan'] = 'Detail';
+                $data[] = $i;
+            }
+        }
+
+        sukses_js('koneksi sukses', $data);
+    }
 }

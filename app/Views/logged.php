@@ -19,7 +19,8 @@ if ($logo == 'pondok') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="icon" type="image/png" href="<?= base_url(); ?>berkas/menu/<?= $logo; ?>.png" sizes="16x16">
     <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>style/style.css" />
-
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <?= view('js'); ?>
     <?= (in_array(url(get_db(menu()['tabel']) == 'karyawan' ? 13 : 14), ck_editor()) ? '<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>' : ''); ?>
     <?= (in_array(url(), ck_editor()) ? '<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>' : ''); ?>
     <?= (url() == 'identitas' && in_array(url(6), ck_editor()) ? '<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>' : ''); ?>
@@ -252,9 +253,9 @@ if ($logo == 'pondok') {
                             <input type="hidden" name="url" value="<?= url(); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/<?= url(8); ?>/<?= url(9); ?>/<?= url(10); ?>/<?= url(11); ?>/<?= url(12); ?>/<?= url(13); ?>/<?= url(4); ?>/<?= url(15); ?>">
                             <div class="input-group input-group-sm mb-2">
                                 <input type="text" class="form-control text_selected" placeholder="Text Selected" readonly>
-                                <button type="button" class="btn_main_inactive miring" style="font-style: italic;font-weight:bold;">I</button>
-                                <button type="button" class="btn_main_inactive tebal" style="font-weight:bold;">B</button>
-                                <button type="button" class="btn_main_inactive enter" style="font-weight:bold;"><i class="fa-solid fa-arrow-turn-down"></i></button>
+                                <button type="button" class="btn_main_inactive miring" style="font-style: italic;font-weight:bold;">I (_..._)</button>
+                                <button type="button" class="btn_main_inactive tebal" style="font-weight:bold;">B (*...*)</button>
+                                <button type="button" class="btn_main_inactive enter" style="font-weight:bold;"><i class="fa-solid fa-arrow-turn-down"></i> (%0a)</button>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
                                 <div class="form-check form-switch form-check-reverse">
@@ -310,6 +311,8 @@ if ($logo == 'pondok') {
                                 </div>
                             </div>
 
+                            <textarea data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Nb." class="form-control selection selection_nb mb-2" data-class="nb" placeholder="Nb" name="nb"><?= template_wa()['nb']; ?></textarea>
+
 
                             <div class="d-grid">
                                 <button class="btn_main" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
@@ -364,8 +367,8 @@ if ($logo == 'pondok') {
     <?php endif; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <?= view('js'); ?>
+
+
     <?= view('validation_js'); ?>
     <?= view('functions_js'); ?>
 

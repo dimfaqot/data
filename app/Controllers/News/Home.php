@@ -599,6 +599,7 @@ class Home extends BaseController
         $tempat = clear($this->request->getVar('tempat'));
         $pengumuman = clear($this->request->getVar('pengumuman'));
         $url = clear($this->request->getVar('url'));
+        $nb = clear($this->request->getVar('nb'));
 
         $exp = explode("/", $url);
         $link = [];
@@ -619,6 +620,7 @@ class Home extends BaseController
         $q['jam'] = $jam;
         $q['tempat'] = $tempat;
         $q['pengumuman'] = $pengumuman;
+        $q['nb'] = $nb;
 
         $db->where('id', $q['id']);
         if ($db->update($q)) {

@@ -6,6 +6,10 @@ $asc_icon = '<i class="fa-solid fa-arrow-down-short-wide secondary_dark_color"><
 $desc_icon = '<i class="fa-solid fa-arrow-down-wide-short"></i>';
 $filter_by = ['Existing', 'Deleted', 'All'];
 $gender = ['L', 'P', 'All'];
+
+$db = db('recruitment', 'karyawan');
+$tahun_rec = $db->groupBy('tahun_masuk')->orderBy('tahun_masuk', 'ASC')->get()->getResultArray();
+
 ?>
 
 <div class="container" style="margin-top: 60px;">
@@ -161,6 +165,7 @@ $gender = ['L', 'P', 'All'];
     <div class="d-flex gap-1 my-2">
         <div class="flex-grow-1">
             <div class="input-group input-group-sm">
+                <button class="btn btn-outline-secondary" id="btn_custome_view" data-bs-toggle="offcanvas" data-bs-target="#canvas_custome_view" aria-controls="canvas_custome_view" type="button"><i class="fa-solid fa-filter"></i> View</button>
                 <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cari daftar data di bawah." class="input-group-text">Cari <?= menu()['menu']; ?></span>
                 <input data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cari daftar data di bawah." type="text" class="form-control cari" placeholder="...">
             </div>
@@ -305,4 +310,336 @@ $gender = ['L', 'P', 'All'];
         </div>
     <?php endif; ?>
 </div>
+
+
+<!-- canvas custome view -->
+
+<div class="offcanvas offcanvas-top vh-100" tabindex="-1" id="canvas_custome_view" aria-labelledby="canvas_custome_viewLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="canvas_custome_viewLabel">Custome View</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="judul mb-2">
+            <label>Tahun</label>
+            <select class="form-select form-select-sm canvas_tahun">
+                <?php foreach ($tahun_rec as $i) : ?>
+                    <option <?= ($i['tahun_masuk'] == date('Y') ? 'selected' : ''); ?> value="<?= $i['tahun_masuk']; ?>"><?= $i['tahun_masuk']; ?></option>
+                <?php endforeach; ?>
+                <option value="All">All</option>
+            </select>
+        </div>
+        <div class="judul mb-2">
+            <label>Data Yang Dihapus dan Exist</label>
+            <div class="d-flex gap-2">
+                <div class="form-check form-switch">
+                    <input name="deleted" class="form-check-input" value="Deleted" type="radio" role="switch">
+                    <label class="form-check-label">Deleted</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input name="deleted" class="form-check-input" value="Existing" type="radio" role="switch" checked>
+                    <label class="form-check-label">Existing</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input name="deleted" class="form-check-input" value="All" type="radio" role="switch">
+                    <label class="form-check-label">All</label>
+                </div>
+            </div>
+        </div>
+        <div class="judul mb-2">
+            <label>Tahapan Peserta Recruitment</label>
+            <div class="d-flex gap-2">
+                <div class="form-check form-switch">
+                    <input name="proses" class="form-check-input" value="Register" type="radio" role="switch" checked>
+                    <label class="form-check-label">Register</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input name="proses" class="form-check-input" value="Interview" type="radio" role="switch">
+                    <label class="form-check-label">Interview</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input name="proses" class="form-check-input" value="Diterima" type="radio" role="switch">
+                    <label class="form-check-label">Diterima</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input name="proses" class="form-check-input" value="Gagal" type="radio" role="switch">
+                    <label class="form-check-label">Gagal</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input name="proses" class="form-check-input" value="All" type="radio" role="switch">
+                    <label class="form-check-label">All</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="judul mb-2">
+            <label>Sub</label>
+            <select class="form-select form-select-sm canvas_sub">
+                <?php foreach (sub() as $i) : ?>
+                    <option <?= ($i['singkatan'] == 'SMP' ? 'selected' : ''); ?> value="<?= $i['singkatan']; ?>"><?= $i['singkatan']; ?></option>
+                <?php endforeach; ?>
+                <option value="All">All</option>
+            </select>
+        </div>
+
+        <div class="judul mb-2">
+            <label>Bidang Pekerjaan</label>
+            <select class="form-select form-select-sm canvas_pekerjaan">
+                <?php foreach (options('pekerjaan') as $i) : ?>
+                    <option value="<?= $i['value']; ?>"><?= $i['value']; ?></option>
+                <?php endforeach; ?>
+                <option value="All" selected>All</option>
+            </select>
+        </div>
+
+        <div class="judul mb-2">
+            <label>Data Yang Ingin Ditampilkan</label>
+            <div class="d-flex gap-2">
+                <div class="form-check form-switch">
+                    <input name="cols" class="form-check-input" value="nama" type="checkbox" role="switch" checked>
+                    <label class="form-check-label">Nama</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input name="cols" class="form-check-input" value="gender" type="checkbox" role="switch">
+                    <label class="form-check-label">Gender</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input name="cols" class="form-check-input" value="ttl" type="checkbox" role="switch">
+                    <label class="form-check-label">Ttl</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input name="cols" class="form-check-input" value="alamat_lengkap" type="checkbox" role="switch">
+                    <label class="form-check-label">Alamat</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input name="cols" class="form-check-input" value="hp" type="checkbox" role="switch">
+                    <label class="form-check-label">Hp</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input name="cols" class="form-check-input" value="pendidikan" type="checkbox" role="switch">
+                    <label class="form-check-label">Pendidikan</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input name="cols" class="form-check-input" value="cv" type="checkbox" role="switch" checked>
+                    <label class="form-check-label">Cv</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-grid">
+            <button class="btn_main btn_tampilkan_costome_view">Tampilkan</button>
+        </div>
+
+
+        <div class="fixed-top mt-5 canvas_custome_view_popup" style="display: none;">
+            <div class="container h-100">
+                <div class="d-flex justify-content-end">
+                    <a href="" class="close_canvas_popup"><i class="fa-solid fa-circle-xmark" style="font-size:x-large;color:red"></i></a>
+
+                </div>
+                <div class="row h-100 justify-content-center align-items-center body_custome_view_popup bg-light p-3" style="border-radius: 5px;border:1px solid #e0dddd">
+
+                </div>
+            </div>
+        </div>
+        <div class="vh-100 body_canvas_custome_view" style="overflow-y: auto;">
+
+        </div>
+    </div>
+</div>
+
+<script>
+    let datas;
+    const get_data_custome_view = () => {
+        let deleted = $('input[name="deleted"]:checked').val();
+        let proses = $('input[name="proses"]:checked').val();
+        let sub = $('.canvas_sub').val();
+        let pekerjaan = $('.canvas_pekerjaan').val();
+        let tahun = $('.canvas_tahun').val();
+        let cols = $('input:checkbox:checked').map(function() {
+            if (this.value !== 'on') {
+                return this.value;
+            }
+        }).get();
+        let data = {
+            deleted,
+            proses,
+            sub,
+            pekerjaan,
+            tahun,
+            cols
+        }
+
+        post('recruitment/custome_view', data).then(res => {
+            if (res.status == '200') {
+                datas = res.data;
+                let html = '';
+                html += '<table class="table table-sm table-striped mt-3">';
+                html += '<thead>';
+                html += '<tr>';
+                html += '<th scope="col">#</th>';
+                cols.forEach(e => {
+                    html += '<th scope="col">' + upper_first(e) + '</th>';
+                })
+                html += '</tr>';
+                html += '</thead>';
+                html += '<tbody>';
+                res.data.forEach((e, i) => {
+                    html += '<tr>';
+                    html += '<th scope="row">' + (i + 1) + '</th>';
+                    cols.forEach(el => {
+                        if (el == 'pendidikan' || el == 'hp' || el == 'cv') {
+                            if (el == 'cv') {
+                                if (e['cv'] == 'file_not_found.jpg') {
+                                    html += '<td style="color:red"><i class="fa-solid fa-circle-xmark"></i></td>';
+                                } else {
+                                    html += '<td><a href="" class="btn_detail_canvas text-success" data-no_id="' + e.no_id + '" data-col="' + el + '"><i class="fa-solid fa-square-up-right"></i></a></td>'
+                                }
+                            } else {
+                                html += '<td><a href="" class="btn_detail_canvas text-success" data-no_id="' + e.no_id + '" data-col="' + el + '">' + (el == 'hp' ? '<i class="fa-brands fa-square-whatsapp"></i>' : e[el]) + '</a></td>'
+                            }
+                        } else {
+                            html += '<td>' + e[el] + '</td>'
+                        }
+                    })
+                    html += '</tr>';
+                })
+                html += '</tbody>';
+                html += '</table>';
+
+                $('.body_canvas_custome_view').html(html);
+            } else {
+                gagal_with_button(res.message);
+            }
+        })
+
+    }
+
+    function pendidikan(data) {
+
+        let html = '';
+        html += '<h6 class="judul">S1</h6>'
+        html += '<div class="input-group input-group-sm mb-2">';
+        html += '<span style="width:80px" class="input-group-text">Kampus</span>';
+        html += '<input type="text" class="form-control" value="' + (data.kampus_s1 == '' ? '-' : data.kampus_s1) + '" readonly>';
+        html += '</div>';
+
+        html += '<div class="input-group input-group-sm mb-2">';
+        html += '<span style="width:80px" class="input-group-text">Fakultas</span>';
+        html += '<input type="text" class="form-control" value="' + (data.fakultas_s1 == '' ? '-' : data.fakultas_s1) + '" readonly>';
+        html += '</div>';
+
+        html += '<div class="input-group input-group-sm mb-2">';
+        html += '<span style="width:80px" class="input-group-text">Jurusan</span>';
+        html += '<input type="text" class="form-control" value="' + (data.jurusan_s1 == '' ? '-' : data.jurusan_s1) + '" readonly>';
+        html += '</div>';
+
+        html += '<div class="input-group input-group-sm mb-2">';
+        html += '<span style="width:80px" class="input-group-text">IPK</span>';
+        html += '<input type="text" class="form-control" value="' + (data.ipk_s1 == '' ? '-' : data.ipk_s1) + '" readonly>';
+        html += '</div>';
+
+        html += '<div class="input-group input-group-sm mb-2">';
+        html += '<span style="width:80px" class="input-group-text">Gelar</span>';
+        html += '<input type="text" class="form-control" value="' + (data.gelar_s1 == '' ? '-' : data.gelar_s1) + '" readonly>';
+        html += '</div>';
+
+        html += '<h6 class="judul">S2</h6>'
+        html += '<div class="input-group input-group-sm mb-2">';
+        html += '<span style="width:80px" class="input-group-text">Kampus</span>';
+        html += '<input type="text" class="form-control" value="' + (data.kampus_s2 == '' ? '-' : data.kampus_s2) + '" readonly>';
+        html += '</div>';
+
+        html += '<div class="input-group input-group-sm mb-2">';
+        html += '<span style="width:80px" class="input-group-text">Fakultas</span>';
+        html += '<input type="text" class="form-control" value="' + (data.fakultas_s2 == '' ? '-' : data.fakultas_s2) + '" readonly>';
+        html += '</div>';
+
+        html += '<div class="input-group input-group-sm mb-2">';
+        html += '<span style="width:80px" class="input-group-text">Jurusan</span>';
+        html += '<input type="text" class="form-control" value="' + (data.jurusan_s2 == '' ? '-' : data.jurusan_s2) + '" readonly>';
+        html += '</div>';
+
+        html += '<div class="input-group input-group-sm mb-2">';
+        html += '<span style="width:80px" class="input-group-text">IPK</span>';
+        html += '<input type="text" class="form-control" value="' + (data.ipk_s2 == '' ? '-' : data.ipk_s2) + '" readonly>';
+        html += '</div>';
+
+        html += '<div class="input-group input-group-sm mb-2">';
+        html += '<span style="width:80px" class="input-group-text">Gelar</span>';
+        html += '<input type="text" class="form-control" value="' + (data.gelar_s2 == '' ? '-' : data.gelar_s2) + '" readonly>';
+        html += '</div>';
+
+        html += '<h6 class="judul">KHUSUS SELAIN SARJANA</h6>'
+        html += '<div class="input-group input-group-sm mb-2">';
+        html += '<span style="width:80px" class="input-group-text">Pendidikan</span>';
+        html += '<input type="text" class="form-control" value="' + (data.pendidikan_terakhir == '' ? '-' : data.pendidikan_terakhir) + '" readonly>';
+        html += '</div>';
+
+        $('.body_custome_view_popup').html(html);
+        $('.canvas_custome_view_popup').fadeIn();
+    }
+
+    function cv(data) {
+        window.open('<?= base_url(); ?>' + 'berkas/recruitment/' + data.cv, '_blank').focus();
+    }
+
+    function hp(data) {
+        let link = "<?= settings('pengumuman'); ?>";
+        let nama = data.nama;
+        let no = '+62' + data.hp.substring(1);
+        let pembuka = "<?= settings('pembuka'); ?>";
+        let tgl = "<?= settings('tgl'); ?>";
+        let jam = "<?= settings('jam'); ?>";
+        let tempat = "<?= settings('tempat'); ?>";
+        let acara = "<?= settings('acara'); ?>";
+        let penutup = "<?= settings('penutup'); ?>";
+        let nb = "<?= settings('nb'); ?>";
+
+        let text = 'Assalamualaikum wr.wb%0a';
+        text += 'Yth: ' + nama + '%0a%0a';
+        text += pembuka + '%0a';
+        text += 'Tanggal: ' + tgl + '%0a';
+        text += 'Waktu: ' + jam + '%0a';
+        text += 'Tempat: ' + tempat + '%0a';
+        text += 'Acara: ' + acara + '%0a';
+        text += '%0a';
+        text += penutup + '%0a';
+        text += 'Wassalamualaikum Wr. Wb.';
+        text += '%0a%0a';
+        text += '*NB:*%0a';
+        text += nb;
+        text += 'Klik link di bawah ini untuk join grup whatsapp!.%0a';
+        text += '*_JANGAN BAGIKAN LINK INI KEPADA SIAPAPUN!_*%0a';
+        text += link;
+        text += '%0a%0aTTD%0a%0a';
+        text += 'PANITIA';
+
+        window.location.href = 'whatsapp://send/?phone=' + no + '&text=' + text;
+    }
+    $(document).on('click', '.btn_tampilkan_costome_view', function(e) {
+        e.preventDefault();
+        get_data_custome_view();
+    })
+    $(document).on('click', '#btn_custome_view', function(e) {
+        e.preventDefault();
+        get_data_custome_view();
+    })
+    $(document).on('click', '.btn_detail_canvas', function(e) {
+        e.preventDefault();
+        let col = $(this).data('col');
+        let no_id = $(this).data('no_id');
+        let data;
+        datas.forEach(e => {
+            if (e.no_id == no_id) {
+                data = e;
+            }
+        })
+        window[col](data);
+    })
+    $(document).on('click', '.close_canvas_popup', function(e) {
+        e.preventDefault();
+        $('.canvas_custome_view_popup').fadeOut();
+    })
+</script>
 <?= $this->endSection() ?>

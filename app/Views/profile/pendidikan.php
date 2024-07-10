@@ -12,8 +12,8 @@
 
         <small class="text-danger" style="font-style: italic;"><i class="fa-solid fa-circle-exclamation"></i> Khusus lulusan di bawah Sarjana!.</small>
         <div class="form-floating">
-            <select class="form-select check_<?= $i; ?>" name="<?= $i; ?>" style="font-size: small;" required>
-                <option>-Pilih Pendidikan Terakhir-</option>
+            <select class="form-select check_<?= $i; ?>" name="<?= $i; ?>" style="font-size: small;">
+                <option value="">-Pilih Pendidikan Terakhir-</option>
                 <option <?= ($data[$i] == 'SD' ? 'selected' : ''); ?> value="SD">SD</option>
                 <option <?= ($data[$i] == 'SMP' ? 'selected' : ''); ?> value="SMP">SMP</option>
                 <option <?= ($data[$i] == 'SMA' ? 'selected' : ''); ?> value="SMA">SMA</option>

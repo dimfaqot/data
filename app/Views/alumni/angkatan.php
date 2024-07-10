@@ -110,7 +110,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="content_detail_identitas mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+                <div class="content_detail_identitas mt-3"></div>
             </div>
         </div>
     </div>
