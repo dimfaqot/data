@@ -97,4 +97,49 @@ class Cari extends BaseController
 
         sukses_js('Koneksi sukses.', $q);
     }
+    public function cari_nama_santri()
+    {
+        $value = clear($this->request->getVar('value'));
+        $col = clear($this->request->getVar('col'));
+
+        $db = db('identitas', 'alumni');
+        $q = $db->select('id,santri_id,alumni_id,nama_alumni')->whereIn($col, [''])->like('nama_alumni', $value, 'both')->orderBy('nama_alumni', 'ASC')->limit(10)->get()->getResultArray();
+
+        if ($q) {
+            $data = [];
+            foreach ($q as $i) {
+                $i['no_id'] = $i['santri_id'];
+                $i['nama'] = $i['nama_alumni'];
+                $data[] = $i;
+            }
+        } else {
+            $db = db('santri', 'santri');
+            $data = $db->select('no_id,nama')->whereIn('status', ['Lulus'])->whereNotIn('tahun_keluar', [0])->like('nama', $value, 'both')->orderBy('nama', 'ASC')->limit(10)->get()->getResultArray();
+        }
+
+        sukses_js('Koneksi sukses.', $data);
+    }
+    public function is_nama_alumni_exist()
+    {
+        $santri_id = clear($this->request->getVar('santri_id'));
+        $nama_alumni = clear($this->request->getVar('nama_alumni'));
+        $val = clear($this->request->getVar('val'));
+        $col = clear($this->request->getVar('col'));
+
+        $db = db('identitas', 'alumni');
+        $q = $db->where('santri_id', $santri_id)->where($col, $val)->get()->getRowArray();
+
+        if ($q) {
+            gagal_js($nama_alumni . ' sudah ada di ' . upper_first($col) . ' ' . $val . '!.');
+        }
+
+        $q2 = $db->whereNotIn($col, [''])->where('santri_id', $santri_id)->get()->getRowArray();
+        if ($q2) {
+            if ($q2[$col] !== '') {
+                gagal_js($nama_alumni . ' sudah ada di ' . upper_first($col) . ' ' . $q2[$col] . '!.');
+            }
+        }
+
+        sukses_js('Koneksi sukses.');
+    }
 }

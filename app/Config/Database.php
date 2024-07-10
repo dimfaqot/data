@@ -310,6 +310,26 @@ class Database extends Config
         'port'         => 3306,
         'numberNative' => false,
     ];
+    public array $alumni = [
+        'DSN'          => '',
+        'hostname'     => 'localhost',
+        'username'     => 'root',
+        'password'     => '',
+        'database'     => 'alumni',
+        'DBDriver'     => 'MySQLi',
+        'DBPrefix'     => '',
+        'pConnect'     => false,
+        'DBDebug'      => true,
+        'charset'      => 'utf8',
+        'DBCollat'     => 'utf8_general_ci',
+        'swapPre'      => '',
+        'encrypt'      => false,
+        'compress'     => false,
+        'strictOn'     => false,
+        'failover'     => [],
+        'port'         => 3306,
+        'numberNative' => false,
+    ];
 
     /**
      * This database connection is used when
@@ -404,6 +424,10 @@ class Database extends Config
             $this->lpk['database'] = getenv('db_name_lpk');
             $this->lpk['username'] = getenv('db_username_lpk');
             $this->lpk['password'] = getenv('db_pass_lpk');
+
+            $this->alumni['database'] = getenv('db_name_alumni');
+            $this->alumni['username'] = getenv('db_username_alumni');
+            $this->alumni['password'] = getenv('db_pass_alumni');
         }
     }
 }

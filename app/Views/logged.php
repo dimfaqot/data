@@ -1,7 +1,7 @@
 <?php
 $logo = strtolower(session('section'));
 
-if ($logo == 'root' || $logo == 'member' || $logo == 'yayasan') {
+if ($logo == 'root' || $logo == 'member' || $logo == 'yayasan' || $logo == 'angkatan' || $logo == 'region') {
     $logo = 'karyawan';
 }
 if ($logo == 'pondok') {
@@ -372,6 +372,7 @@ if ($logo == 'pondok') {
     <?= (url() == 'cetak' ? view('root/cetak_js') : (url() == 'rebana' ? view('rebana/rebana_js') : (url() == 'rental' ? view('rental/rental_js') : ''))); ?>
     <?= (get_db(menu()['tabel']) == 'djana' ? view('djana/djana_js') : ''); ?>
     <?= (get_db(menu()['tabel']) == 'lpk' ? view('lpk/lpk_js') : ''); ?>
+    <?= (get_db(menu()['tabel']) == 'alumni' ? view('alumni/alumni_js') : ''); ?>
 
 
 

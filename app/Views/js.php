@@ -396,8 +396,8 @@
 
     $(document).on('keyup', '.cari', function(e) {
         e.preventDefault();
-
         let value = $(this).val().toLowerCase();
+        console.log(value);
 
         $('.tabel_search tr').filter(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);

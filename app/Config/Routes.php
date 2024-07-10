@@ -13,6 +13,8 @@ $routes->get('/', 'News\Landing::index');
 $routes->post('/cari_nama_db', 'Cari\Cari::cari_nama_db');
 $routes->post('/cari_daerah_db', 'Cari\Cari::cari_daerah_db');
 $routes->post('/cari_lpk_db', 'Cari\Cari::cari_lpk_db');
+$routes->post('alumni/cari_nama_santri', 'Cari\cari::cari_nama_santri');
+$routes->post('alumni/is_nama_alumni_exist', 'Cari\cari::is_nama_alumni_exist');
 
 // label
 $routes->get('/label', 'News\Label::index');
@@ -113,6 +115,22 @@ $routes->post('/santri/update', 'Root\Santri::update');
 $routes->post('/santri/remove', 'Root\Santri::remove');
 $routes->post('/santri/restore', 'Root\Santri::restore');
 $routes->post('/santri/delete', 'Root\Santri::delete');
+
+
+// alumni
+// angkatan
+$routes->get('/angkatan', 'Alumni\Angkatan::index');
+$routes->post('angkatan/add', 'Alumni\Angkatan::add');
+$routes->post('angkatan/detail', 'Alumni\Angkatan::detail');
+$routes->post('angkatan/update', 'Alumni\Angkatan::update');
+$routes->post('angkatan/delete', 'Alumni\Angkatan::delete');
+// region
+$routes->get('/region', 'Alumni\Region::index');
+$routes->post('region/add', 'Alumni\Region::add');
+$routes->post('region/detail', 'Alumni\Region::detail');
+$routes->post('region/update', 'Alumni\Region::update');
+$routes->post('region/delete', 'Alumni\Region::delete');
+
 
 // ppdb
 $routes->get('/ppdb/detail/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:num)/(:any)', 'Root\Ppdb::detail/$1/$2/$3/$4/$5/$6/$7/$8/$9/$10');

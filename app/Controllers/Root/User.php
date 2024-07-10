@@ -48,7 +48,7 @@ class User extends BaseController
             'section' => $section,
             'role' => $role,
             'gender' => $gender,
-            'password' => password_hash($section . '_' . $username, PASSWORD_DEFAULT),
+            'password' => default_password(),
             'created_at' => time(),
             'updated_at' => time(),
             'petugas' => session('nama')
@@ -78,6 +78,7 @@ class User extends BaseController
         $section = clear($this->request->getVar('section'));
         $role = clear($this->request->getVar('role'));
         $gender = clear($this->request->getVar('gender'));
+        $info = clear($this->request->getVar('info'));
 
         $url = base_url(menu()['controller']) . '/' . $section;
         $db = db('user');
@@ -99,6 +100,7 @@ class User extends BaseController
         $q['section'] = $section;
         $q['role'] = $role;
         $q['gender'] = $gender;
+        $q['info'] = $info;
         $q['updated_at'] = time();
         $q['petugas'] = session('nama');
 

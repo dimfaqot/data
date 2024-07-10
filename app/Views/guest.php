@@ -24,6 +24,18 @@ if (url() == 'public') {
 </head>
 
 <body>
+    <!-- warning alert message -->
+    <div class="box_warning" style="position:fixed;z-index:999999;display:none;">
+
+    </div>
+    <!-- warning alert message with button -->
+    <div class="box_warning_with_button" style="position:fixed;z-index:999999;display:none;">
+
+    </div>
+    <!-- warning confirm -->
+    <div class="box_confirm" style="position:fixed;z-index:999999;display:none;">
+
+    </div>
 
     <!-- loading -->
     <div class="blur waiting" style="display:none">
@@ -313,6 +325,146 @@ if (url() == 'public') {
             cari_sertifikat($(this).val());
 
         });
+
+        const gagal_js = (alert) => {
+            let html = '';
+            html += '<div class="d-flex flex-column min-vh-100 min-vw-100">';
+            html += '<div class="d-flex flex-grow-1 justify-content-center align-items-center">';
+            html += '<div class="d-flex gap-3" style="border:2px solid #FF9FA1;border-radius:8px;padding:5px;background-color:#FFC9C9;color:#A90020">';
+            html += '<div class="px-2"><i class="fa-solid fa-circle-xmark"></i> ' + alert + '</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+
+            $('.box_warning').html(html)
+            $('.box_warning').fadeIn();
+            $('.box_confirm').fadeOut();
+
+            setTimeout(() => {
+                $('.box_warning').fadeOut();
+            }, 1000);
+
+        }
+
+        const gagal_with_button = (alert) => {
+            let html = '';
+            html += '<div class="d-flex flex-column min-vh-100 min-vw-100">';
+            html += '<div class="d-flex flex-grow-1 justify-content-center align-items-center">';
+            html += '<div class="d-flex gap-3" style="border:2px solid #FF9FA1;border-radius:8px;padding:5px;background-color:#FFC9C9;color:#A90020">';
+            html += '<div class="d-flex">';
+            html += '<div class="px-2"><i class="fa-solid fa-triangle-exclamation" style="color: #cc0000;"></i> ' + alert + '</div>';
+            html += '<a class="btn_close_warning" style="text-decoration: none;color:#A90020" href=""><i class="fa-solid fa-circle-xmark"></i></a>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+
+            $('.box_warning_with_button').html(html);
+
+            $('.box_warning_with_button').show();
+
+            $(document).on('click', '.btn_close_warning', function(e) {
+                e.preventDefault();
+                $('.box_warning_with_button').fadeOut();
+            });
+
+        }
+
+        $(document).on('click', '.btn_close_warning', function(e) {
+            e.preventDefault();
+            $('.box_warning_with_button').fadeOut();
+        });
+
+
+        const object_to_array = (obj) => {
+
+            let data = [];
+            for (const [key, value] of Object.entries(obj)) {
+                data.push({
+                    key,
+                    value
+                });
+            }
+
+            return data;
+        }
+
+        const confirm = (obj) => {
+            let args = object_to_array(obj);
+            let args_values = '';
+            let alert = '';
+            args.forEach(elm => {
+                args_values += 'data-' + elm.key + '="' + elm.value + '" ';
+                if (elm.key == 'alert') {
+                    alert = elm.value;
+                }
+            });
+
+            let html = '';
+            html += '<div class="d-flex flex-column min-vh-100 min-vw-100">';
+            html += '<div class="d-flex flex-grow-1 justify-content-center align-items-center">';
+            html += '<div class="d-flex gap-3" style="border:2px solid #ff9933;border-radius:8px;padding:5px;background-color:#ffe6cc;color:#cc6600">';
+            html += '<div class="d-flex gap-2">';
+            html += '<div class="px-2" style="font-weight: 700;"><i class="fa-solid fa-triangle-exclamation" style="color: #ff9933;"></i> ' + alert + '</div>';
+            html += '<a class="btn_close_confirm" style="text-decoration: none;color:#ff8000" href=""><i class="fa-solid fa-circle-xmark"></i></a>';
+            html += '<a class="btn_execute_confirm" ' + args_values + ' style="text-decoration: none;color:green" href=""><i class="fa-solid fa-circle-check"></i></i></a>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+
+            $('.box_confirm').html(html);
+
+            $('.box_confirm').show();
+
+            $(document).on('click', '.btn_close_confirm', function(e) {
+                e.preventDefault();
+                $('.box_confirm').fadeOut();
+            });
+
+
+        }
+
+
+        const sukses_js = (alert) => {
+            let html = '';
+            html += '<div class="d-flex flex-column min-vh-100 min-vw-100">';
+            html += '<div class="d-flex flex-grow-1 justify-content-center align-items-center">';
+            html += '<div class="d-flex gap-3" style="border:2px solid #9fffc4;border-radius:8px;padding:5px;background-color:#c9ffde;color:#00a939">';
+            html += '<div class="px-2"><i class="fa-solid fa-circle-check"></i> ' + alert + '</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+
+            $('.box_warning').html(html)
+            $('.box_warning').fadeIn();
+            $('.box_confirm').fadeOut();
+
+            setTimeout(() => {
+                $('.box_warning').fadeOut();
+            }, 1000);
+
+        }
+
+        <?php if (session()->getFlashdata('sukses')) : ?>
+
+            let msg = '<?= session()->getFlashdata('sukses'); ?>';
+            sukses_js(msg);
+
+        <?php endif; ?>
+
+        <?php if (session()->getFlashdata('gagal')) : ?>
+            let msg = '<?= session()->getFlashdata('gagal'); ?>';
+            gagal_js(msg);
+
+        <?php endif; ?>
+
+        <?php if (session()->getFlashdata('gagal_with_button')) : ?>
+
+            let msg = '<?= session()->getFlashdata('gagal_with_button'); ?>';
+            gagal_with_button(msg);
+
+        <?php endif; ?>
     </script>
 </body>
 

@@ -249,6 +249,7 @@ class Home extends BaseController
         session()->remove('role');
         session()->remove('gender');
         session()->remove('nama');
+        session()->remove('info');
 
         sukses(base_url('login'), 'Logout sukses!.');
     }
@@ -373,7 +374,7 @@ class Home extends BaseController
                 'section' => upper_first($tabel_db),
                 'role' => 'Member',
                 'gender' => $q['gender'],
-                'password' => password_hash(upper_first($tabel_db) . '_' . $q['no_id'], PASSWORD_DEFAULT),
+                'password' => default_password(),
                 'created_at' => time(),
                 'updated_at' => time(),
                 'petugas' => session('nama')

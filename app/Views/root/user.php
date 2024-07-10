@@ -55,6 +55,10 @@
                                     </select>
                                     <label>Pilih Gender</label>
                                 </div>
+                                <div class="form-floating mb-2">
+                                    <input type="text" class="form-control" name="info" placeholder="Info">
+                                    <label>Info</label>
+                                </div>
 
                                 <div class="d-grid mt-3">
                                     <button type="submit" class="btn_main btn-sm"><i class="fa-regular fa-floppy-disk"></i> Save</button>
@@ -88,6 +92,7 @@
                     <th>Username</th>
                     <th>No Id</th>
                     <th>Role</th>
+                    <th>Info</th>
                     <th>Act</th>
                 </tr>
             </thead>
@@ -100,6 +105,7 @@
                         <td><?= $i['username']; ?></td>
                         <td><?= $i['no_id']; ?></td>
                         <td><?= $i['role']; ?></td>
+                        <td><?= $i['info']; ?></td>
                         <td><a href="" data-bs-toggle="modal" data-bs-target="#<?= menu()['controller']; ?>_<?= $i['id']; ?>" style="font-size: medium;"><i class="fa-solid fa-square-pen main_color"></i></a> <a class="confirm" data-order="reset password" data-id="<?= $i['id']; ?>" data-method="reset_password" href="" style="font-size: medium;"><i class="fa-solid fa-rotate-left"></i></a> <a href="" data-method="delete" class="confirm" data-id="<?= $i['id']; ?>" data-controller="<?= menu()['controller']; ?>" style="font-size: medium;"><i class="fa-solid fa-square-xmark danger_color"></i></a></td>
                     </tr>
                 <?php endforeach; ?>
@@ -150,14 +156,17 @@
                                         <label>Pilih Role</label>
                                     </div>
 
-                                    <div class="form-floating">
+                                    <div class="form-floating mb-3">
                                         <select class="form-select" name="gender">
                                             <option <?= ($i['gender'] == 'L' ? 'selected' : ''); ?> value="L">L</option>
                                             <option <?= ($i['gender'] == 'P' ? 'selected' : ''); ?> value="P">P</option>
                                         </select>
                                         <label>Pilih Gender</label>
                                     </div>
-
+                                    <div class="form-floating">
+                                        <input type="text" value="<?= $i['info']; ?>" class="form-control" name="info" placeholder="Info">
+                                        <label>Info</label>
+                                    </div>
                                     <div class="d-grid mt-3">
                                         <button type="submit" class="btn-sm btn_main"><i class="fa-solid fa-file-pen"></i> Update <?= menu()['menu']; ?></button>
 

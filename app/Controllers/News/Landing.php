@@ -35,7 +35,6 @@ class Landing extends BaseController
         $db = db('user');
 
         $by_username = $db->where('username', $username)->whereNotIn('username', [''])->get()->getRowArray();
-
         if ($by_username) {
             if (!password_verify($password, $by_username['password'])) {
                 gagal(base_url('login'), 'Pasword salah.');
@@ -47,7 +46,8 @@ class Landing extends BaseController
                     'no_id' => $by_username['no_id'],
                     'section' => $by_username['section'],
                     'role' => $by_username['role'],
-                    'nama' => $by_username['nama']
+                    'nama' => $by_username['nama'],
+                    'info' => $by_username['info']
                 ];
                 session()->set($data);
                 sukses(base_url('home'), 'Login sukses.');
@@ -65,7 +65,8 @@ class Landing extends BaseController
                         'no_id' => $by_username['no_id'],
                         'section' => $by_username['section'],
                         'role' => $by_username['role'],
-                        'nama' => $by_username['nama']
+                        'nama' => $by_username['nama'],
+                        'info' => $by_username['info']
                     ];
 
                     session()->set($data);

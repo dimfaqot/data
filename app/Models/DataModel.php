@@ -7,7 +7,6 @@ class DataModel
 
     public function allData($asc = null)
     {
-
         $exp = [];
         if ($asc == null) {
             $exp = ['id', 'ASC'];
@@ -299,5 +298,59 @@ class DataModel
         }
 
         return $no_nota;
+    }
+
+    public function no_id_alumni($siswa_id)
+    {
+        $db = db('santri', 'santri');
+        $santri = $db->where('no_id', $siswa_id)->get()->getRowArray();
+
+        $alumni_id = '9' . substr($santri['tahun_keluar'], -2) . '000000001';
+
+        $dba = db('identitas', 'alumni');
+        $q = $dba->where('alumni_id', $alumni_id)->get()->getRowArray();
+
+        if ($q) {
+            for ($i = 1; $i < 100000000; $i++) {
+
+                if (strlen($i) == 1) {
+                    $no = '9' . substr($santri['tahun_keluar'], -2) . '00000000' . $i;
+                }
+                if (strlen($i) == 2) {
+                    $no = '9' . substr($santri['tahun_keluar'], -2) . '0000000' . $i;
+                }
+                if (strlen($i) == 3) {
+                    $no = '9' . substr($santri['tahun_keluar'], -2) . '000000' . $i;
+                }
+                if (strlen($i) == 4) {
+                    $no = '9' . substr($santri['tahun_keluar'], -2) . '00000' . $i;
+                }
+
+                if (strlen($i) == 5) {
+                    $no = '9' . substr($santri['tahun_keluar'], -2) . '0000' . $i;
+                }
+                if (strlen($i) == 6) {
+                    $no = '9' . substr($santri['tahun_keluar'], -2) . '000' . $i;
+                }
+                if (strlen($i) == 7) {
+                    $no = '9' . substr($santri['tahun_keluar'], -2) . '00' . $i;
+                }
+                if (strlen($i) == 8) {
+                    $no = '9' . substr($santri['tahun_keluar'], -2) . '0' . $i;
+                }
+                if (strlen($i) == 9) {
+                    $no = '9' . substr($santri['tahun_keluar'], -2) . $i;
+                }
+
+
+                $exist = $dba->where('alumni_id', $no)->get()->getRowArray();
+                if (!$exist) {
+                    $alumni_id = $no;
+                    break;
+                }
+            }
+        }
+
+        return $alumni_id;
     }
 }

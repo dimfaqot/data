@@ -28,7 +28,7 @@
 
             <div class="list-group p-2">
                 <h5 class="card-title"><?= session('nama'); ?></h5>
-                <h6 class="card-subtitle mb-2 text-muted">[Section: <?= session('section'); ?>] [Role: <?= session('role'); ?>]</h6>
+                <h6 class="card-subtitle mb-2 text-muted">[Section: <?= session('section'); ?>] [Role: <?= (session('section') == 'Angkatan' || session('section') == 'Region' ? session('role') . ' ' . session('info') : session('role')); ?>]</h6>
                 <p class="card-text"><small class="text-muted">Username: <?= (session('username') == '' ? '-' : session('username')); ?> | No. Id: <?= (session('no_id') == 0 ? '-' : session('no_id')); ?></small></p>
             </div>
 
