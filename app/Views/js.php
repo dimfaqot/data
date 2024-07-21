@@ -1502,6 +1502,7 @@
     // auth url
     $(document).on('click', '.auth_url', function(e) {
         e.preventDefault();
+
         let tabel = $(this).data('tabel');
         let id = $(this).data('id');
         let section = $(this).data('section');
@@ -1515,7 +1516,8 @@
             section,
             gender,
             nama,
-            role
+            role,
+            info: ''
         }).then((res) => {
             if (res.status == '200') {
                 let html = '<div>' + res.data + ' <a href="" data-no="' + no + '" data-nama="' + nama + '" data-link="' + res.data + '" class="btn_send_wa_with_link"><i class="fa-brands fa-whatsapp"></i></a></div>';

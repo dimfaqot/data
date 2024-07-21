@@ -11,7 +11,9 @@ class Auth extends BaseController
 
     public function index($jwt)
     {
+
         $decode = decode_jwt($jwt);
+
         if (session('id')) {
             sukses(base_url('home'), 'Login sukses.');
         }
@@ -22,7 +24,8 @@ class Auth extends BaseController
             'no_id' => $decode['id'],
             'section' => $decode['section'],
             'role' => $decode['role'],
-            'nama' => $decode['nama']
+            'nama' => $decode['nama'],
+            'info' => $decode['info']
         ];
         session()->set($data);
         sukses(base_url('home'), 'Login sukses.');

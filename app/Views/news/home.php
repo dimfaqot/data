@@ -45,14 +45,26 @@
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <select class="form-select section" required>
+                                    <select class="form-select mb-2 section" required>
                                         <?php foreach (options('Section') as $b) : ?>
+                                            <option value="<?= $b['value']; ?>"><?= $b['value']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <select class="form-select mb-2 role" required>
+                                        <?php foreach (options('Role') as $b) : ?>
+                                            <option value="<?= $b['value']; ?>"><?= $b['value']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <?php $infos = array_merge(options('Marhalah'), options('Region')); ?>
+                                    <select class="form-select info" required>
+                                        <option value="">Kosong</option>
+                                        <?php foreach ($infos as $b) : ?>
                                             <option value="<?= $b['value']; ?>"><?= $b['value']; ?></option>
                                         <?php endforeach; ?>
                                     </select>
 
                                     <div class="d-grid mt-3">
-                                        <button data-tabel="karyawan" data-id="000000000" data-section="Recruitment" data-role="Temp" data-nama="Temporary User" data-gender="L" data-no="00000" class="btn_main_inactive auth_url">Get Token</button>
+                                        <button data-tabel="karyawan" data-id="000000000" data-nama="Temporary User" data-gender="L" data-no="00000" class="btn_main_inactive auth_url_temp_user">Get Token</button>
                                     </div>
                                 </div>
                             </div>
@@ -154,13 +166,50 @@
 </div>
 
 <script>
-    let section = document.querySelector('.section');
-    section.addEventListener('change', function(e) {
+    $(document).on('click', '.auth_url_temp_user', function(e) {
         e.preventDefault();
-        let val = section.value;
-        let auth_url = document.querySelector('.auth_url');
-        auth_url.setAttribute('data-section', val);
-    })
+        let menus = <?= json_encode(menus()); ?>;
+
+        let id = $(this).data('id');
+        let section = $('.section').val();
+        let info = $('.info').val();
+        let gender = $(this).data('gender');
+        let nama = $(this).data('nama');
+        let role = $('.role').val();
+        let no = $(this).data('no');
+        let tabel;
+
+        menus.forEach(e => {
+            if (e.menu == section) {
+                tabel = e.tabel;
+            }
+        });
+
+
+        post("auth_url", {
+            tabel,
+            id,
+            section,
+            gender,
+            nama,
+            role,
+            info
+        }).then((res) => {
+            if (res.status == '200') {
+                let html = '<div>' + res.data + ' <a href="" data-no="' + no + '" data-nama="' + nama + '" data-link="' + res.data + '" class="btn_send_wa_with_link"><i class="fa-brands fa-whatsapp"></i></a></div>';
+                $('.body_auth_url').html(html);
+                let myModal = document.getElementById('modal_auth_url');
+                let modal = bootstrap.Modal.getOrCreateInstance(myModal)
+                modal.show();
+
+            } else {
+                gagal(res.message);
+            }
+
+        });
+
+
+    });
 </script>
 
 <?= $this->endSection() ?>

@@ -630,7 +630,6 @@ class Recruitment extends BaseController
         $proses = clear($this->request->getVar('proses'));
         $pekerjaan = clear($this->request->getVar('pekerjaan'));
         $sub = clear($this->request->getVar('sub'));
-        $cols = json_decode(json_encode($this->request->getVar('cols')), true);
 
         $db = db('recruitment', 'karyawan');
         $db;
@@ -666,5 +665,65 @@ class Recruitment extends BaseController
         }
 
         sukses_js('koneksi sukses', $data);
+    }
+
+    public function cetak_interview($jwt)
+    {
+        $decode = decode_jwt($jwt);
+
+        $no_ids = explode(",", $decode['data']);
+
+        $db = db('recruitment', 'karyawan');
+
+        $data = $db->whereIn('no_id', $no_ids)->get()->getResultArray();
+
+        if ($decode['order'] == 'absen') {
+            $set = [
+                'mode' => 'utf-8',
+                'format' => [215, 330],
+                'orientation' => 'P',
+                'margin_left' => 5,
+                'margin_right' => 5,
+                'margin_top' => 5,
+                'margin_bottom' => 5,
+            ];
+
+            $mpdf = new \Mpdf\Mpdf($set);
+
+            $logo = '<img width="100px" src="berkas/menu/karyawan.png" alt="Logo"/>';
+            $html = view('cetak/recruitment_absen', ['judul' => 'ABSENSI PESERTA WAWANCARA RECRUITMENT ' . date('Y'), 'data' => $data, 'logo' => $logo]);
+            $mpdf->AddPage();
+            $mpdf->WriteHTML($html);
+
+
+
+            $this->response->setHeader('Content-Type', 'application/pdf');
+            $mpdf->Output('Data ' . menu()['controller'] . '.pdf', 'I');
+        }
+        if ($decode['order'] == 'form') {
+            // recruitment_form_interview
+            $set = [
+                'mode' => 'utf-8',
+                'format' => [215, 330],
+                'orientation' => 'P',
+                'margin_left' => 5,
+                'margin_right' => 5,
+                'margin_top' => 5,
+                'margin_bottom' => 5,
+            ];
+
+            $mpdf = new \Mpdf\Mpdf($set);
+
+            foreach ($data as $i) {
+
+                $i['logo'] = '<img width="50px" src="berkas/menu/karyawan.png" alt="Logo"/>';
+                $i['alamat_lengkap'] = alamat_lengkap($i);
+                $html = view('cetak/recruitment_form_interview', ['judul' => (count($no_ids) == 1 ? $i['nama'] : 'DATA PESERTA WAWANCARA RECRUITMENT ' . date('Y')), 'data' => $i]);
+                $mpdf->AddPage();
+                $mpdf->WriteHTML($html);
+            }
+            $this->response->setHeader('Content-Type', 'application/pdf');
+            $mpdf->Output('Data ' . menu()['controller'] . '.pdf', 'I');
+        }
     }
 }

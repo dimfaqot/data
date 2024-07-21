@@ -416,6 +416,14 @@ $tahun_rec = $db->groupBy('tahun_masuk')->orderBy('tahun_masuk', 'ASC')->get()->
                     <label class="form-check-label">Hp</label>
                 </div>
                 <div class="form-check form-switch">
+                    <input name="cols" class="form-check-input" value="bidang_pekerjaan" type="checkbox" role="switch">
+                    <label class="form-check-label">Pekerjaan</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input name="cols" class="form-check-input" value="sub" type="checkbox" role="switch">
+                    <label class="form-check-label">Sub</label>
+                </div>
+                <div class="form-check form-switch">
                     <input name="cols" class="form-check-input" value="pendidikan" type="checkbox" role="switch">
                     <label class="form-check-label">Pendidikan</label>
                 </div>
@@ -474,10 +482,14 @@ $tahun_rec = $db->groupBy('tahun_masuk')->orderBy('tahun_masuk', 'ASC')->get()->
             if (res.status == '200') {
                 datas = res.data;
                 let html = '';
+                html += '<div class="mt-3 body_cetak_interview" style="display:none">';
+                html += '<a href="" data-order="absen" class="btn_secondary_inactive btn_cetak_interview">Absen</a> <a href="" data-order="form" class="btn_secondary btn_cetak_interview">Form</a>';
+                html += '</div>';
                 html += '<table class="table table-sm table-striped mt-3">';
                 html += '<thead>';
                 html += '<tr>';
                 html += '<th scope="col">#</th>';
+                html += '<td>Check</td>';
                 cols.forEach(e => {
                     html += '<th scope="col">' + upper_first(e) + '</th>';
                 })
@@ -487,6 +499,9 @@ $tahun_rec = $db->groupBy('tahun_masuk')->orderBy('tahun_masuk', 'ASC')->get()->
                 res.data.forEach((e, i) => {
                     html += '<tr>';
                     html += '<th scope="row">' + (i + 1) + '</th>';
+                    html += '<td>';
+                    html += '<input data-no_id="' + e.no_id + '" class="form-check-input cetak_interview" type="checkbox" value="">';
+                    html += '</td>';
                     cols.forEach(el => {
                         if (el == 'pendidikan' || el == 'hp' || el == 'cv') {
                             if (el == 'cv') {
@@ -640,6 +655,52 @@ $tahun_rec = $db->groupBy('tahun_masuk')->orderBy('tahun_masuk', 'ASC')->get()->
     $(document).on('click', '.close_canvas_popup', function(e) {
         e.preventDefault();
         $('.canvas_custome_view_popup').fadeOut();
+    })
+    $(document).on('change', '.cetak_interview', function(e) {
+        e.preventDefault();
+        let elems = document.getElementsByClassName('cetak_interview');
+        let no_ids = [];
+        for (let i = 0; i < elems.length; i++) {
+            if (elems[i].checked) {
+                no_ids.push(elems[i].getAttribute('data-no_id'));
+            }
+        }
+        if (no_ids.length <= 0) {
+            $('.body_cetak_interview').fadeOut();
+
+        } else {
+            $('.body_cetak_interview').fadeIn();
+        }
+    })
+    $(document).on('click', '.btn_cetak_interview', function(e) {
+        e.preventDefault();
+        let order = $(this).data('order');
+        let elems = document.getElementsByClassName('cetak_interview');
+        let no_ids = [];
+        for (let i = 0; i < elems.length; i++) {
+            if (elems[i].checked) {
+                no_ids.push(elems[i].getAttribute('data-no_id'));
+            }
+        }
+        if (no_ids.length <= 0) {
+            gagal('Data belum dipilih!.');
+            return false;
+        }
+        let data = {
+            data: no_ids.join(","),
+            order
+        }
+
+
+        post("encode", {
+            data
+        }).then((res) => {
+            if (res.status == '200') {
+                window.open('<?= base_url('recruitment/cetak_interview/'); ?>' + res.data, '_blank');
+            } else {
+                gagal(res.message);
+            }
+        })
     })
 </script>
 <?= $this->endSection() ?>

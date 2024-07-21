@@ -85,10 +85,10 @@
 
                                 <div style="width: 70px;"><?= $b['bulan']; ?></div>
                                 <div>
-                                    <input data-bulan="<?= $b['angka']; ?>" data-tahun="<?= $th; ?>" data-pemberangkatan_id="<?= $siswa['id']; ?>" data-tabel="setoran" type="date" style="height:30px;" data-date="" class="input_date date_setoran <?= ($hasil == null ? '' : 'tgl_tf' . $hasil['id']); ?> form-control form-control-sm" data-id="<?= ($hasil == null ? '' : $hasil['id']); ?>" name="tgl_pembayaran" data-date-format="DD/MM/YYYY" value="<?= ($hasil == null ? $th . '-' . $b['angka'] . '-01' : date('Y-m-d', $hasil['tgl_tf'])); ?>">
+                                    <input data-bulan="<?= $b['angka']; ?>" data-tahun="<?= $th; ?>" data-pemberangkatan_id="<?= $siswa['id']; ?>" data-tabel="setoran" type="date" style="height:30px;" data-date="" class="input_date date_setoran_<?= $th; ?>_<?= $b['angka']; ?> date_setoran form-control form-control-sm" data-id="<?= ($hasil == null ? '' : $hasil['id']); ?>" name="tgl_pembayaran" data-date-format="DD/MM/YYYY" value="<?= ($hasil == null ? $th . '-' . $b['angka'] . '-01' : date('Y-m-d', $hasil['tgl_tf'])); ?>">
                                 </div>
                                 <div>
-                                    <input data-bulan="<?= $b['angka']; ?>" data-tahun="<?= $th; ?>" data-pemberangkatan_id="<?= $siswa['id']; ?>" type="text" value="<?= ($hasil == null ? rupiah($siswa['setoran']) : rupiah($hasil['jml_tf'])); ?>" class="form-control form-control-sm uang jml_tf <?= ($hasil == null ? '' : 'jml_tf_' . $hasil['id']); ?>" data-id="<?= ($hasil == null ? '' : $hasil['id']); ?>" name="jml_tf" placeholder="Jumlah setoran" required>
+                                    <input data-bulan="<?= $b['angka']; ?>" data-tahun="<?= $th; ?>" data-pemberangkatan_id="<?= $siswa['id']; ?>" type="text" value="<?= ($hasil == null ? rupiah($siswa['setoran']) : rupiah($hasil['jml_tf'])); ?>" class="form-control form-control-sm uang jml_tf jml_tf_<?= $th; ?>_<?= $b['angka']; ?>" data-id="<?= ($hasil == null ? '' : $hasil['id']); ?>" name="jml_tf" placeholder="Jumlah setoran" required>
                                 </div>
                             </div>
                             <div class="form-check form-switch">

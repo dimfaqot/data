@@ -292,6 +292,7 @@
     }
 
     const update_setoran = (data) => {
+
         post('setoran/update', data).then(res => {
             if (res.status == '200') {
                 $('.total_' + data.tahun).text(res.data);
@@ -309,16 +310,15 @@
     $(document).on('change', '.date_setoran', function(e) {
         let id = $(this).data('id');
         let order = 'add';
-        let tgl_tf = $(this).val();
-        let jml_tf = $('.jml_tf').val();
         let tahun = $(this).data('tahun');
         let bulan = $(this).data('bulan');
         let pemberangkatan_id = $(this).data('pemberangkatan_id');
+        let tgl_tf = $(this).val();
+        let jml_tf = $('.jml_tf_' + tahun + '_' + bulan).val();
         let col = 'tgl_tf';
 
         if (id !== '') {
             order = 'update';
-            jml_tf = $('.jml_tf_' + id).val();
         }
         update_setoran({
             order,
@@ -335,18 +335,17 @@
     $(document).on('change', '.btn_setoran', function(e) {
         let id = $(this).data('id');
         let order = 'add';
-        let tgl_tf = $('.date_setoran').val();
-        let jml_tf = $('.jml_tf').val();
         let tahun = $(this).data('tahun');
         let bulan = $(this).data('bulan');
+        let tgl_tf = $('.date_setoran_' + tahun + '_' + bulan).val();
+        let jml_tf = $('.jml_tf_' + tahun + '_' + bulan).val();
         let pemberangkatan_id = $(this).data('pemberangkatan_id');
 
 
         if (id !== '') {
             order = 'delete';
-            tgl_tf = $('.tgl_tf_' + id).val();
-            jml_tf = $('.jml_tf_' + id).val();
         }
+
         update_setoran({
             order,
             pemberangkatan_id,
@@ -362,17 +361,15 @@
     $(document).on('blur', '.jml_tf', function(e) {
         let id = $(this).data('id');
         let order = 'add';
-        let tgl_tf = $('.date_setoran').val();
-        let jml_tf = $(this).val();
         let pemberangkatan_id = $(this).data('pemberangkatan_id');
         let tahun = $(this).data('tahun');
         let bulan = $(this).data('bulan');
+        let tgl_tf = $('.date_setoran_' + tahun + '_' + bulan).val();
+        let jml_tf = $(this).val();
         let col = 'jml_tf';
 
         if (id !== '') {
             order = 'update';
-            tgl_tf = $('.tgl_tf_' + id).val();
-            jml_tf = $(this).val();
         }
         update_setoran({
             order,

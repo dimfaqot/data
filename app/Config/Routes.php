@@ -106,6 +106,7 @@ $routes->post('/recruitment/gagal', 'Root\Recruitment::gagal');
 $routes->post('recruitment/add_image', 'Root\Recruitment::add_image');
 $routes->post('recruitment/delete_file', 'Root\Recruitment::delete_file');
 $routes->post('recruitment/custome_view', 'Root\Recruitment::custome_view');
+$routes->get('recruitment/cetak_interview/(:any)', 'Root\Recruitment::cetak_interview/$1');
 
 // santri
 $routes->get('/santri/detail/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:num)/(:any)', 'Root\Santri::detail/$1/$2/$3/$4/$5/$6/$7/$8/$9/$10');

@@ -763,8 +763,9 @@ class Home extends BaseController
         $gender = clear($this->request->getVar('gender'));
         $role = clear($this->request->getVar('role'));
         $nama = clear($this->request->getVar('nama'));
+        $info = clear($this->request->getVar('info'));
 
-        $encode = encode_jwt(['id' => $id, 'section' => $section, 'tabel' => $tabel, 'role' => $role, 'gender' => $gender, 'nama' => $nama]);
+        $encode = encode_jwt(['id' => $id, 'section' => $section, 'tabel' => $tabel, 'role' => $role, 'gender' => $gender, 'nama' => $nama, 'info' => $info]);
         $url = base_url() . 'public/a/' . $encode;
         sukses_js('Koneksi ok', $url);
     }
