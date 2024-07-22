@@ -473,7 +473,7 @@
         let col = $(this).data('col');
         let exe = get_file($(this).val(), 'exe');
 
-        if (col == 'cv' || col == 'sp' || col == 'kontrak') {
+        if (col == 'cv' || col == 'sp' || col == 'kontrak' || col == 'wawancara') {
             if (exe == 'pdf') {
                 $('.line_warning_' + col).removeClass('line_danger');
                 $('.body_warning_' + col).html('');
