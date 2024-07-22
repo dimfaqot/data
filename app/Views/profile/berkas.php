@@ -15,7 +15,7 @@ if (url() == 'identitas') {
             <div class="card mb-3 shadow shadow-sm line_warning_<?= $i; ?>">
                 <div class="row g-0">
                     <div class="col-md-4 p-2">
-                        <?php if ($i == 'cv' || $i == 'sp' || $i == 'kontrak') : ?>
+                        <?php if ($i == 'cv' || $i == 'sp' || $i == 'kontrak' || $i == 'wawancara') : ?>
                             <div style="padding-top: 30px;">
                                 <a class="<?= ($data[$i] == 'file_not_found.jpg' ? 'new_inactive' : 'new_active'); ?>" target="_blank" href="<?= $url . '/' . $data[$i]; ?>"><span class="btn_main">Klik Untuk Cek <?= upper_first(str_replace("_", " ", $i)); ?></span> <span><?= ($data[$i] == 'file_not_found.jpg' ? '<i class="fa-solid fa-circle-xmark text-danger"></i>' : '<i class="fa-solid fa-circle-check text-success"></i>'); ?></span></a>
                             </div>
