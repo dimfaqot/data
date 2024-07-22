@@ -24,9 +24,11 @@ class Auth extends BaseController
             'no_id' => $decode['id'],
             'section' => $decode['section'],
             'role' => $decode['role'],
-            'nama' => $decode['nama'],
-            'info' => $decode['info']
+            'nama' => $decode['nama']
         ];
+        if (array_key_exists('info', $decode)) {
+            $data['info'] = $decode['info'];
+        }
         session()->set($data);
         sukses(base_url('home'), 'Login sukses.');
     }
