@@ -821,7 +821,7 @@ function upload($file, $q, $col, $url, $controller = null)
         if ($size > 2000000) {
             gagal($url, 'Ukuran file maksimal 2 MB.');
         }
-        if ($col == 'cv' || $col == 'sp' || $col == 'kontrak') {
+        if ($col == 'cv' || $col == 'sp' || $col == 'kontrak' || $col == 'wawancara') {
             $ext = ['pdf'];
         } elseif ($col == 'logo') {
             $ext = ['png'];
