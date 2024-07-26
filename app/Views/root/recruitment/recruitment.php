@@ -457,6 +457,16 @@ $tahun_rec = $db->groupBy('tahun_masuk')->orderBy('tahun_masuk', 'ASC')->get()->
 </div>
 
 <script>
+    // CK EDITOR MEMBER IDENTITAS
+    let ck_input_identitas;
+    ClassicEditor
+        .create(document.querySelector('#ck_input'))
+        .then(newEditor => {
+            ck_input_identitas = newEditor;
+        })
+        .catch(error => {
+            console.error(error);
+        });
     let datas;
     const get_data_custome_view = () => {
         let deleted = $('input[name="deleted"]:checked').val();

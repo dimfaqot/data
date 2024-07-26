@@ -21,9 +21,7 @@ if ($logo == 'pondok') {
     <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>style/style.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <?= view('js'); ?>
-    <?= (in_array(url(get_db(menu()['tabel']) == 'karyawan' ? 13 : 14), ck_editor()) ? '<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>' : ''); ?>
-    <?= (in_array(url(), ck_editor()) ? '<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>' : ''); ?>
-    <?= (url() == 'identitas' && in_array(url(6), ck_editor()) ? '<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>' : ''); ?>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <?php if (get_db(menu()['tabel']) == 'djana' || get_db(menu()['tabel']) == 'lpk') : ?>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <?php endif; ?>
@@ -377,6 +375,27 @@ if ($logo == 'pondok') {
     <?= (get_db(menu()['tabel']) == 'lpk' ? view('lpk/lpk_js') : ''); ?>
     <?= (get_db(menu()['tabel']) == 'alumni' ? view('alumni/alumni_js') : ''); ?>
 
+    <script>
+        // CK EDITOR MEMBER IDENTITAS
+        let ck_input_identitas;
+        ClassicEditor
+            .create(document.querySelector('#ck_input'))
+            .then(newEditor => {
+                ck_input_identitas = newEditor;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        let ck_input_identitas2;
+        ClassicEditor
+            .create(document.querySelector('.ck_input'))
+            .then(newEditor => {
+                ck_input_identitas2 = newEditor;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 
 
 </body>

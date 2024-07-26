@@ -149,7 +149,7 @@ $desc_icon = '<i class="fa-solid fa-arrow-down-wide-short"></i>';
 
                             <div class="card-body mb-2">
                                 <label class="form-label">Artikel</label>
-                                <textarea name="artikel" class="form-control form-control-sm" id="ck_<?= $i['id']; ?>" rows="10"><?= $i['artikel']; ?></textarea>
+                                <textarea name="artikel" class="form-control form-control-sm ck_input" id="ck_<?= $i['id']; ?>" rows="10"><?= $i['artikel']; ?></textarea>
                             </div>
 
                             <div class="mb-2">
