@@ -429,7 +429,9 @@ class Recruitment extends BaseController
 
             if ($i['tipe'] == 'file') {
                 if ($q[$i['col']] !== 'file_not_found.jpg') {
-                    rename("berkas/recruitment/" . $q[$i['col']], "berkas/tes/" . $q[$i['col']]);
+                    if (file_exists("berkas/recruitment/" . $q[$i['col']])) {
+                        rename("berkas/recruitment/" . $q[$i['col']], "berkas/karyawan/" . $q[$i['col']]);
+                    }
                 }
             }
         }
