@@ -397,8 +397,6 @@
     $(document).on('keyup', '.cari', function(e) {
         e.preventDefault();
         let value = $(this).val().toLowerCase();
-        console.log(value);
-
         $('.tabel_search tr').filter(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
         });
@@ -494,7 +492,7 @@
             })
             .then(res => {
                 if (res.status == '200') {
-                    sukses();
+                    sukses_js();
                     setTimeout(() => {
                         location.reload();
                     }, 1000);
@@ -683,7 +681,7 @@
             }).then((res) => {
                 if (res.status == '200') {
 
-                    sukses();
+                    sukses_js();
                     setTimeout(() => {
                         location.reload();
                     }, 1000);
@@ -942,7 +940,7 @@
             id: 0
         }).then((res) => {
             if (res.status == '200') {
-                sukses();
+                sukses_js();
                 setTimeout(() => {
                     location.reload();
                 }, 1000);
@@ -1959,22 +1957,23 @@
     }
 
     <?php if (session()->getFlashdata('sukses')) : ?>
+        sukses_js("<?= session()->getFlashdata('sukses'); ?>");
+        $('.box_warning').html('<h1>Tes</h1>');
+        $('.box_warning').fadeIn();
 
-        let msg = '<?= session()->getFlashdata('sukses'); ?>';
-        sukses_js(msg);
+        setTimeout(() => {
+            location.reload();
+        }, 55500);
 
     <?php endif; ?>
 
     <?php if (session()->getFlashdata('gagal')) : ?>
-        let msg = '<?= session()->getFlashdata('gagal'); ?>';
-        gagal_js(msg);
+        gagal_js("<?= session()->getFlashdata('gagal'); ?>");
 
     <?php endif; ?>
 
     <?php if (session()->getFlashdata('gagal_with_button')) : ?>
-
-        let msg = '<?= session()->getFlashdata('gagal_with_button'); ?>';
-        gagal_with_button(msg);
+        gagal_with_button("<?= session()->getFlashdata('gagal_with_button'); ?>");
 
     <?php endif; ?>
 

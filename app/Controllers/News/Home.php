@@ -784,12 +784,11 @@ class Home extends BaseController
             gagal_js('Id tidak ditemukan!.');
         }
 
-        $q[$col] = $val;
+        $q['status'] = $val;
         $q['updated_at'] = time();
         $q['petugas'] = session('nama');
 
         $db->where('no_id', $id);
-
         if ($db->update($q)) {
             sukses_js('Data berhasil diupdate.');
         } else {

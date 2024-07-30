@@ -738,7 +738,7 @@
             })
             .then(res => {
                 if (res.status == '200') {
-                    sukses();
+                    sukses_js();
                     setTimeout(() => {
                         location.reload();
                     }, 1000);
