@@ -117,6 +117,7 @@ $routes->post('/santri/update', 'Root\Santri::update');
 $routes->post('/santri/remove', 'Root\Santri::remove');
 $routes->post('/santri/restore', 'Root\Santri::restore');
 $routes->post('/santri/delete', 'Root\Santri::delete');
+$routes->post('/santri/insert_to_karyawan', 'Root\Santri::insert_to_karyawan');
 
 
 // alumni

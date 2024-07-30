@@ -504,4 +504,88 @@ class Santri extends BaseController
             exit;
         }
     }
+
+    public function insert_to_karyawan()
+    {
+
+        $no_id = clear($this->request->getVar('id'));
+        $sub = clear($this->request->getVar('sub'));
+
+        // santri lulus
+        $db = db('santri', 'santri');
+        $q = $db->where('no_id', $no_id)->get()->getRowArray();
+
+        if (!$q) {
+            gagal_js('No id tidak ditemukan.');
+        }
+        if ($q['status'] !== 'Lulus') {
+            gagal_js('Santri belum lulus.');
+        }
+
+
+        $cols = get_fields('santri');
+
+        $data = [];
+        $ket = '';
+        $col_san = [];
+        foreach ($cols as $i) {
+            $col_san[] = $i['col'];
+            if ($i['col'] == 'no_id') {
+                $data['no_id'] = last_no_id_kar(date('Y'), $sub);
+            } elseif ($i['col'] == 'status') {
+                $data['status'] = 'Aktif';
+            } elseif ($i['col'] == 'sub') {
+                $data['sub'] = $sub;
+            } elseif ($i['col'] == 'tahun_masuk') {
+                $data['tahun_masuk'] = date('Y');
+            } elseif ($i['col'] == 'keluarga' || $i['col'] == 'ekonomi' || $i['col'] == 'kesehatan' || $i['col'] == 'karakter') {
+                $ket .= '<h6>' . strtoupper($i['col']) . '</h6>' . $i['col'];
+            } else {
+                $data[$i['col']] = $q[$i['col']];
+            }
+
+            if ($i['tipe'] == 'file') {
+                if ($q[$i['col']] !== 'file_not_found.jpg') {
+                    if (file_exists("berkas/santri/" . $q[$i['col']])) {
+                        rename("berkas/santri/" . $q[$i['col']], "berkas/karyawan/" . $q[$i['col']]);
+                    }
+                }
+            }
+        }
+
+        $cols_kar = get_fields('karyawan');
+        $col_kar = [];
+        foreach ($cols_kar as $c) {
+            $col_kar[] = $c['col'];
+        }
+
+        foreach ($col_san as $i) {
+            if (!in_array($i, $col_kar)) {
+                unset($data[$i]);
+            }
+        }
+        $data['catatan'] = $ket;
+        $data['ijazah_s1'] = 'file_not_found.jpg';
+        $data['nilai_s1'] = 'file_not_found.jpg';
+        $data['ijazah_s2'] = 'file_not_found.jpg';
+        $data['nilai_s2'] = 'file_not_found.jpg';
+        $data['ijazah_s3'] = 'file_not_found.jpg';
+        $data['nilai_s3'] = 'file_not_found.jpg';
+        $data['bpjs_ket'] = 'file_not_found.jpg';
+        $data['cv'] = 'file_not_found.jpg';
+        $data['sp'] = 'file_not_found.jpg';
+        $data['kontrak'] = 'file_not_found.jpg';
+        $data['ijazah_pendidikan_terakhir'] = 'file_not_found.jpg';
+        $data['nilai_pendidikan_terakhir'] = 'file_not_found.jpg';
+
+        // karyawan karyawan
+        $dbk = db('karyawan', 'karyawan');
+
+        if ($dbk->insert($data)) {
+
+            sukses_js('Data sukses diinsert ke karyawan.');
+        } else {
+            gagal_js('Data gagal dicopy ke karyawan!.');
+        }
+    }
 }

@@ -233,7 +233,7 @@ $gender = ['L', 'P', 'All'];
                             </select>
                         </td>
                         <td>
-                            <span class="btn_main_inactive"><a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit data." class="main_color" href="<?= base_url() . url(3); ?>/detail/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/<?= url(8); ?>/<?= url(9); ?>/<?= url(10); ?>/<?= url(11); ?>/<?= $i['no_id']; ?>/Profile" style="font-size: medium;"><i class="fa-solid fa-square-pen"></i></a> <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cetak pdf." style="font-size: 14px;" target="_blank" href="<?= base_url(menu()['controller']); ?>/cetak/single/<?= $i['no_id']; ?>/<?= url(6); ?>/<?= url(7); ?>/<?= url(8); ?>/<?= url(9); ?>/<?= url(10); ?>/<?= url(11); ?>/pdf" class="dark_color"><i class="fa-solid fa-file-pdf"></i></a> <?= ($i['deleted'] == 0 ? '<a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove data ini." href="" class="confirm" data-order="remove" data-method="remove" data-id="' . $i['no_id'] . '" style="font-size: medium;"><i class="fa-solid fa-square-xmark danger_color"></i></a>' : '<a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Restore data ini." href="" class="confirm secondary_dark_color" data-order="restore" data-method="restore" data-id="' . $i['no_id'] . '" style="font-size: medium;"><i class="fa-solid fa-rotate-left"></i></a> <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete permanen data ini." href="" class="confirm text-danger" data-order="delete" data-method="delete" data-id="' . $i['no_id'] . '" style="font-size: medium;"><i class="fa-solid fa-trash"></i></a>'); ?></span>
+                            <span class="btn_main_inactive"><a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit data." class="main_color" href="<?= base_url() . url(3); ?>/detail/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/<?= url(8); ?>/<?= url(9); ?>/<?= url(10); ?>/<?= url(11); ?>/<?= $i['no_id']; ?>/Profile" style="font-size: medium;"><i class="fa-solid fa-square-pen"></i></a> <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cetak pdf." style="font-size: 14px;" target="_blank" href="<?= base_url(menu()['controller']); ?>/cetak/single/<?= $i['no_id']; ?>/<?= url(6); ?>/<?= url(7); ?>/<?= url(8); ?>/<?= url(9); ?>/<?= url(10); ?>/<?= url(11); ?>/pdf" class="dark_color"><i class="fa-solid fa-file-pdf"></i></a> <?= ($i['deleted'] == 0 ? ($i['status'] == 'Lulus' ? '<a data-message="Pindah ke karyawan" data-id="' . $i['no_id'] . '" class="confirm_pindah_karyawan" href=""><i style="font-size:medium" class="fa-solid fa-square-up-right"></i></a>' : '<a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove data ini." href="" class="confirm" data-order="remove" data-method="remove" data-id="' . $i['no_id'] . '" style="font-size: medium;"><i class="fa-solid fa-square-xmark danger_color"></i></a>') : '<a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Restore data ini." href="" class="confirm secondary_dark_color" data-order="restore" data-method="restore" data-id="' . $i['no_id'] . '" style="font-size: medium;"><i class="fa-solid fa-rotate-left"></i></a> <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete permanen data ini." href="" class="confirm text-danger" data-order="delete" data-method="delete" data-id="' . $i['no_id'] . '" style="font-size: medium;"><i class="fa-solid fa-trash"></i></a>'); ?></span>
                         </td>
                     </tr>
 
@@ -256,4 +256,54 @@ $gender = ['L', 'P', 'All'];
         </div>
     <?php endif; ?>
 </div>
+
+<script>
+    $(document).on('click', '.confirm_pindah_karyawan', function(e) {
+        e.preventDefault();
+
+        let id = $(this).data('id');
+        let message = $(this).data('message');
+
+        let html = '';
+        html += '<div class="middlecenter">';
+        html += '<div class="d-flex justify-content-between shadow shadow-lg bg-white px-1" style="border:1px solid #dad8d8;border-radius: 10px;width:300px;font-size:12px;">';
+
+        html += '<div class="toast-body p-2 text-danger alert_message" style="border-radius: 10px; font-size:12px;">';
+        html += '<i class="fa-solid fa-triangle-exclamation text-warning"></i> Yakin ' + message + '?';
+        html += '</div>';
+
+        html += '</div>';
+        html += '<div class="d-flex justify-content-center body_btn_confirm">';
+        html += '<button data-id="' + id + '" type="button" class="btn btn-sm m-auto bg-white text-secondary cancel_confirm"><i class="fa-solid fa-xmark"></i></button>';
+        html += '<button data-id="' + id + '" data-sub="KB" type="button" class="btn btn-sm m-auto bg-white text-success execute_pindah_karyawan">KB</button>';
+        html += '<button data-id="' + id + '" data-sub="TK" type="button" class="btn btn-sm m-auto bg-white text-success execute_pindah_karyawan">TK</button>';
+        html += '<button data-id="' + id + '" data-sub="SDI" type="button" class="btn btn-sm m-auto bg-white text-success execute_pindah_karyawan">SDI</button>';
+        html += '<button data-id="' + id + '" data-sub="SMP" type="button" class="btn btn-sm m-auto bg-white text-success execute_pindah_karyawan">SMP</button>';
+        html += '<button data-id="' + id + '" data-sub="SMA" type="button" class="btn btn-sm m-auto bg-white text-success execute_pindah_karyawan">SMA</button>';
+        html += '<button data-id="' + id + '" data-sub="Pondok" type="button" class="btn btn-sm m-auto bg-white text-success execute_pindah_karyawan">Pondok</button>';
+        html += '</div>';
+        html += '</div>';
+        $('.modal_confirm').html(html);
+        $('.modal_confirm').show();
+    });
+    $(document).on('click', '.execute_pindah_karyawan', function(e) {
+        e.preventDefault();
+
+        let id = $(this).data('id');
+        let sub = $(this).data('sub');
+        post('santri/insert_to_karyawan', {
+            id,
+            sub
+        }).then(res => {
+            if (res.status == '200') {
+                sukses(res.message);
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+            } else {
+                gagal_with_button(res.message);
+            }
+        })
+    });
+</script>
 <?= $this->endSection() ?>
