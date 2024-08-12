@@ -686,7 +686,7 @@ function last_sk($penetapan)
 
     $db = db('sk', 'karyawan');
 
-
+    $res = null;
     for ($i = 1; $i < 100; $i++) {
         $no = '00' . $i;
         if (strlen($i) == 2) {
@@ -699,9 +699,12 @@ function last_sk($penetapan)
         $q = $db->where('no_sk', $no_sk)->get()->getRowArray();
 
         if (!$q) {
-            dd($no_sk);
+            $res = $no_sk;
+            break;
         }
     }
+
+    return $res;
 }
 
 
