@@ -686,6 +686,10 @@ function last_sk($penetapan)
 
     $db = db('sk', 'karyawan');
 
+    // echo json_encode($exp);
+    echo json_encode($bulan);
+
+    die;
     for ($i = 1; $i < 100; $i++) {
         $no = '00' . $i++;
         if (strlen($i++) == 2) {
