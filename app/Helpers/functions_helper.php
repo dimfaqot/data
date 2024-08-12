@@ -686,20 +686,17 @@ function last_sk($penetapan)
 
     $db = db('sk', 'karyawan');
 
-    // echo json_encode($exp);
-    echo json_encode($bulan);
 
-    die;
     for ($i = 1; $i < 100; $i++) {
-        $no = '00' . $i++;
-        if (strlen($i++) == 2) {
-            $no = '0' . $i++;
+        $no = '00' . $i;
+        if (strlen($i) == 2) {
+            $no = '0' . $i;
         }
-        if (strlen($i++) == 3) {
-            $no = $i++;
+        if (strlen($i) == 3) {
+            $no = $i;
         }
         $no_sk = $no . '/SK/' . $ypp . '/A/' . $bulan . '/' . $exp[2];
-
+        dd($no_sk);
         $q = $db->where('no_sk', $no_sk)->get()->getRowArray();
 
         if (!$q) {
