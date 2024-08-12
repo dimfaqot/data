@@ -4,7 +4,6 @@
 namespace App\Controllers\Root;
 
 use App\Controllers\BaseController;
-use Mpdf\Tag\Tr;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
