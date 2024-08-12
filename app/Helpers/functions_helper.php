@@ -696,11 +696,10 @@ function last_sk($penetapan)
             $no = $i;
         }
         $no_sk = $no . '/SK/' . $ypp . '/A/' . $bulan . '/' . $exp[2];
-        dd($no_sk);
         $q = $db->where('no_sk', $no_sk)->get()->getRowArray();
 
         if (!$q) {
-            return $no_sk;
+            dd($no_sk);
         }
     }
 }
