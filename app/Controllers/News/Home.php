@@ -436,7 +436,8 @@ class Home extends BaseController
             if (!$tahun) {
                 gagal_js('Buat dulu tahun penetapan di tahun ' . $tahun . "!.");
             }
-            gagal_js($thn);
+            echo json_encode($thn);
+            die;
 
             if ($q) {
                 $data = [
