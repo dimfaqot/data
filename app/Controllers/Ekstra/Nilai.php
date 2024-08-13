@@ -19,6 +19,15 @@ class Nilai extends BaseController
 
     public function index($tahun, $ekstra)
     {
+        $db = db('nilai', 'ekstra');
+        $q = $db->where('status', '')->get()->getResultArray();
+
+        foreach ($q as $i) {
+            $i['status'] = 'Nonaktif';
+            $db->where('id', $i['id']);
+            $db->update($i);
+        }
+
 
         $db = db(menu()['tabel'], get_db(menu()['tabel']));
         $q = $db->where('singkatan', $ekstra)->where('status', 'Aktif')->orderBy('ekstra', 'ASC')->orderBy('nama', 'ASC')->orderBy('no_urut', 'ASC')->groupBy('kode')->get()->getResultArray();
