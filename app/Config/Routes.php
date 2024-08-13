@@ -223,6 +223,7 @@ $routes->post('/nilai/update_blur', 'Ekstra\Nilai::update_blur');
 $routes->post('/nilai/update_nilai', 'Ekstra\Nilai::update_nilai');
 $routes->post('/nilai/detail_js', 'Ekstra\Nilai::detail_js');
 $routes->post('/nilai/delete', 'Ekstra\Nilai::delete');
+$routes->post('/nilai/update_status', 'Ekstra\Nilai::update_status');
 
 // pemilu
 // partai

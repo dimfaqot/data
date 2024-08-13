@@ -417,7 +417,8 @@ class Home extends BaseController
                     'mapel' => $i['mapel'],
                     'sks' => $i['sks'],
                     'no_id' => $santri['no_id'],
-                    'nama' => $santri['nama']
+                    'nama' => $santri['nama'],
+                    'status' => 'Aktif'
                 ];
 
                 $db = db('nilai', get_db('nilai'));

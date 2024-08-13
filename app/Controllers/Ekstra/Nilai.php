@@ -21,7 +21,7 @@ class Nilai extends BaseController
     {
 
         $db = db(menu()['tabel'], get_db(menu()['tabel']));
-        $q = $db->where('singkatan', $ekstra)->orderBy('ekstra', 'ASC')->orderBy('nama', 'ASC')->orderBy('no_urut', 'ASC')->groupBy('kode')->get()->getResultArray();
+        $q = $db->where('singkatan', $ekstra)->where('status', 'Aktif')->orderBy('ekstra', 'ASC')->orderBy('nama', 'ASC')->orderBy('no_urut', 'ASC')->groupBy('kode')->get()->getResultArray();
 
         $data = [];
 
@@ -171,5 +171,29 @@ class Nilai extends BaseController
         }
 
         sukses_js('Data sukses didelete');
+    }
+    public function update_status()
+    {
+        $data = json_decode(json_encode($this->request->getVar('data')), true);
+        $db = db('nilai', 'ekstra');
+
+        $err = 0;
+        foreach ($data as $i) {
+            $q = $db->where('kode', $i)->get()->getResultArray();
+
+            foreach ($q as $x) {
+                if ($x['status'] !== 'Nonaktif') {
+                    $x['status'] = 'Nonaktif';
+
+                    $db->where('id', $x['id']);
+
+                    if (!$db->update($x)) {
+                        $err++;
+                    }
+                }
+            }
+        }
+
+        sukses_js('Update data sukses, ' . $err . ' gagal.');
     }
 }

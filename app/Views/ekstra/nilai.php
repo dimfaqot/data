@@ -38,6 +38,7 @@
             <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Check All" href="" class="btn_main_inactive check_all" style="font-style:italic;"><i class="fa-solid fa-list-check"></i> Check All</a>
             <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download excel" data-order="excel" href="" data-controller="<?= url(); ?>" class="btn_main_inactive cetak" style="font-style:italic;"><i class="fa-solid fa-file-excel"></i> Print Excel</a>
             <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download pdf" data-order="pdf" href="" data-controller="<?= url(); ?>" class="btn_main_inactive cetak" style="font-style:italic;"><i class="fa-solid fa-paste"></i> Print Pdf</a>
+            <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Status lulus" href="" class="btn_main_inactive status" style="font-style:italic;"><i class="fa-solid fa-person-hiking"></i> Lulus</a>
         </div>
         <table class="table table-striped table-hover">
             <thead>
@@ -97,4 +98,31 @@
 
 
 </div>
+
+<script>
+    $(document).on('click', '.status', function(e) {
+        e.preventDefault();
+        let checkboxes = document.getElementsByName('cetak_check');
+        let data = [];
+        // loop over them all
+        for (let i = 0; i < checkboxes.length; i++) {
+            // And stick the checked ones onto an array...
+            if (checkboxes[i].checked) {
+                data.push(checkboxes[i].value);
+            }
+        }
+
+
+        post('nilai/update_status', {
+            data
+        }).then(res => {
+            if (res.status == '200') {
+                location.reload();
+            } else {
+                gagal(res.message);
+            }
+        })
+
+    })
+</script>
 <?= $this->endSection() ?>
