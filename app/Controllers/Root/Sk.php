@@ -43,8 +43,9 @@ class Sk extends BaseController
 
         $keys = array_column($res, $col);
         array_multisort($keys, $short_by, $res);
+        $dbt = db('tahun');
+        $tahuns = $dbt->groupBy('tahun')->orderBy('tahun', 'DESC')->get()->getResultArray();
 
-        $tahuns = $db->groupBy('tahun')->orderBy('tahun', 'DESC')->get()->getResultArray();
 
         $subs = $db->groupBy('sub')->orderBy('sub', 'ASC')->get()->getResultArray();
 
@@ -273,10 +274,11 @@ class Sk extends BaseController
         if ($order == 'pdf' || $order == 'single' || $order == 'detailpdf') {
 
             foreach ($data as $i) {
+
                 $i['is_ttd'] = $ttd;
                 $i['kop'] = '<img src="' .  'berkas/kop/' . $i['kop'] . '" alt="Kop"/>';
                 $i['ttd'] = '<img width="100px" src="' .  'berkas/ttd/' . get_ttd($i['ketua_ypp']) . '" alt="Ttd"/>';
-                $html = view('cetak/sk', ['judul' => $judul, 'data' => $i]);
+                $html = view('cetak/' . ($i['tahun'] <= 2012 ? 'sk_lpi' : 'sk'), ['judul' => $judul, 'data' => $i]);
                 $mpdf->AddPage();
                 $mpdf->WriteHTML($html);
             }
