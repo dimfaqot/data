@@ -680,10 +680,8 @@ function last_sk($penetapan)
     $exp = explode(" ", $penetapan);
     $bulan = bulan($exp[1])['romawi'];
     $ypp = '/SK-GTL/LPI-SW';
-    $kode = "/A-3/";
     if ($exp[2] >= 2013) {
         $ypp = '/SK/YPP-WS';
-        $kode = "/A/";
     }
 
     $db = db('sk', 'karyawan');
@@ -697,7 +695,7 @@ function last_sk($penetapan)
         if (strlen($i) == 3) {
             $no = $i;
         }
-        $no_sk = $no  . $ypp . $kode . $bulan . '/' . $exp[2];
+        $no_sk = $no  . $ypp . '/A/' . $bulan . '/' . $exp[2];
         $q = $db->where('no_sk', $no_sk)->get()->getRowArray();
 
         if (!$q) {
