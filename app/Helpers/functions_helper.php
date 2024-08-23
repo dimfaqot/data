@@ -816,7 +816,7 @@ function upload($file, $q, $col, $url, $controller = null)
         gagal($url, 'File belum dipilih.');
     }
 
-    $randomname = $col . '_' . str_replace(" ", "_", $q['nama']) . '_' . time();
+    $randomname = $col . '_' . str_replace(" ", "_", str_replace("'", "", $q['nama'])) . '_' . time();
 
     if ($file['error'] == 0) {
         $size = $file['size'];
@@ -840,7 +840,7 @@ function upload($file, $q, $col, $url, $controller = null)
 
         $dir = 'berkas/' . $controller . '/';
 
-        $upload = $dir . str_replace("'", "-", $randomname) . '.' . $exe;
+        $upload = $dir . str_replace("'", "", $randomname) . '.' . $exe;
 
         if (!move_uploaded_file($file['tmp_name'], $upload)) {
             gagal($url, 'File gagal diupload.');
