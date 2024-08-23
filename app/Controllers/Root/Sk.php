@@ -151,15 +151,15 @@ class Sk extends BaseController
         $no_sk = strtoupper(clear($this->request->getVar('no_sk')));
         $no_id = clear($this->request->getVar('no_id'));
         $nama = clear($this->request->getVar('nama'));
-        $ttl = upper_first(clear($this->request->getVar('ttl')));
+        $ttl = clear($this->request->getVar('ttl'));
         $pendidikan = clear($this->request->getVar('pendidikan'));
         $sub = clear($this->request->getVar('sub'));
-        $jabatan = upper_first(clear($this->request->getVar('jabatan')));
-        $tugas = upper_first(clear($this->request->getVar('tugas')));
-        $diangkat = upper_first(clear($this->request->getVar('diangkat')));
-        $rapat = upper_first(clear($this->request->getVar('rapat')));
-        $penetapan = upper_first(clear($this->request->getVar('penetapan')));
-        $jenis = upper_first(clear($this->request->getVar('jenis')));
+        $jabatan = clear($this->request->getVar('jabatan'));
+        $tugas = clear($this->request->getVar('tugas'));
+        $diangkat = clear($this->request->getVar('diangkat'));
+        $rapat = clear($this->request->getVar('rapat'));
+        $penetapan = clear($this->request->getVar('penetapan'));
+        $jenis = clear($this->request->getVar('jenis'));
         $ketua_ypp = clear($this->request->getVar('ketua_ypp'));
         $kop = strtolower(clear($this->request->getVar('kop')));
 
