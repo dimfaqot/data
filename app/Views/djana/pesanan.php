@@ -205,6 +205,8 @@
                     <th>Barang</th>
                     <th class="d-none d-md-table-cell">Pemesan</th>
                     <th class="d-none d-md-table-cell">Teller</th>
+                    <th class="d-none d-md-table-cell">Lunas</th>
+                    <th class="d-none d-md-table-cell">Masuk</th>
                     <th>Ket</th>
                 </tr>
             </thead>
@@ -221,6 +223,8 @@
                         <td data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail barang."><a data-bs-toggle="modal" data-bs-target="#detail_<?= $i['id']; ?>" href="" class="btn_bright_sm"><?= $i['barang']; ?></a></td>
                         <td class="d-none d-md-table-cell"><?= $i['pemesan']; ?></td>
                         <td class="d-none d-md-table-cell"><?= $i['penerima_order']; ?></td>
+                        <td class="d-none d-md-table-cell"><?= rupiah($i['jml_lunas']); ?></td>
+                        <td class="d-none d-md-table-cell"><?= rupiah($i['jml']); ?></td>
                         <td><a href="" class="get_status" data-status="<?= $i['status']; ?>"><?= $i['icon']; ?></a></td>
                     </tr>
                 <?php endforeach; ?>
