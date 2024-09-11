@@ -188,7 +188,7 @@ function clear($text)
 
 function upper_first($text)
 {
-    $text = clear($text);
+    // $text = clear($text);
     $exp = explode(" ", $text);
 
     $val = [];
@@ -840,7 +840,7 @@ function upload($file, $q, $col, $url, $controller = null)
 
         $dir = 'berkas/' . $controller . '/';
 
-        $upload = $dir . str_replace("'", "", $randomname) . '.' . $exe;
+        $upload = $dir .  $randomname . '.' . $exe;
 
         if (!move_uploaded_file($file['tmp_name'], $upload)) {
             gagal($url, 'File gagal diupload.');
