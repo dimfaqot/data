@@ -1,7 +1,7 @@
 <?php
 $logo = strtolower(session('section'));
 
-if ($logo == 'root' || $logo == 'member' || $logo == 'yayasan' || $logo == 'angkatan' || $logo == 'region') {
+if ($logo == 'root' ||  $logo == 'member' || $logo == 'yayasan' || $logo == 'angkatan' || $logo == 'region') {
     $logo = 'karyawan';
 }
 if ($logo == 'pondok') {
@@ -20,15 +20,21 @@ if ($logo == 'pondok') {
     <link rel="icon" type="image/png" href="<?= base_url(); ?>berkas/menu/<?= $logo; ?>.png" sizes="16x16">
     <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>style/style.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <?= view('js'); ?>
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <?php if (get_db(menu()['tabel']) == 'djana' || get_db(menu()['tabel']) == 'lpk') : ?>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <?php endif; ?>
+
+    <?php if (url() == 'sdi-admin' || url() == 'member-sdi') : ?>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <?php endif; ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
 </head>
 
 
 <body style="margin-bottom: 70px;" class="bg-light">
+
     <!-- warning alert message -->
     <div class="box_warning" style="position:fixed;z-index:999999;display:none;">
 
@@ -364,12 +370,11 @@ if ($logo == 'pondok') {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <?php endif; ?>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <?= view('js'); ?>
 
 
     <?= view('validation_js'); ?>
     <?= view('functions_js'); ?>
-
     <?= (url() == 'cetak' ? view('root/cetak_js') : (url() == 'rebana' ? view('rebana/rebana_js') : (url() == 'rental' ? view('rental/rental_js') : ''))); ?>
     <?= (get_db(menu()['tabel']) == 'djana' ? view('djana/djana_js') : ''); ?>
     <?= (get_db(menu()['tabel']) == 'lpk' ? view('lpk/lpk_js') : ''); ?>

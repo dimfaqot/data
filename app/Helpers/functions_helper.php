@@ -561,6 +561,10 @@ function last_no_id_ppdb($tahun_masuk, $sub)
 {
     $db = db('ppdb', get_db(menu()['tabel']));
     $q = $db->where('tahun_masuk', $tahun_masuk)->where('sub', $sub)->orderBy('no_id', 'DESC')->get()->getRowArray();
+    if ($sub == 'SDI') {
+        $db = db('ppdb', 'sdi');
+        $q = $db->where('tahun_masuk', $tahun_masuk)->orderBy('no_id', 'DESC')->get()->getRowArray();
+    }
     $sb = sub($sub)['kode'];
     $rentang = substr($tahun_masuk, -2) . $sb . '000';
     $rentang = (int)$rentang;

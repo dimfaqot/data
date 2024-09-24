@@ -1365,6 +1365,7 @@
         $('.message_confirm_' + i).removeClass('d-none');
 
     });
+
     $(document).on('click', '.cancel_delete_file', function(e) {
         e.preventDefault();
         let i = $(this).data('i');
@@ -1957,8 +1958,8 @@
     }
 
     <?php if (session()->getFlashdata('sukses')) : ?>
+
         sukses_js("<?= session()->getFlashdata('sukses'); ?>");
-        $('.box_warning').html('<h1>Tes</h1>');
         $('.box_warning').fadeIn();
 
         setTimeout(() => {

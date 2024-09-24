@@ -11,6 +11,7 @@ $routes->get('/', 'News\Landing::index');
 
 // cari
 $routes->post('/cari_nama_db', 'Cari\Cari::cari_nama_db');
+$routes->post('/get_kabupaten', 'Cari\Cari::get_kabupaten');
 $routes->post('/cari_daerah_db', 'Cari\Cari::cari_daerah_db');
 $routes->post('/cari_lpk_db', 'Cari\Cari::cari_lpk_db');
 $routes->post('alumni/cari_nama_santri', 'Cari\Cari::cari_nama_santri');
@@ -304,6 +305,11 @@ $routes->get('/recruitment', 'Public\Recruitment::index');
 $routes->get('/identitas/member/recruitment/(:any)', 'Member\Recruitment::identitas/$1');
 $routes->post('/identitas/member/recruitment/update', 'Member\Recruitment::update');
 
+// identitas untuk member ppdb sdi
+$routes->get('/member-sdi', 'Member\Ppdb_sdi::index');
+$routes->get('/member-sdi/(:any)', 'Member\Ppdb_sdi::index/$1');
+$routes->post('/member-sdi/update', 'Member\Ppdb_sdi::update');
+
 // rebana
 $routes->get('/public/rebana/cetak/(:any)/(:any)/(:any)', 'Public\Rebana::cetak/$1/$2/$3');
 $routes->get('/public/rebana', 'Public\Rebana::index');
@@ -466,3 +472,13 @@ $routes->post('/pembayaran/delete_nota_lpk', 'Lpk\Pembayaran::delete_nota_lpk');
 $routes->get('/setoran', 'Lpk\Setoran::index');
 $routes->get('/setoran/detail_setoran/(:num)', 'Lpk\Setoran::detail/$1');
 $routes->post('setoran/update', 'Lpk\Setoran::update');
+
+// Sdi
+$routes->get('/sdi-admin/detail-ppdb-sdi/(:any)/(:num)', 'Sdi\Admin::detail/$1/$2');
+$routes->get('/sdi-admin/cetak/(:any)/(:any)', 'Sdi\Admin::cetak/$1/$2');
+$routes->get('/sdi-admin', 'Sdi\Admin::index');
+$routes->post('/sdi-admin/add', 'Sdi\Admin::add');
+$routes->post('/sdi-admin/update', 'Sdi\Admin::update');
+$routes->post('/sdi-admin/delete', 'Sdi\Admin::delete');
+$routes->post('/sdi-admin/update_template_wa', 'Sdi\Admin::update_template_wa');
+$routes->get('/sdi-admin/(:any)', 'Sdi\Admin::index/$1');
