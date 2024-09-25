@@ -11,7 +11,6 @@ $routes->get('/', 'News\Landing::index');
 
 // cari
 $routes->post('/cari_nama_db', 'Cari\Cari::cari_nama_db');
-$routes->post('/get_kabupaten', 'Cari\Cari::get_kabupaten');
 $routes->post('/cari_daerah_db', 'Cari\Cari::cari_daerah_db');
 $routes->post('/cari_lpk_db', 'Cari\Cari::cari_lpk_db');
 $routes->post('alumni/cari_nama_santri', 'Cari\Cari::cari_nama_santri');

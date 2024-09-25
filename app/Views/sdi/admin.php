@@ -164,7 +164,10 @@
         if (values.length === 0) {
             $('.body_cetak').html('');
         } else {
-            let html = '<a href="" data-order="pdf" data-no_id="' + values.join(',') + '" class="btn_main_inactive btn_cetak" style="font-size: medium;"><i class="fa-solid fa-file-pdf"></i></a>';
+            let html = '<div class="d-flex gap-2">';
+            html += '<a href="" data-order="pdf" data-no_id="' + values.join(',') + '" class="btn_main_inactive btn_cetak" style="font-size: medium;"><i class="fa-solid fa-file-pdf"></i></a>';
+            html += '<a href="" data-order="excel" data-no_id="' + values.join(',') + '" class="btn_main_inactive btn_cetak" style="font-size: medium;"><i class="fa-solid fa-file-excel"></i></a>';
+            html += '</div>';
             $('.body_cetak').html(html);
         }
     })

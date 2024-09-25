@@ -143,7 +143,7 @@ class Cari extends BaseController
         sukses_js('Koneksi sukses.');
     }
 
-    public function get_kabupaten()
+    public function get_daerah()
     {
         $text = clear($this->request->getVar('text'));
 

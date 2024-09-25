@@ -75,7 +75,7 @@ class Admin extends BaseController
         if ($segmen == 'identitas') {
             $cols = ['jenis_pendaftaran', 'nama', 'nisn', 'nik', 'gender', 'kota_lahir', 'tgl_lahir', 'usia', 'no_hp', 'agama', 'kewarganegaraan'];
         } elseif ($segmen == 'profile') {
-            $cols = ['tinggi_badan', 'berat_badan',  'anak_ke', 'jml_saudara', 'alamat', 'kelurahan', 'kecamatan', 'kabupaten', 'provinsi', 'kodepos', 'tinggal_bersama', 'jarak_tempuh', 'asal_sekolah'];
+            $cols = ['tinggi_badan', 'berat_badan',  'anak_ke', 'jml_saudara', 'tinggal_bersama', 'jarak_tempuh', 'asal_sekolah', 'alamat', 'provinsi', 'kabupaten', 'kecamatan', 'kelurahan', 'kodepos'];
         } else {
             $cols = ['nama_' . $segmen, 'nik_' . $segmen, 'ttl_' . $segmen, 'pendidikan_' . $segmen, 'pekerjaan_' . $segmen, 'penghasilan_' . $segmen];
         }
@@ -200,7 +200,8 @@ class Admin extends BaseController
 
             $rows = 2;
             $huruf = 'Z';
-            foreach ($data['data'] as $i) {
+            foreach ($data as $i) {
+                $i['tgl_lahir'] = date('d/m/Y', $i['tgl_lahir']);
                 foreach ($cols as $k => $c) {
                     $huruf++;
                     if ($k < 26) {
