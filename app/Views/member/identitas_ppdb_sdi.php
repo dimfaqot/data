@@ -49,11 +49,11 @@
                 <?php elseif ($i == 'usia'): ?>
                     <input name="<?= $i; ?>" type="text" value="<?= $data[$i]; ?>" class="form-control form-control-sm" placeholder="<?= upper_first(str_replace("_", " ", $i)); ?>" readonly>
                 <?php elseif ($i == 'kota_lahir'): ?>
-                    <input name="<?= $i; ?>" type="text" value="<?= $data[$i]; ?>" data-to="show_search_daerah" class="form-control form-control-sm show_search_daerah" placeholder="<?= upper_first(str_replace("_", " ", $i)); ?>" readonly>
+                    <input name="<?= $i; ?>" type="text" value="<?= $data[$i]; ?>" data-tabel="kabupaten" data-provinsi="" data-to="show_search_daerah" class="form-control form-control-sm show_search_daerah" placeholder="<?= upper_first(str_replace("_", " ", $i)); ?>" readonly>
                 <?php elseif ($i == 'tgl_lahir'): ?>
                     <input type="date" style="height: 30px;" data-date="" class="input_date form-control" name="tgl_lahir" data-date-format="DD/MM/YYYY" value="<?= date('Y-m-d', $data['tgl_lahir']); ?>">
                 <?php else: ?>
-                    <input name="<?= $i; ?>" type="text" value="<?= $data[$i]; ?>" class="form-control form-control-sm" placeholder="<?= upper_first(str_replace("_", " ", $i)); ?>">
+                    <input name="<?= $i; ?>" type="text" value="<?= $data[$i]; ?>" class="form-control form-control-sm update_daerah update_<?= $i; ?>" data-order="<?= $i; ?>" placeholder="<?= upper_first(str_replace("_", " ", $i)); ?>">
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>
@@ -76,13 +76,26 @@
     </div>
 </div>
 <script>
-    $(document).on('click', '.show_search_daerah', function(e) {
-        e.preventDefault();
+    const get_daerah = (data, to) => {
+        post('cari_daerah_db', {
+            data
+        }).then(res => {
+            if (res.status == '200') {
+                let html2 = '';
+                res.data.forEach(e => {
+                    html2 += '<a href="#" data-to="' + to + '" class="list-group-item list-group-item-action select_hasil">' + e.name + '</a>';
+                });
+                $('.hasil_pencarian').html(html2);
 
-        let to = $(this).data('to');
+            } else {
+                gagal_with_button('Connection failed!.');
+            }
+        })
+    }
+
+    const show_modal_daerah = (to, tabel, provinsi = '', kabupaten = '', kecamatan = '') => {
         let html = '';
-
-        html += '<input type="text" class="form-control form-control-sm get_kabupaten">';
+        html += '<input type="text" data-tabel="' + tabel + '" data-to="' + to + '" data-provinsi="' + provinsi + '" data-kabupaten="' + kabupaten + '" data-kecamatan="' + kecamatan + '" class="form-control form-control-sm search_daerah">';
         html += '<div class="list-group mt-2 hasil_pencarian">';
         html += '</div>';
 
@@ -93,41 +106,100 @@
         modal.show();
 
         $('#modal_search').on('shown.bs.modal', function() {
-            $('.get_kabupaten').focus();
+            $('.search_daerah').focus();
         })
 
-        $(document).on('keyup', '.get_kabupaten', function(e) {
-            e.preventDefault();
-            let text = $(this).val();
-            post('get_kabupaten', {
-                text
-            }).then(res => {
-                if (res.status == '200') {
-                    let html2 = '';
-                    res.data.forEach(e => {
-                        html2 += '<a href="#" data-to="' + to + '" class="list-group-item list-group-item-action select_hasil">' + e.name + '</a>';
-                    });
-                    $('.hasil_pencarian').html(html2);
+    }
 
+    $('#modal_search').on('hide.bs.modal', function() {
+        $('.body_modal_search').html('');
+    })
 
+    $(document).on('click', '.show_search_daerah', function(e) {
+        e.preventDefault();
+        let to = $(this).data('to');
+        let tabel = $(this).data('tabel');
+        show_modal_daerah(to, tabel);
+    })
 
-                } else {
-                    gagal_with_button('Connection failed!.');
-                }
-            })
+    $(document).on('keyup', '.search_daerah', function(e) {
+        e.preventDefault();
+        let value = $(this).val();
+        let to = $(this).data('to');
+        let tabel = $(this).data('tabel');
+        let provinsi = $(this).data('provinsi');
+        let kabupaten = $(this).data('kabupaten');
+        let kecamatan = $(this).data('kecamatan');
+        let data = {
+            tabel,
+            value,
+            provinsi,
+            kabupaten,
+            kecamatan
+        };
+        get_daerah(data, to);
 
-        })
+    })
 
+    $(document).on('keyup', '.update_daerah', function(e) {
+        let order = $(this).data('order');
+        let value = $(this).val();
+        let tabel = $(this).data('order');
+        let provinsi = $('.update_provinsi').val();
+        let kabupaten = $('.update_kabupaten').val();
+        let kecamatan = $('.update_kecamatan').val();
+        let to = 'update_' + order;
+
+        if (order == 'provinsi') {
+            if ($('.update_alamat').val() == '') {
+                gagal_with_button('Alamat harus diisi dahulu!.');
+                $(this).val('');
+                return false;
+            }
+
+            show_modal_daerah(to, tabel, provinsi, kabupaten, kecamatan);
+        }
+
+        if (order == 'kabupaten') {
+            if (provinsi == '') {
+                gagal_with_button('Provinsi harus diisi dahulu!.');
+                $(this).val('');
+                return false;
+            }
+
+            show_modal_daerah(to, tabel, provinsi, kabupaten, kecamatan);
+        }
+
+        if (order == 'kecamatan') {
+            if (kabupaten == '') {
+                gagal_with_button('Kabupaten harus diisi dahulu!.');
+                $(this).val('');
+                return false;
+            }
+
+            show_modal_daerah(to, tabel, provinsi, kabupaten, kecamatan);
+        }
+
+        if (order == 'kelurahan') {
+            if (kecamatan == '') {
+                gagal_with_button('Kecamatan harus diisi dahulu!.');
+                $(this).val('');
+                return false;
+            }
+
+            show_modal_daerah(to, tabel, provinsi, kabupaten, kecamatan);
+        }
 
 
     })
 
     $(document).on('click', '.select_hasil', function(e) {
+        e.preventDefault();
         let val = $(this).text();
         let to = $(this).data('to');
 
         $('.' + to).val(val);
-
+        $('.body_modal_search').html('');
         let myModal = document.getElementById('modal_search');
         let modal = bootstrap.Modal.getOrCreateInstance(myModal)
         modal.hide();
