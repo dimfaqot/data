@@ -39,10 +39,14 @@ class Admin extends BaseController
         $gender = clear($this->request->getVar('gender'));
         $nama = upper_first(clear($this->request->getVar('nama')));
         $no_hp = upper_first(clear($this->request->getVar('no_hp')));
+        $jenis_pendaftaran = upper_first(clear($this->request->getVar('jenis_pendaftaran')));
+        $asal_tk = upper_first(clear($this->request->getVar('asal_tk')));
 
         $data = [
             'no_id' => last_no_id_ppdb($tahun_masuk, 'SDI'),
             'tahun_masuk' => $tahun_masuk,
+            'jenis_pendaftaran' => $jenis_pendaftaran,
+            'asal_tk' => $asal_tk,
             'tgl_lahir' => time(),
             'gender' => $gender,
             'kewarganegaraan' => 'Indonesia',
@@ -73,7 +77,7 @@ class Admin extends BaseController
 
         $cols = [];
         if ($segmen == 'identitas') {
-            $cols = ['jenis_pendaftaran', 'nama', 'nisn', 'nik', 'gender', 'kota_lahir', 'tgl_lahir', 'usia', 'no_hp', 'agama', 'kewarganegaraan'];
+            $cols = ['jenis_pendaftaran', 'asal_tk', 'nama', 'nisn', 'nik', 'gender', 'kota_lahir', 'tgl_lahir', 'usia', 'no_hp', 'agama', 'kewarganegaraan'];
         } elseif ($segmen == 'profile') {
             $cols = ['tinggi_badan', 'berat_badan',  'anak_ke', 'jml_saudara', 'tinggal_bersama', 'jarak_tempuh', 'asal_sekolah', 'alamat', 'provinsi', 'kabupaten', 'kecamatan', 'kelurahan', 'kodepos'];
         } else {

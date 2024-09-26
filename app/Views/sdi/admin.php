@@ -24,7 +24,28 @@
                     <div class="card">
                         <div class="card-body">
                             <form action="<?= base_url(menu()['controller']); ?>/add" method="post">
-
+                                <div class="mb-2 box_card">
+                                    <div class="form-label">Jenis Pendaftaran</div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" name="jenis_pendaftaran" type="radio" value="Siswa Baru" checked>
+                                        <label class="form-check-label">Siswa Baru</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" name="jenis_pendaftaran" type="radio" value="Pindahan">
+                                        <label class="form-check-label">Pindahan</label>
+                                    </div>
+                                </div>
+                                <div class="mb-2 box_card">
+                                    <div class="form-label">Asal Tk</div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" name="asal_tk" type="radio" value="Tk Walisongo" checked>
+                                        <label class="form-check-label">Tk Walisongo</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" name="asal_tk" type="radio" value="Tk Luar">
+                                        <label class="form-check-label">Tk Luar</label>
+                                    </div>
+                                </div>
                                 <div class="form-floating mb-2">
                                     <input type="number" class="form-control check_tahun_masuk" name="tahun_masuk" value="<?= tahun_santri('ppdb'); ?>" placeholder="Tahun Masuk">
                                     <label>Tahun Masuk</label>

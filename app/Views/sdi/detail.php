@@ -29,6 +29,15 @@
                         <input class="form-check-input" name="<?= $i; ?>" type="radio" value="P" <?= ($data[$i] == 'P' ? 'checked' : ''); ?>>
                         <label class="form-check-label">Perempuan</label>
                     </div>
+                <?php elseif ($i == 'asal_tk'): ?>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" name="<?= $i; ?>" type="radio" value="Tk Walisongo" <?= ($data[$i] == 'Tk Walisongo' ? 'checked' : ''); ?>>
+                        <label class="form-check-label">Tk Walisongo</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" name="<?= $i; ?>" type="radio" value="Tk Luar" <?= ($data[$i] == 'Tk Luar' ? 'checked' : ''); ?>>
+                        <label class="form-check-label">Tk Luar</label>
+                    </div>
                 <?php elseif ($i == 'jenis_pendaftaran'): ?>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" name="<?= $i; ?>" type="radio" value="Siswa Baru" <?= ($data[$i] == 'Siswa Baru' ? 'checked' : ''); ?>>

@@ -21,7 +21,7 @@ class Ppdb_sdi extends BaseController
 
         $cols = [];
         if ($segmen == 'identitas') {
-            $cols = ['jenis_pendaftaran', 'nama', 'nisn', 'nik', 'gender', 'kota_lahir', 'tgl_lahir', 'usia', 'no_hp', 'agama', 'kewarganegaraan'];
+            $cols = ['nama', 'nisn', 'nik', 'gender', 'kota_lahir', 'tgl_lahir', 'usia', 'no_hp', 'agama', 'kewarganegaraan'];
         } elseif ($segmen == 'profile') {
             $cols = ['tinggi_badan', 'berat_badan',  'anak_ke', 'jml_saudara', 'tinggal_bersama', 'jarak_tempuh', 'asal_sekolah', 'alamat', 'provinsi', 'kabupaten', 'kecamatan', 'kelurahan', 'kodepos'];
         } else {
