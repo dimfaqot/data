@@ -771,7 +771,7 @@ function alamat_lengkap($req)
         $alamat .= ' Prov. ' . $req['provinsi'];
     }
     if (array_key_exists('kode_pos', $req)) {
-        if ($req['kode_pos'] !== '') {
+        if ($req['kode_pos'] !== '' && $req['kode_pos'] !== '0') {
             $alamat .= ' ' . $req['kode_pos'];
         }
     }

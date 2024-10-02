@@ -119,6 +119,10 @@ $routes->post('/santri/restore', 'Root\Santri::restore');
 $routes->post('/santri/delete', 'Root\Santri::delete');
 $routes->post('/santri/insert_to_karyawan', 'Root\Santri::insert_to_karyawan');
 
+// kts
+$routes->get('/kts/cetak/(:num)/(:any)', 'Root\Kts::cetak/$1/$2');
+$routes->get('/kts', 'Root\Kts::index');
+$routes->get('/kts/(:num)/(:any)', 'Root\Kts::index/$1/$2');
 
 // alumni
 // angkatan
