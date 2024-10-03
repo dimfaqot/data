@@ -6,12 +6,12 @@
 
     <div class="input-group input-group-sm mb-3">
         <!-- Button trigger modal -->
-        <select data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Filter data berdasar tahun masuk." class="form-select">
+        <select data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Filter data berdasar tahun masuk." class="form-select fltr tahun" data-filter="tahun">
             <?php foreach ($tahuns as $i) : ?>
                 <option <?= ($i['tahun_masuk'] == $tahun ? 'selected' : ''); ?> value="<?= $i['tahun_masuk']; ?>"><?= $i['tahun_masuk']; ?></option>
             <?php endforeach; ?>
         </select>
-        <select data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Filter data berdasar sub." class="form-select">
+        <select data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Filter data berdasar sub." class="form-select fltr sub" data-filter="sub">
             <?php foreach (sub() as $i) : ?>
                 <option <?= ($i['singkatan'] == $sub ? 'selected' : ''); ?> value="<?= $i['singkatan']; ?>"><?= $i['singkatan']; ?></option>
             <?php endforeach; ?>
@@ -48,6 +48,18 @@
         e.preventDefault();
 
         window.open('<?= base_url('kts/cetak'); ?>/' + '/' + '<?= $tahun; ?>' + '/' + '<?= $sub; ?>', '_blank');
+    })
+    $(document).on('change', '.fltr', function(e) {
+        e.preventDefault();
+
+        let filter = $(this).data('filter');
+
+        if (filter == 'tahun') {
+            location.href = '<?= base_url('kts'); ?>/' + $(this).val() + '/' + $('.sub').val();
+        }
+        if (filter == 'sub') {
+            location.href = '<?= base_url('kts'); ?>/' + $('.tahun').val() + '/' + $(this).val();
+        }
     })
 </script>
 <?= $this->endSection() ?>
