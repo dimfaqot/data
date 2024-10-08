@@ -56,9 +56,10 @@
 
         if (x == 0) {
             $('.btn_check').attr('type', 'submit');
-        } else {
-            $('.btn_check').attr('type', 'button');
         }
+        // else {
+        //     $('.btn_check').attr('type', 'button');
+        // }
 
     }
     check_cols_to_change_submit();
@@ -353,7 +354,7 @@
                 $('.check_kelurahan').prop('disabled', true);
                 gagal_check('kelurahan', 'Kelurahan harus diisi!.');
 
-                $('.btn_update').attr('type', 'button');
+                // $('.btn_update').attr('type', 'button');
             } else {
                 $('.check_kabupaten').prop('disabled', false);
                 sukses_check('provinsi', '');
@@ -373,7 +374,7 @@
                 $('.check_kelurahan').prop('disabled', true);
                 gagal_check('kelurahan', 'Kelurahan harus diisi!.');
 
-                $('.btn_update').attr('type', 'button');
+                // $('.btn_update').attr('type', 'button');
             } else {
                 $('.check_kecamatan').prop('disabled', false);
                 sukses_check('kecamatan', '');
@@ -386,7 +387,7 @@
                 $('.check_kelurahan').prop('disabled', true);
                 gagal_check('kelurahan', 'Kelurahan harus diisi!.');
 
-                $('.btn_update').attr('type', 'button');
+                // $('.btn_update').attr('type', 'button');
             } else {
                 $('.check_kelurahan').prop('disabled', false);
                 sukses_check('kelurahan', '');
@@ -397,7 +398,7 @@
             if ($('.check_kelurahan').val() == '') {
                 gagal_check('kelurahan', 'Kelurahan harus diisi!.');
 
-                $('.btn_update').attr('type', 'button');
+                // $('.btn_update').attr('type', 'button');
             }
         }
 
@@ -417,26 +418,26 @@
         if (order == 'provinsi') {
             sukses_check('provinsi', '');
             $('.check_kabupaten').prop('disabled', false);
-            $('.btn_update').attr('type', 'button');
+            // $('.btn_update').attr('type', 'button');
 
         }
         if (order == 'kabupaten') {
             sukses_check('kabupaten', '');
             $('.check_kecamatan').prop('disabled', false);
-            $('.btn_update').attr('type', 'button');
+            // $('.btn_update').attr('type', 'button');
 
         }
         if (order == 'kecamatan') {
             sukses_check('kecamatan', '');
             $('.check_kelurahan').prop('disabled', false);
 
-            $('.btn_update').attr('type', 'button');
+            // $('.btn_update').attr('type', 'button');
 
         }
         if (order == 'kelurahan') {
             sukses_check('kelurahan', '');
 
-            $('.btn_update').attr('type', 'button');
+            // $('.btn_update').attr('type', 'button');
 
         }
 
@@ -456,14 +457,14 @@
         $('.check_kabupaten').prop('disabled', true);
         $('.check_kecamatan').prop('disabled', true);
         $('.check_kelurahan').prop('disabled', true);
-        $('.btn_update').attr('type', 'button');
+        // $('.btn_update').attr('type', 'button');
     }
 
 
 
     if ($('.check_kode_pos').val() == '' || $('.check_kode_pos').val() == '0') {
         gagal_check('kode_pos', 'Kode pos harus diisi!.');
-        $('.btn_update').attr('type', 'button');
+        // $('.btn_update').attr('type', 'button');
     }
 
 
@@ -481,18 +482,18 @@
                 if (this.files[0].size > 2000000) {
                     $('.line_warning_' + col).addClass('line_danger');
                     $('.body_warning_' + col).html('<i class="fa-solid fa-circle-exclamation"></i> File terlalu besar. Ukuran maksima 2 MB!.');
-                    $('.btn_' + col).attr('type', 'button');
+                    // $('.btn_' + col).attr('type', 'button');
                 }
             } else {
                 $('.line_warning_' + col).addClass('line_danger');
                 $('.body_warning_' + col).html('<i class="fa-solid fa-circle-exclamation"></i> File harus pdf!.');
-                $('.btn_' + col).attr('type', 'button');
+                // $('.btn_' + col).attr('type', 'button');
             }
         } else {
             if (exe !== 'jpg' && exe !== 'jpeg' && exe !== 'png') {
                 $('.line_warning_' + col).addClass('line_danger');
                 $('.body_warning_' + col).html('<i class="fa-solid fa-circle-exclamation"></i> File harus jpg atau jpeg atau png!.');
-                $('.btn_' + col).attr('type', 'button');
+                // $('.btn_' + col).attr('type', 'button');
             } else {
                 $('.line_warning_' + col).removeClass('line_danger');
                 $('.body_warning_' + col).html('');
@@ -500,7 +501,7 @@
                 if (this.files[0].size > 2000000) {
                     $('.line_warning_' + col).addClass('line_danger');
                     $('.body_warning_' + col).html('<i class="fa-solid fa-circle-exclamation"></i> File terlalu besar. Ukuran maksima 2 MB!.');
-                    $('.btn_' + col).attr('type', 'button');
+                    // $('.btn_' + col).attr('type', 'button');
                 }
             }
         }
@@ -656,7 +657,7 @@
             }
         }
         if (x == 1) {
-            $('.btn_check').attr('type', 'button');
+            // $('.btn_check').attr('type', 'button');
         }
 
         return x;

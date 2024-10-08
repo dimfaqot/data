@@ -318,7 +318,7 @@
         $(".body_feedback_" + cls).removeClass('valid-feedback');
         $(".body_feedback_" + cls).addClass('invalid-feedback');
         $(".body_feedback_" + cls).html('<small class="text-danger">' + (message == '' ? '' : '<i class="fa-solid fa-circle-exclamation"></i>') + ' ' + message + '</small>');
-        $('.btn_check').attr('type', 'button');
+        // $('.btn_check').attr('type', 'button');
     }
 
     const default_check = (cls) => {
