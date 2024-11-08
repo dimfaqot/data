@@ -1181,27 +1181,27 @@ function partai()
     return $q;
 }
 
-function last_vote($order = null)
-{
-    $db = db('pemilih', 'pemilu');
-    $q = $db->whereNotIn('tgl', [0])->orderBy('tgl', 'DESC')->get()->getRowArray();
+// function last_vote($order = null)
+// {
+//     $db = db('pemilih', 'pemilu');
+//     $q = $db->whereNotIn('tgl', [0])->orderBy('tgl', 'DESC')->get()->getRowArray();
 
-    if ($order == null) {
-        if ($q) {
-            return $q['tgl'] + 86400;
-        } else {
-            return time() + (86400 * 3);
-        }
-    }
+//     if ($order == null) {
+//         if ($q) {
+//             return $q['tgl'] + 86400;
+//         } else {
+//             return time() + (86400 * 3);
+//         }
+//     }
 
-    if ($order == 'started') {
-        if ($q) {
-            return $q;
-        } else {
-            return null;
-        }
-    }
-}
+//     if ($order == 'started') {
+//         if ($q) {
+//             return $q;
+//         } else {
+//             return null;
+//         }
+//     }
+// }
 
 
 function no_pilangsari($no)

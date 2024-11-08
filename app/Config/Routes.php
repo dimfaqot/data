@@ -254,6 +254,7 @@ $routes->get('/pemilih/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)', 'Pemil
 $routes->post('/pemilih/update', 'Pemilu\Pemilih::update');
 $routes->post('/pemilih/delete', 'Pemilu\Pemilih::delete');
 $routes->post('/pemilih/absen', 'Pemilu\Pemilih::absen');
+$routes->post('/pemilih/copy_to_next_year', 'Pemilu\Pemilih::copy_to_next_year');
 $routes->get('/pemilih/reset', 'Pemilu\Pemilih::reset');
 
 // hasil

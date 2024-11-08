@@ -18,7 +18,7 @@ class Pemilih extends BaseController
     public function index($tahun, $voted, $page, $kategori, $pondok, $col, $asc): string
     {
         $db = db(menu()['tabel'], get_db(menu()['tabel']));
-
+        $tahuns = $db->groupBy('tahun')->orderBy('tahun', 'DESC')->get()->getResultArray();
         $limit = 0;
         $db;
         if ($page !== 'All') {
@@ -95,7 +95,7 @@ class Pemilih extends BaseController
         $cal = db('calon', get_db('calon'));
         $calon = $cal->groupBy('tahun')->orderBy('tahun', 'DESC')->get()->getResultArray();
 
-        return view('pemilu/' . menu()['controller'], ['judul' => menu()['menu'], 'data' => $data, 'kategori' => $ktgr, 'voted' => $vtd, 'tahun' => $calon, 'pondok' => $pdk]);
+        return view('pemilu/' . menu()['controller'], ['judul' => menu()['menu'], 'data' => $data, 'kategori' => $ktgr, 'voted' => $vtd, 'tahun' => $calon, 'pondok' => $pdk, 'tahuns' => $tahuns]);
     }
 
     public function add_data_from_api()
@@ -238,5 +238,32 @@ class Pemilih extends BaseController
         }
 
         sukses(base_url(menu()['controller']) . '/2023/Belum/1/Karyawan/Putra/updated_at/DESC', 'Reset success.');
+    }
+
+    public function copy_to_next_year()
+    {
+
+        $data = json_decode(json_encode($this->request->getVar('data')));
+        $err = [];
+        foreach ($data as $i) {
+            $db = db('pemilih', 'pemilu');
+            $q = $db->where('no_id', $i)->get()->getRowArray();
+            if (!$q) {
+                $err[] = $i;
+            } else {
+                $q['petugas'] = session('nama');
+                $q['tahun'] = date('Y');
+                $db->where('no_id', $i);
+                if (!$db->update($q)) {
+                    $err[] = $i;
+                }
+            }
+        }
+
+        if (count($err) == 0) {
+            sukses_js('Data sukses diupdate.');
+        } {
+            gagal_js('Data ' . implode(", ", $err) . ' gagal diupdate!.');
+        }
     }
 }

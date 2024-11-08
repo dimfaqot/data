@@ -7,7 +7,6 @@ $desc_icon = '<i class="fa-solid fa-arrow-down-wide-short"></i>';
 $filter_by = ['Existing', 'Deleted', 'All'];
 $gender = ['L', 'P', 'All'];
 
-
 ?>
 
 <div class="container" style="margin-top: 60px;">
@@ -19,7 +18,7 @@ $gender = ['L', 'P', 'All'];
             Tahun [<?= url(4); ?>]
         </a>
         <ul class="dropdown-menu">
-            <?php foreach ($tahun as $i) : ?>
+            <?php foreach ($tahuns as $i) : ?>
                 <li style="font-size: small;"><a class="dropdown-item <?= (url(4) == $i['tahun'] ? 'bg_main' : ''); ?>" href="<?= base_url(menu()['controller']); ?>/<?= $i['tahun']; ?>/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/<?= url(8); ?>/<?= url(9); ?>/<?= url(10); ?>"><?= $i['tahun']; ?></a></li>
             <?php endforeach; ?>
             <li style="font-size: small;"><a class="dropdown-item <?= (url(4) == 'All' ? 'bg_main' : ''); ?>" href="<?= base_url(menu()['controller']); ?>/All/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/<?= url(8); ?>/<?= url(9); ?>/<?= url(10); ?>">All</a></li>
@@ -110,10 +109,11 @@ $gender = ['L', 'P', 'All'];
                 <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Filter berdasar pondok (All)." href="<?= base_url(url()); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/All/<?= url(9); ?>/<?= url(10); ?>"><span class="badge <?= (url(8) == 'All' ? 'text-bg-success' : 'text-bg-light'); ?>">All</span></a>
             </div>
         </div>
-
+        <div class="body_button"></div>
         <table class="table table-striped table-hover">
             <thead>
                 <th scope="col">#</th>
+                <th>Check</th>
                 <th>No. Id <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Urutkan berdasar no. id" href="<?= base_url() . url(3); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/<?= url(8); ?>/no_id/<?= (url(10) == 'ASC' ? 'DESC' : 'ASC'); ?>"><?= (url(9) == 'no_id' && url(10) == 'DESC' ? $desc_icon : $asc_icon); ?></a></th>
                 <th>Nama <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Urutkan berdasar nama" href="<?= base_url() . url(3); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/<?= url(8); ?>/nama/<?= (url(10) == 'ASC' ? 'DESC' : 'ASC'); ?>"><?= (url(9) == 'nama' && url(10) == 'DESC' ? $desc_icon : $asc_icon); ?></a></th>
                 <th>Kategori <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Urutkan berdasar kategori" href="<?= base_url() . url(3); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/<?= url(8); ?>/kategori/<?= (url(10) == 'ASC' ? 'DESC' : 'ASC'); ?>"><?= (url(9) == 'kategori' && url(10) == 'DESC' ? $desc_icon : $asc_icon); ?></a></th>
@@ -124,6 +124,9 @@ $gender = ['L', 'P', 'All'];
                 <?php foreach ($data['data'] as $k => $i) : ?>
                     <tr>
                         <th scope="row"><?= ($k + 1); ?></th>
+                        <td>
+                            <input class="form-check-input checkbox_pemilih" name="checkbox_pemilih" type="checkbox" value="<?= $i['no_id']; ?>">
+                        </td>
                         <td><?= $i['no_id']; ?></td>
                         <td><?= $i['nama']; ?></td>
                         <td><?= $i['kategori']; ?></td>
@@ -153,4 +156,51 @@ $gender = ['L', 'P', 'All'];
         </div>
     <?php endif; ?>
 </div>
+<script>
+    $(document).on('change', '.checkbox_pemilih', function(e) {
+        e.preventDefault();
+        let checkbox_pemilih = document.getElementsByName('checkbox_pemilih');
+
+        let data = [];
+        checkbox_pemilih.forEach(v => {
+            if (v.checked && v.value) {
+                data.push(v.value);
+            }
+        })
+
+        if (data.length == 0) {
+            $('.body_button').html('');
+        } else {
+            let html = '<button class="btn_main btn_copy_to_next_year">Copy to <?= (int)url(4) + 1; ?></button>';
+            $('.body_button').html(html);
+        }
+    })
+
+    $(document).on('click', '.btn_copy_to_next_year', function(e) {
+        e.preventDefault();
+        let checkbox_pemilih = document.getElementsByName('checkbox_pemilih');
+
+        let datas = [];
+        checkbox_pemilih.forEach(v => {
+            if (v.checked && v.value) {
+                datas.push(v.value);
+            }
+        })
+        let data = Object.assign({}, datas);
+
+        post('pemilih/copy_to_next_year', {
+            data
+        }).then(res => {
+            if (res.status == "200") {
+                sukses_js();
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+
+            } else {
+                gagal(res.message);
+            }
+        })
+    })
+</script>
 <?= $this->endSection() ?>

@@ -335,7 +335,7 @@ class Home extends BaseController
             }
 
             $pem = db('pemilih', get_db('pemilih'));
-            $exist = $pem->where('no_id', $no_id)->get()->getRowArray();
+            $exist = $pem->where('no_id', $no_id)->where('tahun', $tahun)->get()->getRowArray();
 
             if ($exist) {
                 gagal_js('Nama sudah ada.!');
