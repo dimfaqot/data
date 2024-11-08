@@ -133,7 +133,7 @@ $gender = ['L', 'P', 'All'];
                         <td><?= $i['pondok']; ?></td>
                         <td <?= ($i['voted'] == 0 ? 'class="d-flex gap-2"' : ''); ?>>
                             <?= ($i['voted'] == 0 ? '<a href="" class="confirm" data-id="' . $i['no_id'] . '" data-order="hapus" data-method="delete" style="font-size: medium;"><i class="fa-solid fa-square-xmark danger_color"></i></a> <form method="post" action="' . base_url() . menu()['controller'] . '/absen' . '"><input type="hidden" name="no_id" value="' . $i['no_id'] . '"><input type="hidden" name="url" value="' . base_url(url()) . '/' . url(4) . '/'  . url(5) . '/' . url(6) . '/' . url(7) . '/' . url(8) . '/' . url(9) . '/' . url(10) . '"><button class="' . ($i['absen'] == 0 ? 'btn_main_inactive' : 'btn_main') . '" type="submit">' . ($i['absen'] == 0 ? '<i class="fa-solid fa-square-person-confined"></i> Absen' : '<i class="fa-solid fa-spinner"></i> Aktif') . '</button></form>' : '<i class="text-success fa-regular fa-circle-check"></i>'); ?>
-
+                            <?= ($i['voted'] == 0 ? '<a href="" class="btn_main_inactive"><i class="fa-solid fa-link"></i> Login</a>' : ''); ?>
                         </td>
                     </tr>
 
