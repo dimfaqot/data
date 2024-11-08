@@ -133,7 +133,7 @@ $gender = ['L', 'P', 'All'];
                         <td><?= $i['pondok']; ?></td>
                         <td <?= ($i['voted'] == 0 ? 'class="d-flex gap-2"' : ''); ?>>
                             <?= ($i['voted'] == 0 ? '<a href="" class="confirm" data-id="' . $i['no_id'] . '" data-order="hapus" data-method="delete" style="font-size: medium;"><i class="fa-solid fa-square-xmark danger_color"></i></a> <form method="post" action="' . base_url() . menu()['controller'] . '/absen' . '"><input type="hidden" name="no_id" value="' . $i['no_id'] . '"><input type="hidden" name="url" value="' . base_url(url()) . '/' . url(4) . '/'  . url(5) . '/' . url(6) . '/' . url(7) . '/' . url(8) . '/' . url(9) . '/' . url(10) . '"><button class="' . ($i['absen'] == 0 ? 'btn_main_inactive' : 'btn_main') . '" type="submit">' . ($i['absen'] == 0 ? '<i class="fa-solid fa-square-person-confined"></i> Absen' : '<i class="fa-solid fa-spinner"></i> Aktif') . '</button></form>' : '<i class="text-success fa-regular fa-circle-check"></i>'); ?>
-                            <?= ($i['voted'] == 0 ? '<a href="" class="btn_main_inactive"><i class="fa-solid fa-link"></i> Login</a>' : ''); ?>
+                            <?= ($i['voted'] == 0 ? '<a data-no_id="' . $i['no_id'] . '" href="" class="btn_main_inactive link_login"><i class="fa-solid fa-link"></i> Login</a>' : ''); ?>
                         </td>
                     </tr>
 
@@ -155,6 +155,17 @@ $gender = ['L', 'P', 'All'];
             <?php endif; ?>
         </div>
     <?php endif; ?>
+</div>
+
+<!-- modal link_login -->
+<div class="modal fade" id="link_login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color:transparent;border:none">
+            <div class="modal-body body_link_login">
+
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     $(document).on('change', '.checkbox_pemilih', function(e) {
@@ -197,6 +208,66 @@ $gender = ['L', 'P', 'All'];
                     location.reload();
                 }, 1000);
 
+            } else {
+                gagal(res.message);
+            }
+        })
+    })
+
+    $(document).on('click', '.link_login', function(e) {
+        e.preventDefault();
+        let no_id = $(this).data('no_id');
+        let html = '';
+        html += '<div class="d-flex justify-content-center gap-2">';
+        html += '<a data-order="link" data-no_id="' + no_id + '" href="" class="btn_main_inactive get_link_login"><i class="fa-solid fa-link"></i></a>';
+        html += '<a data-order="wa" data-no_id="' + no_id + '" href="" class="btn_main_inactive get_link_login"><i class="fa-brands fa-whatsapp"></i></a>';
+        html += '</div>';
+
+        $('.body_link_login').html(html);
+        let myModal = document.getElementById('link_login');
+        let modal = bootstrap.Modal.getOrCreateInstance(myModal)
+        modal.show();
+    })
+
+    $(document).on('click', '.get_link_login', function(e) {
+        e.preventDefault();
+
+        let no_id = $(this).data('no_id');
+        let order = $(this).data('order');
+
+        post('pemilih/get_jwt_login', {
+            no_id
+        }).then(res => {
+            if (res.status == "200") {
+                if (order == 'link') {
+                    let text = 'Assalamualaikum wr.wb%0a';
+                    text += 'Yth: ' + res.data3 + '%0a%0a';
+                    text += 'Silahkan kunjungi link di bawah ini untuk mengikuti Pemilu Iswa <?= date('Y'); ?>:%0a%0a';
+                    text += res.data;
+
+                    text += '*_JANGAN BAGIKAN LINK TERSEBUT KEPADA SIAPAPUN!_*%0a';
+                    text += '%0a%0a%0aTTD%0a%0a';
+                    text += 'PANITIA';
+                    navigator.clipboard.writeText(res.data);
+
+                    sukses_js(res.message);
+
+                    setTimeout(() => {
+                        window.location.href = 'whatsapp://send/?phone=' + res.data2 + '&text='; //Will take you to Google.
+                    }, 1000);
+                } else {
+
+                    let text = 'Assalamualaikum wr.wb%0a';
+                    text += 'Yth: ' + res.data3 + '%0a%0a';
+                    text += 'Silahkan kunjungi link di bawah ini untuk mengikuti Pemilu Iswa <?= date('Y'); ?>:%0a%0a';
+                    text += res.data;
+
+                    text += '%0a%0a*_JANGAN BAGIKAN LINK TERSEBUT KEPADA SIAPAPUN!_*%0a';
+                    text += '%0a%0a%0aTTD%0a%0a';
+                    text += 'PANITIA';
+
+                    window.location.href = 'whatsapp://send/?phone=' + res.data2 + '&text=' + text; //Will take you to Google.
+                }
             } else {
                 gagal(res.message);
             }

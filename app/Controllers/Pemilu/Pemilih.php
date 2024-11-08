@@ -270,4 +270,33 @@ class Pemilih extends BaseController
             gagal_js('Data ' . implode(", ", $err) . ' gagal diupdate!.');
         }
     }
+
+    public function get_jwt_login()
+    {
+        $no_id = clear($this->request->getVar('no_id'));
+
+        $dbs = db('santri', 'santri');
+        $dbk = db('karyawan', 'karyawan');
+        if (strlen($no_id) > 6) {
+            $user = $dbk->where('no_id', $no_id)->get()->getRowArray();
+        } else {
+            $user = $dbs->where('no_id', $no_id)->get()->getRowArray();
+        }
+
+        if (!$user) {
+            gagal_js('Id tidak ditemukan!.');
+        }
+
+        $data = [
+            'id' => $user['no_id'],
+            'no_id' => $user['no_id'],
+            'gender' => $user['gender'],
+            'username' => '',
+            'section' => 'Pemilu',
+            'role' => 'Member',
+            'nama' => $user['nama']
+        ];
+
+        sukses_js('Copied.', base_url('public/a/') . encode_jwt($data), ($user['hp'] !== '' ? substr_replace($user['hp'], "+62", 0, 1) : ''), nama_gelar($user));
+    }
 }
