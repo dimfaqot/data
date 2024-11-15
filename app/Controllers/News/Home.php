@@ -717,8 +717,8 @@ class Home extends BaseController
 
         $calon = db('calon', get_db('calon'));
         $q_calon = $calon->where('id', $id_calon)->get()->getRowArray();
-
         $q_calon['suara'] = $q_calon['suara'] + $bobot_suara;
+
 
         $calon->where('id', $id_calon);
         if ($calon->update($q_calon)) {

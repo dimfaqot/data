@@ -1405,6 +1405,7 @@ function hasil_pemilu($tahun)
             foreach ($partai as $p) {
                 $capres = $db->where('tahun', $i['tahun'])->where('pondok', $pdk)->where('singkatan_partai', $p['singkatan_partai'])->where('status_calon', 'Capres')->get()->getRowArray();
                 $cawapres = $db->where('tahun', $i['tahun'])->where('pondok', $pdk)->where('singkatan_partai', $p['singkatan_partai'])->where('status_calon', 'Cawapres')->get()->getRowArray();
+
                 $par[] = ['capres' => $capres, 'cawapres' => $cawapres, 'suara' => $cawapres['suara'], 'flyer' => $cawapres['flyer'], 'partai' => $capres['partai'], 'singkatan_partai' => $capres['singkatan_partai'], 'no_partai' => $capres['no_urut_partai'], 'visi_misi' => $cawapres['visi_misi']];
             }
 

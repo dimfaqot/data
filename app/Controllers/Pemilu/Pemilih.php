@@ -173,7 +173,6 @@ class Pemilih extends BaseController
         $db = db('pemilih', 'pemilu');
 
         $q = $db->where('no_id', $no_id)->get()->getRowArray();
-
         if ($q['voted'] > 0) {
             gagal($url, 'Peserta sudah memilih.');
         }
@@ -191,7 +190,6 @@ class Pemilih extends BaseController
         $q['absen'] = ($q['absen'] == 0 ? 1 : 0);
         $q['tgl'] = 0;
         $q['voted'] = 0;
-        $q['absen'] = 0;
         $q['created_at'] = time();
         $q['updated_at'] = time();
         $q['petugas'] = session('nama');
