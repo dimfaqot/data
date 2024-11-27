@@ -91,13 +91,14 @@ class Ekstra extends BaseController
         foreach ($decode_jwt as $i) {
 
             $q = $db->where('kode', $i)->get()->getResultArray();
+
             $img1 = 'berkas/ekstra/sertifikat1.jpg';
             $img2 = 'berkas/ekstra/sertifikat2.jpg';
 
-            if ($q) {
-                $q[0]['link_qr_code'] = $q[0]['qr_code'];
-                $q[0]['qr_code'] = '<img width="80px" src="' .  $q[0]['qr_code'] . '" alt="QR CODE"/>';
-            }
+            // if ($q) {
+            //     $q[0]['link_qr_code'] = $q[0]['qr_code'];
+            //     $q[0]['qr_code'] = '<img width="80px" src="' .  $q[0]['qr_code'] . '" alt="QR CODE"/>';
+            // }
             $data[] = ['bg_img' => $img1, 'data' => $q, 'profile' => ($q ? $q[0] : [])];
             $data[] = ['bg_img' => $img2, 'data' => $q, 'profile' => ($q ? $q[0] : [])];
         }

@@ -206,9 +206,11 @@ class Pemilih extends BaseController
 
     public function reset()
     {
-        if (session('role') !== 'Root' || session('role') !== 'Admin') {
+
+        if (session('role') !== 'Root' && session('role') !== 'Admin') {
             gagal(base_url('home'), 'Pemilu sudah dimulai.');
         }
+
         if (settings('pemilu_dimulai') == 1) {
             gagal(base_url('home'), 'Pemilu sudah dimulai.');
         }
