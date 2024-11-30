@@ -178,7 +178,7 @@ class Pemilih extends BaseController
         }
 
         if ($q['absen'] == 0) {
-            $all = $db->whereNotIn('absen', [0])->get()->getResultArray();
+            $all = $db->where('pondok', (session('gender') == 'L' ? 'Putra' : 'Putri'))->whereNotIn('absen', [0])->get()->getResultArray();
 
             foreach ($all as $i) {
                 $i['absen'] = 0;
