@@ -465,6 +465,34 @@ if (url() == 'public') {
             gagal_with_button(msg);
 
         <?php endif; ?>
+
+        $(document).on('keyup', ".cari_db_niy", function(e) {
+            e.preventDefault();
+            let nama = $(this).val();
+            post('p/cari_db_niy', {
+                nama
+            }).then(res => {
+                if (res.status == "200") {
+                    let html = "";
+                    if (res.data.length == 0) {
+                        html += '<i class="fa-solid fa-triangle-exclamation"></i> Data tidak ditemukan!.';
+                    }
+                    res.data.forEach((e, i) => {
+                        html += '<tr>';
+                        html += '<td>' + (i + 1) + '</td>';
+                        html += '<td>' + e.nama + '</td>';
+                        html += '<td>' + e.sub + '</td>';
+                        html += '<td>' + e.no_id + '</td>';
+                        html += '</tr>';
+                    });
+
+                    $(".hasil").html(html);
+                } else {
+                    gagal(res.message);
+                }
+            })
+
+        })
     </script>
 </body>
 

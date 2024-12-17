@@ -32,6 +32,8 @@ $routes->get('/login', 'News\Landing::login');
 $routes->post('/login', 'News\Landing::proses_login');
 $routes->post('/ganti_password', 'News\Home::ganti_password');
 $routes->post('/logout', 'News\Home::logout');
+$routes->get('/p/karyawan', 'Public\Recruitment::karyawan');
+$routes->post('/p/cari_db_niy', 'Public\Recruitment::cari_db_niy');
 
 // tahun
 $routes->post('/tahun/add', 'Root\Tahun::add');

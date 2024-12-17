@@ -194,7 +194,6 @@ class Pemilih extends BaseController
         $q['updated_at'] = time();
         $q['petugas'] = session('nama');
 
-
         $db->where('no_id', $no_id);
 
         if ($db->update($q)) {
