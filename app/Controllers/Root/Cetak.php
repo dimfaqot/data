@@ -21,15 +21,15 @@ class Cetak extends BaseController
 
     public function index()
     {
-        $db = db('karyawan', 'karyawan');
-        $q = $db->get()->getResultArray();
-        foreach ($q as $i) {
-            $i['ppg'] = "Belum";
-            $i['inpassing'] = "Belum";
+        // $db = db('karyawan', 'karyawan');
+        // $q = $db->get()->getResultArray();
+        // foreach ($q as $i) {
+        //     $i['ppg'] = "Belum";
+        //     $i['inpassing'] = "Belum";
 
-            $db->where('no_id', $i['no_id']);
-            $db->update($i);
-        }
+        //     $db->where('no_id', $i['no_id']);
+        //     $db->update($i);
+        // }
         $data = explode(",", get_db());
 
         return view('root/cetak', ['judul' => 'Cetak', 'data' => $data]);

@@ -482,7 +482,7 @@ class Karyawan extends BaseController
             gagal_js("No. id tidak ditemukan!.");
         }
 
-        $q[$order] = ($q['order'] == "Belum" ? "Sudah" : "Belum");
+        $q[$order] = ($q[$order] == "Belum" ? "Sudah" : "Belum");
 
         $db->where('no_id', $no_id);
         if ($db->update($q)) {

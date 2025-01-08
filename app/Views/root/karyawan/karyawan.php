@@ -197,12 +197,12 @@ $gender = ['L', 'P', 'All'];
                         <td><?= $i['pengabdian']; ?></td>
                         <td>
                             <div class="form-check form-switch">
-                                <input class="form-check-input update_checked" data-no_id=<?= $i['no_id']; ?> data-order="ppg" <?= ($i['ppg'] == 1 ? 'checked' : ''); ?> type="checkbox" role="switch">
+                                <input class="form-check-input update_checked" data-no_id=<?= $i['no_id']; ?> data-order="ppg" <?= ($i['ppg'] == "Sudah" ? 'checked' : ''); ?> type="checkbox" role="switch">
                             </div>
                         </td>
                         <td>
                             <div class="form-check form-switch">
-                                <input class="form-check-input update_checked" data-no_id=<?= $i['no_id']; ?> data-order="inpassing" <?= ($i['inpassing'] == 1 ? 'checked' : ''); ?> type="checkbox" role="switch">
+                                <input class="form-check-input update_checked" data-no_id=<?= $i['no_id']; ?> data-order="inpassing" <?= ($i['inpassing'] == "Sudah" ? 'checked' : ''); ?> type="checkbox" role="switch">
                             </div>
                         </td>
                         <td>
