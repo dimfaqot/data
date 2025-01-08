@@ -21,14 +21,15 @@ class Cetak extends BaseController
 
     public function index()
     {
-        // $db = db('provinsi', 'indonesia');
-        // $q = $db->get()->getResultArray();
-        // foreach ($q as $i) {
-        //     $i['name'] = upper_first($i['name']);
+        $db = db('karyawan', 'karyawan');
+        $q = $db->get()->getResultArray();
+        foreach ($q as $i) {
+            $i['ppg'] = "Belum";
+            $i['inpassing'] = "Belum";
 
-        //     $db->where('id', $i['id']);
-        //     $db->update($i);
-        // }
+            $db->where('no_id', $i['no_id']);
+            $db->update($i);
+        }
         $data = explode(",", get_db());
 
         return view('root/cetak', ['judul' => 'Cetak', 'data' => $data]);
@@ -96,6 +97,17 @@ class Cetak extends BaseController
                     'detail' => ['Ikut', 'Tidak']
                 ];
             }
+            if ($table == 'karyawan') {
+                $data[] =   [
+                    'filter' => 'ppg',
+                    'detail' => ['Sudah', 'Belum']
+                ];
+                $data[] =   [
+                    'filter' => 'inpassing',
+                    'detail' => ['Sudah', 'Belum']
+                ];
+            }
+
 
             $data[] =   [
                 'filter' => 'ultah',
@@ -249,6 +261,22 @@ class Cetak extends BaseController
                         $cols[] = 'durasi';
                     }
                     $i['durasi'] = date('Y') - $i['tahun_masuk'];
+                }
+            }
+            if (array_key_exists('ppg', $i)) {
+                if ($i['ppg'] == 1) {
+                    $i['ppg'] = "Sudah";
+                }
+                if ($i['ppg'] == 0) {
+                    $i['ppg'] = "Belum";
+                }
+            }
+            if (array_key_exists('inpassing', $i)) {
+                if ($i['inpassing'] == 1) {
+                    $i['inpassing'] = "Sudah";
+                }
+                if ($i['inpassing'] == 0) {
+                    $i['inpassing'] = "Belum";
                 }
             }
             if (array_key_exists('tgl_lahir', $i)) {
