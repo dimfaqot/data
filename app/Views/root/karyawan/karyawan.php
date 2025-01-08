@@ -178,6 +178,8 @@ $gender = ['L', 'P', 'All'];
                 <th>Hp <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Urutkan berdasar hp" href="<?= base_url() . url(3); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/hp/<?= (url(8) == 'ASC' ? 'DESC' : 'ASC'); ?>/<?= url(9); ?>/<?= url(10); ?>"><?= (url(7) == 'hp' && url(8) == 'DESC' ? $desc_icon : $asc_icon); ?></a></th>
                 <th>Umur <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Urutkan berdasar umur" href="<?= base_url() . url(3); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/umur/<?= (url(8) == 'ASC' ? 'DESC' : 'ASC'); ?>/<?= url(9); ?>/<?= url(10); ?>"><?= (url(7) == 'umur' && url(8) == 'DESC' ? $desc_icon : $asc_icon); ?></a></th>
                 <th>Pengabdian <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Urutkan pengabdian" href="<?= base_url() . url(3); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/pengabdian/<?= (url(8) == 'ASC' ? 'DESC' : 'ASC'); ?>/<?= url(9); ?>/<?= url(10); ?>"><?= (url(7) == 'pengabdian' && url(8) == 'DESC' ? $desc_icon : $asc_icon); ?></a></th>
+                <th>Ppg <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Urutkan berdasar ppg" href="<?= base_url() . url(3); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/status/<?= (url(8) == 'ASC' ? 'DESC' : 'ASC'); ?>/<?= url(9); ?>/<?= url(10); ?>"><?= (url(7) == 'status' && url(8) == 'DESC' ? $desc_icon : $asc_icon); ?></a></th>
+                <th>Inpassing <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Urutkan berdasar inpassing" href="<?= base_url() . url(3); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/status/<?= (url(8) == 'ASC' ? 'DESC' : 'ASC'); ?>/<?= url(9); ?>/<?= url(10); ?>"><?= (url(7) == 'status' && url(8) == 'DESC' ? $desc_icon : $asc_icon); ?></a></th>
                 <th>Status <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Urutkan berdasar status" href="<?= base_url() . url(3); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/status/<?= (url(8) == 'ASC' ? 'DESC' : 'ASC'); ?>/<?= url(9); ?>/<?= url(10); ?>"><?= (url(7) == 'status' && url(8) == 'DESC' ? $desc_icon : $asc_icon); ?></a></th>
                 <th>Act</th>
             </thead>
@@ -193,6 +195,16 @@ $gender = ['L', 'P', 'All'];
                         <td><?= ($i['hp'] == '' || strlen($i['hp']) < 11 ? '-' : '<a class="btn_main send_wa" data-col="hp" data-order-id="' . $i['no_id'] . '" data-sapaan="' . $sapaan . '" data-nama="' . $i['nama'] . '" data-no="+62' . substr($i['hp'], 1) . '" style="font-size:10px;" href=""><i class="fa-brands fa-whatsapp"></i> ' . $i['hp'] . '</a>'); ?></td>
                         <td><?= $i['umur']; ?></td>
                         <td><?= $i['pengabdian']; ?></td>
+                        <td>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input update_checked" data-no_id=<?= $i['no_id']; ?> data-order="ppg" <?= ($i['ppg'] == 1 ? 'checked' : ''); ?> type="checkbox" role="switch">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input update_checked" data-no_id=<?= $i['no_id']; ?> data-order="inpassing" <?= ($i['inpassing'] == 1 ? 'checked' : ''); ?> type="checkbox" role="switch">
+                            </div>
+                        </td>
                         <td>
                             <select class="form-select form-select-sm change_status" data-id="<?= $i['no_id']; ?>" data-tabel="<?= menu()['tabel']; ?>">
                                 <?php foreach (options('Status') as $s) : ?>
@@ -224,4 +236,28 @@ $gender = ['L', 'P', 'All'];
         </div>
     <?php endif; ?>
 </div>
+<script>
+    $(document).on("change", ".update_checked", function(e) {
+        e.preventDefault();
+
+        let order = $(this).data("order");
+        let no_id = $(this).data("no_id");
+
+        post("karyawan/update_check", {
+            order,
+            no_id
+        }).then(res => {
+            if (res.status == "200") {
+                sukses(res.message);
+
+                setTimeout(() => {
+                    location.reload();
+
+                }, 2000);
+            } else {
+                gagal(res.message);
+            }
+        })
+    })
+</script>
 <?= $this->endSection() ?>

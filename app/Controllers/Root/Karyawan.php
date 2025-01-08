@@ -24,7 +24,7 @@ class Karyawan extends BaseController
         $db = db(menu()['tabel'], 'karyawan');
 
         $limit = 0;
-        $db->select('no_id,nama,sub,hp,status,tgl_lahir,gender,tahun_masuk,tahun_keluar,deleted,updated_at');
+        $db->select('no_id,nama,sub,hp,status,tgl_lahir,gender,tahun_masuk,tahun_keluar,deleted,updated_at,ppg,inpassing');
         if ($page !== 'All') {
             $limit = $page * 50;
             $db->limit($limit);
@@ -467,6 +467,28 @@ class Karyawan extends BaseController
             $writer->save('php://output');
 
             exit;
+        }
+    }
+
+    public function update_check()
+    {
+        $no_id = clear($this->request->getVar("no_id"));
+        $order = clear($this->request->getVar("order"));
+
+        $db = db("karyawan", "karyawan");
+        $q = $db->where('no_id', $no_id)->get()->getRowArray();
+
+        if (!$q) {
+            gagal_js("No. id tidak ditemukan!.");
+        }
+
+        $q[$order] = ($q[$order] == 0 ? 1 : 0);
+
+        $db->where('no_id', $no_id);
+        if ($db->update($q)) {
+            sukses_js("Update sukses.");
+        } else {
+            gagal_js("Update gagal!.");
         }
     }
 }

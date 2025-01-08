@@ -91,6 +91,7 @@ $routes->post('/karyawan/update', 'Root\Karyawan::update');
 $routes->post('/karyawan/remove', 'Root\Karyawan::remove');
 $routes->post('/karyawan/restore', 'Root\Karyawan::restore');
 $routes->post('/karyawan/delete', 'Root\Karyawan::delete');
+$routes->post('/karyawan/update_check', 'Root\Karyawan::update_check');
 
 // recruitment
 $routes->get('/recruitment/detail/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:num)/(:any)', 'Root\Recruitment::detail/$1/$2/$3/$4/$5/$6/$7/$8/$9');
