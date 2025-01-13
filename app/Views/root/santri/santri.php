@@ -215,7 +215,7 @@ $gender = ['L', 'P', 'All'];
 
                             <?php else: ?>
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input uid" data-status="<?= $i['status']; ?>" name="uid" value="<?= $i['no_id']; ?>" type="radio" role="switch">
+                                    <input class="form-check-input uid" name="uid" value="<?= $i['no_id']; ?>" type="radio" role="switch" <?= ($i['status'] !== "Aktif" ? "disabled" : ""); ?>>
                                 </div>
                             <?php endif; ?>
                         </td>
@@ -363,11 +363,6 @@ $gender = ['L', 'P', 'All'];
         e.preventDefault();
         let no_id = $(this).val();
         no_id_uid = no_id;
-        let status = $(this).data('status');
-        if (status !== "Aktif") {
-            gagal("Status santri harus aktif!.");
-            return;
-        }
         interval_uid = setInterval(get_rfid, 1000)
     });
 </script>
