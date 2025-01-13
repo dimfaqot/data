@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Cari;
+namespace App\Controllers\Api;
 
 use App\Controllers\BaseController;
 
