@@ -17,7 +17,7 @@ class Tanah_baru extends BaseController
         $jwt = $this->request->getVar('jwt');
         $decode = decode_jwt($jwt, 'finger');
         $rfid = $decode['uid'];
-
+        sukses_js("Ok", $rfid);
         $db = db('rfid', 'santri');
         $q = $db->get()->getRowArray();
 
