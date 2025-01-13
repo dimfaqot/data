@@ -143,19 +143,19 @@ function key_jwt()
     return $q['key_jwt'];
 }
 
-function encode_jwt($data)
+function encode_jwt($data, $key = null)
 {
 
-    $jwt = JWT::encode($data, key_jwt(), 'HS256');
+    $jwt = JWT::encode($data, ($key == null ? key_jwt() : getenv('jwt_finger')), 'HS256');
 
     return $jwt;
 }
 
-function decode_jwt($encode_jwt)
+function decode_jwt($encode_jwt, $key = null)
 {
     try {
 
-        $decoded = JWT::decode($encode_jwt, new Key(key_jwt(), 'HS256'));
+        $decoded = JWT::decode($encode_jwt, new Key(($key == null ? key_jwt() : getenv('jwt_finger')), 'HS256'));
         $arr = (array)$decoded;
 
         return $arr;

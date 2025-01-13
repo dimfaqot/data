@@ -123,6 +123,7 @@ $routes->post('/santri/delete', 'Root\Santri::delete');
 $routes->post('/santri/insert_to_karyawan', 'Root\Santri::insert_to_karyawan');
 $routes->post('/santri/update_uid', 'Root\Santri::update_uid');
 $routes->post('/santri/get_rfid', 'Root\Santri::get_rfid');
+$routes->post('/santri/add_rfid', 'Root\Santri::add_rfid');
 
 // kts
 $routes->get('/kts/cetak/(:num)/(:any)', 'Root\Kts::cetak/$1/$2');
