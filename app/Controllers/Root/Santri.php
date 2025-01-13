@@ -24,7 +24,7 @@ class Santri extends BaseController
         $db = db(menu()['tabel'], get_db(menu()['tabel']));
 
         $limit = 0;
-        $db->select('no_id,nama,gender,status,tahun_masuk,tahun_keluar,pondok,tgl_lahir,sub,hp_ayah,updated_at,deleted');
+        $db->select('no_id,nama,gender,uid,status,tahun_masuk,tahun_keluar,pondok,tgl_lahir,sub,hp_ayah,updated_at,deleted');
 
         if ($filter !== 'All') {
             $filt = 0;
@@ -587,5 +587,54 @@ class Santri extends BaseController
         } else {
             gagal_js('Data gagal dicopy ke karyawan!.');
         }
+    }
+    public function update_uid()
+    {
+
+        $no_id = clear($this->request->getVar('no_id'));
+        $uid = clear($this->request->getVar('uid'));
+
+        // santri lulus
+        $db = db('santri', 'santri');
+        $q = $db->where('no_id', $no_id)->get()->getRowArray();
+
+        if (!$q) {
+            gagal_js('No id tidak ditemukan.');
+        }
+
+        $exist = $db->where('uid', $uid)->get()->getRowArray();
+        if ($exist) {
+            gagal_js("Uid sudah terdaftar: " . $exist['nama'] . '.');
+        }
+
+        $q['uid'] = $uid;
+        $db->where('no_id', $no_id);
+
+        if ($db->update($q)) {
+            $dbr = db('rfid', 'santri');
+            $qr = $dbr->get()->getRowArray();
+            if ($qr) {
+                $qr['rfid'] = "";
+                $dbr->where('id', $qr['id']);
+                $dbr->update($qr);
+            }
+            sukses_js("Data berhasil diupdate.");
+        } else {
+            gagal_js("Data gagal diupdate.");
+        }
+    }
+    public function get_rfid()
+    {
+        $db = db('rfid', 'santri');
+        $q = $db->get()->getRowArray();
+
+        if (!$q) {
+            gagal_js('Rfid tidak ditemukan!.');
+        }
+        if ($q['rfid'] == "") {
+            gagal_js('Rfid belum masuk!.');
+        }
+
+        sukses_js("Rfid berhasil ditemukan.", $q['rfid']);
     }
 }

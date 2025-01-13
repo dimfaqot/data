@@ -190,7 +190,8 @@ $gender = ['L', 'P', 'All'];
                 <th scope="col">#</th>
                 <th>No. Id <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Urutkan berdasar no. id" href="<?= base_url() . url(3); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/no_id/<?= (url(9) == 'ASC' ? 'DESC' : 'ASC'); ?>/<?= url(10); ?>/<?= url(11); ?>"><?= (url(8) == 'no_id' && url(9) == 'DESC' ? $desc_icon : $asc_icon); ?></a></th>
                 <th>Nama <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Urutkan berdasar nama" href="<?= base_url() . url(3); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/nama/<?= (url(9) == 'ASC' ? 'DESC' : 'ASC'); ?>/<?= url(10); ?>/<?= url(11); ?>"><?= (url(8) == 'nama' && url(9) == 'DESC' ? $desc_icon : $asc_icon); ?></a></th>
-                <th>Masa Belajar <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Urutkan masa belajar" href="<?= base_url() . url(3); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/pengabdian/<?= (url(9) == 'ASC' ? 'DESC' : 'ASC'); ?>/<?= url(10); ?>/<?= url(11); ?>"><?= (url(8) == 'pengabdian' && url(9) == 'DESC' ? $desc_icon : $asc_icon); ?></a></th>
+                <th>Uid</th>
+                <!-- <th>Masa Belajar <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Urutkan masa belajar" href="<?= base_url() . url(3); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/pengabdian/<?= (url(9) == 'ASC' ? 'DESC' : 'ASC'); ?>/<?= url(10); ?>/<?= url(11); ?>"><?= (url(8) == 'pengabdian' && url(9) == 'DESC' ? $desc_icon : $asc_icon); ?></a></th> -->
 
                 <!-- <th>Hp Ayah <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Urutkan berdasar hp_ayah" href="<?= base_url() . url(3); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/hp_ayah/<?= (url(9) == 'ASC' ? 'DESC' : 'ASC'); ?>/<?= url(10); ?>/<?= url(11); ?>"><?= (url(8) == 'hp_ayah' && url(9) == 'DESC' ? $desc_icon : $asc_icon); ?></a></th>
                 <th>Umur <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Urutkan berdasar umur" href="<?= base_url() . url(3); ?>/<?= url(4); ?>/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/umur/<?= (url(9) == 'ASC' ? 'DESC' : 'ASC'); ?>/<?= url(10); ?>/<?= url(11); ?>"><?= (url(8) == 'umur' && url(9) == 'DESC' ? $desc_icon : $asc_icon); ?></a></th> -->
@@ -207,7 +208,17 @@ $gender = ['L', 'P', 'All'];
                         <th scope="row"><?= ($k + 1); ?></th>
                         <td><?= $i['no_id']; ?></td>
                         <td><?= $i['nama']; ?></td>
-                        <td><?= $i['pengabdian']; ?></td>
+                        <!-- <td><?= $i['pengabdian']; ?></td> -->
+                        <td class="td_uid_<?= $i['no_id']; ?>">
+                            <?php if ($i['uid'] !== ""): ?>
+                                <?= $i['uid']; ?>
+
+                            <?php else: ?>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input uid" data-status="<?= $i['status']; ?>" name="uid" value="<?= $i['no_id']; ?>" type="radio" role="switch">
+                                </div>
+                            <?php endif; ?>
+                        </td>
                         <!-- <td><?= ($i['hp_ayah'] == '' || strlen($i['hp_ayah']) < 11 ? '-' : '<a class="btn_main send_wa" data-col="hp_ayah" data-order-id="' . $i['no_id'] . '" data-sapaan="Ayahanda" data-nama="' . $i['nama'] . '" data-no="+62' . substr($i['hp_ayah'], 1) . '" style="font-size:10px;" href=""><i class="fa-brands fa-whatsapp"></i> ' . $i['hp_ayah'] . '</a>'); ?></td>
                         <td><?= $i['umur']; ?></td> -->
 
@@ -304,6 +315,60 @@ $gender = ['L', 'P', 'All'];
                 gagal_with_button(res.message);
             }
         })
+    });
+
+    const update_uid = (no_id, uid) => {
+        if (no_id == "") {
+            gagal("No id belum diisi!.");
+            return;
+        }
+        if (uid == "") {
+            gagal("Uid belum diisi!.");
+            return;
+        }
+
+        post('santri/update_uid', {
+            no_id,
+            uid
+        }).then(res => {
+            if (res.status == '200') {
+                $(".td_uid_" + no_id).text(uid);
+                sukses(res.message);
+            } else {
+                gagal(res.message);
+            }
+        })
+    }
+
+    let no_id_uid = "";
+    let interval_uid = "";
+    const get_rfid = () => {
+        if (no_id_uid == "") {
+            gagal("No id uid masih kosong!.");
+            clearInterval(interval_uid);
+            return;
+        }
+
+        post('santri/get_rfid', {
+            no_id_uid
+        }).then(res => {
+            if (res.status == "200") {
+                update_uid(no_id_uid, res.data);
+                clearInterval(interval_uid); //antri booking
+            }
+        })
+    }
+
+    $(document).on('change', '.uid', function(e) {
+        e.preventDefault();
+        let no_id = $(this).val();
+        no_id_uid = no_id;
+        let status = $(this).data('status');
+        if (status !== "Aktif") {
+            gagal("Status santri harus aktif!.");
+            return;
+        }
+        interval_uid = setInterval(get_rfid, 1000)
     });
 </script>
 <?= $this->endSection() ?>
