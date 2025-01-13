@@ -9,7 +9,6 @@ class Tanah_baru extends BaseController
 
     public function index()
     {
-
         sukses_js("Ok", ["tes" => "tes"]);
     }
     public function add_rfid_santri()

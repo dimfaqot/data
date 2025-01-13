@@ -495,5 +495,5 @@ $routes->post('/sdi-admin/update_template_wa', 'Sdi\Admin::update_template_wa');
 $routes->get('/sdi-admin/(:any)', 'Sdi\Admin::index/$1');
 
 // Api
-$routes->post('/api/tanah_baru', 'Api\Tanah_baru::index');
+$routes->get('/api/tanah_baru', 'Api\Tanah_baru::index');
 $routes->post('/api/add_rfid_santri', 'Api\Tanah_baru::add_rfid_santri');
