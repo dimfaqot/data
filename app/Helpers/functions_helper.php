@@ -413,6 +413,7 @@ function sub($order = null)
         ['singkatan' => 'TPQ', 'kode' => "7", 'lengkap' => "TPQ Walisongo Sragen"],
         ['singkatan' => 'Pondok', 'kode' => "8", 'lengkap' => "Pondok Pesantren Walisongo Walisongo Sragen"],
         ['singkatan' => 'Ekstra', 'kode' => "9", 'lengkap' => "Ekstrakurikuler"],
+        ['singkatan' => 'BKW', 'kode' => "9", 'lengkap' => "Badan Kemandirian Walisongo"],
         ['singkatan' => 'Almuntaha', 'kode' => "9", 'lengkap' => "CV Al Muntaha Record"],
         ['singkatan' => 'Yayasan', 'kode' => "0", "lengkap" => 'Yayasan Pondok Pesantren Walisongo Sragen']
     ];
