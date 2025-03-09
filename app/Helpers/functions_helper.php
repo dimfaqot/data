@@ -1068,6 +1068,10 @@ function rupiah($uang)
 {
     return 'Rp. ' . number_format($uang, 0, ",", ".");
 }
+function angka($uang)
+{
+    return number_format($uang, 0, ",", ".");
+}
 
 // santri 
 

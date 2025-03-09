@@ -161,6 +161,24 @@
         return prefix == undefined ? 'Rp. ' + rupiah : prefix + ' ' + rupiah;
     }
 
+    function angka(a, prefix) {
+        let angka = a.toString();
+        let number_string = angka.replace(/[^,\d]/g, '').toString(),
+            split = number_string.split(','),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+    }
+
+
 
 
     const tgl_lahir = (tgl_lahir) => {
@@ -425,6 +443,35 @@
         e.preventDefault();
         let val = $(this).val();
         $(this).val(rupiah(val));
+    });
+    $(document).on('keyup', '.angka', function(e) {
+        e.preventDefault();
+        let val = $(this).val();
+        $(this).val(angka(val));
+    });
+
+    $(document).on('keyup', '.angka_text', function(e) {
+        e.preventDefault();
+        let value = $(this).text();
+
+        // Hapus format lama (non-angka)
+        value = value.replace(/[^0-9]/g, '');
+
+        // Format angka tanpa "Rp"
+        let formatted = new Intl.NumberFormat('id-ID', {
+            minimumFractionDigits: 0
+        }).format(value || 0);
+
+        // Masukkan kembali angka ke dalam <td>
+        $(this).text(formatted);
+
+        // Memastikan kursor tetap berada di posisi terakhir
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(this);
+        range.collapse(false);
+        selection.removeAllRanges();
+        selection.addRange(range);
     });
 
     $(document).on('click', '.confirm', function(e) {

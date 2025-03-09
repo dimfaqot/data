@@ -88,6 +88,7 @@
                                 <th scope="col">Waktu</th>
                                 <th scope="col">Penyewa</th>
                                 <th scope="col">Pj</th>
+                                <th scope="col">Biaya</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -98,6 +99,7 @@
                                     <td><?= $i['waktu']; ?></td>
                                     <td><?= $i['pemakai']; ?></td>
                                     <td><?= $i['pj']; ?></td>
+                                    <td class="text-end"><?= angka($i['biaya']); ?></td>
                                 </tr>
 
                             <?php endforeach; ?>

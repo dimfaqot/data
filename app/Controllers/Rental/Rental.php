@@ -33,16 +33,28 @@ class Rental extends BaseController
 
     public function index($tahun, $bulan, $kat = null)
     {
+
+        $dbs = ['apv', 'bus', 'l300', 'elf'];
+
+        foreach ($dbs as $i) {
+            $db = db($i, 'rental');
+            $q = $db->get()->getResultArray();
+
+            foreach ($q as $i) {
+                $i['kategori'] = "Masuk";
+                $db->where('id', $i['id']);
+                $db->update($i);
+            }
+        }
+
         $kategori = session('role');
 
         if (session('role') == 'Root') {
             $kategori = ($kat == null ? 'Bus' : $kat);
         }
-
-
         $db = db(strtolower($kategori), 'rental');
 
-        $q = $db->where('kategori', $kategori)->orderBy('tgl', 'ASC')->get()->getResultArray();
+        $q = $db->where('kategori', "Masuk")->orderBy('tgl', 'ASC')->get()->getResultArray();
 
         $data = [];
 
@@ -91,7 +103,7 @@ class Rental extends BaseController
             $url .= '/' . $kategori;
         }
         $data = [
-            'kategori' => $kategori,
+            'kategori' => "Masuk",
             'tgl' => $tgl,
             'waktu' => $waktu,
             'pemakai' => $pemakai,
@@ -112,23 +124,27 @@ class Rental extends BaseController
         $kategori = session('role');
 
         if (session('role') == 'Root') {
-            $kategori = clear($this->request->getVar('tabel'));
+            $kategori = strtolower(clear($this->request->getVar('tabel')));
         }
 
         $id = $this->request->getVar('id');
         $col = clear($this->request->getVar('col'));
         $val = upper_first(clear($this->request->getVar('val')));
 
+        if ($col == 'masuk' || $col == 'keluar') {
+            $val = (int)str_replace(".", "", $val);
+        }
+
 
         $db = db(strtolower($kategori), 'rental');
 
         $q = $db->where('id', $id)->get()->getRowArray();
-
         if (!$q) {
             gagal_js('Id tidak ditemukan!.');
         }
 
         $q[$col] = $val;
+
 
         $db->where('id', $id);
         if ($db->update($q)) {
@@ -137,6 +153,7 @@ class Rental extends BaseController
             gagal_js('Data gagal diupdate!.');
         }
     }
+
     public function update_tgl()
     {
         $kategori = session('role');
@@ -211,5 +228,65 @@ class Rental extends BaseController
         } else {
             gagal_js('File gagal dihapus.');
         }
+    }
+
+    public function add_pengeluaran()
+    {
+        $kategori = session('role');
+
+        if (session('role') == 'Root') {
+            $kategori = clear(strtolower($this->request->getVar('tabel')));
+        }
+
+        $tahun = clear($this->request->getVar('tahun'));
+        $bulan = clear($this->request->getVar('bulan'));
+
+        $db = db(strtolower($kategori), 'rental');
+
+        $data = [
+            'kategori' => "Keluar",
+            'tgl' => time(),
+            'barang' => upper_first(clear($this->request->getVar('barang'))),
+            'pj' => upper_first(clear($this->request->getVar('pj'))),
+            'keluar' => (int)str_replace(".", "", clear($this->request->getVar('harga'))),
+        ];
+        if ($db->insert($data)) {
+            $q = $db->where('kategori', "Keluar")->orderBy('tgl', 'ASC')->get()->getResultArray();
+
+            $data = [];
+            foreach ($q as $i) {
+                if (date('m', $i['tgl']) == $bulan && date('Y', $i['tgl']) == $tahun) {
+                    $data[] = $i;
+                }
+            }
+            sukses_js("Data berhasil disimpan.", $data);
+        } else {
+            gagal_js('Data gagal disimpan!.');
+        }
+    }
+
+    public function pengeluaran()
+    {
+        $kategori = session('role');
+
+        if (session('role') == 'Root') {
+            $kategori = clear(strtolower($this->request->getVar('tabel')));
+        }
+
+        $tahun = clear($this->request->getVar('tahun'));
+        $bulan = clear($this->request->getVar('bulan'));
+
+        $db = db(strtolower($kategori), 'rental');
+
+        $q = $db->where('kategori', "Keluar")->orderBy('tgl', 'ASC')->get()->getResultArray();
+
+        $data = [];
+        foreach ($q as $i) {
+            if (date('m', $i['tgl']) == $bulan && date('Y', $i['tgl']) == $tahun) {
+                $data[] = $i;
+            }
+        }
+
+        sukses_js("Sukses.", $data);
     }
 }

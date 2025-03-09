@@ -291,6 +291,8 @@ if (session('role') == 'Root') {
 }
 
 // rental
+$routes->post('/rental/pengeluaran', 'Rental\Rental::pengeluaran');
+$routes->post('/rental/add_pengeluaran', 'Rental\Rental::add_pengeluaran');
 $routes->post('/rental/add', 'Rental\Rental::add');
 $routes->post('/rental/update_blur', 'Rental\Rental::update_blur');
 $routes->post('/rental/update_tgl', 'Rental\Rental::update_tgl');
@@ -322,6 +324,7 @@ $routes->get('/member-sdi/(:any)', 'Member\Ppdb_sdi::index/$1');
 $routes->post('/member-sdi/update', 'Member\Ppdb_sdi::update');
 
 // rebana
+$routes->get('/public/rental/laporan/cetak/(:any)/(:num)/(:any)', 'Public\Rental::laporan/$1/$2/$3');
 $routes->get('/public/rebana/cetak/(:any)/(:any)/(:any)', 'Public\Rebana::cetak/$1/$2/$3');
 $routes->get('/public/rebana', 'Public\Rebana::index');
 $routes->get('/public/rebana/(:any)/(:any)', 'Public\Rebana::index/$1/$2');
