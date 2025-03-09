@@ -34,18 +34,18 @@ class Rental extends BaseController
     public function index($tahun, $bulan, $kat = null)
     {
 
-        $dbs = ['apv', 'bus', 'l300', 'elf'];
+        // $dbs = ['apv', 'bus', 'l300', 'elf'];
 
-        foreach ($dbs as $i) {
-            $db = db($i, 'rental');
-            $q = $db->get()->getResultArray();
+        // foreach ($dbs as $i) {
+        //     $db = db($i, 'rental');
+        //     $q = $db->get()->getResultArray();
 
-            foreach ($q as $i) {
-                $i['kategori'] = "Masuk";
-                $db->where('id', $i['id']);
-                $db->update($i);
-            }
-        }
+        //     foreach ($q as $i) {
+        //         $i['kategori'] = "Masuk";
+        //         $db->where('id', $i['id']);
+        //         $db->update($i);
+        //     }
+        // }
 
         $kategori = session('role');
 
