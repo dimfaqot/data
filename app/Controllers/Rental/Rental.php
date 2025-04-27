@@ -52,6 +52,8 @@ class Rental extends BaseController
         if (session('role') == 'Root') {
             $kategori = ($kat == null ? 'Bus' : $kat);
         }
+
+
         $db = db(strtolower($kategori), 'rental');
 
         $q = $db->where('kategori', "Masuk")->orderBy('tgl', 'ASC')->get()->getResultArray();
@@ -81,7 +83,7 @@ class Rental extends BaseController
             }
         }
 
-        return view('rental/' . menu()['controller'], ['judul' => 'Rental ' . $kategori, 'data' => $data, 'tahuns' => $th]);
+        return view('rental/' . menu()['controller'], ['judul' => 'Rental ' . $kategori, 'kategori' => $kategori, 'data' => $data, 'tahuns' => $th]);
     }
 
 

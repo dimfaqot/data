@@ -416,7 +416,7 @@
 
        $(document).on("click", ".btn_laporan", function(e) {
            e.preventDefault();
-           let tabel = '<?= (url(6) == '' ? 'Bus' : url(6)); ?>';
+           let tabel = "<?= strtolower($kategori); ?>";
            let tahun = '<?= url(4); ?>';
            let bulan = '<?= url(5); ?>';
 

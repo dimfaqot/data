@@ -47,7 +47,7 @@
             <td style="font-size:14px;">RENTAL WALISONGO</td>
         </tr>
         <tr>
-            <th style="text-align: left;font-size:16px">RENTAL <?= strtoupper($order); ?></th>
+            <th style="text-align: left;font-size:16px">RENTAL <?= strtoupper($kategori); ?></th>
         </tr>
 
         <tr>
@@ -70,18 +70,18 @@
 
         <tr>
             <td style="text-align:center;border: 1px solid grey;padding:4px">1</td>
-            <td style="border: 1px solid grey;padding:4px">Saldo Bulan <?= bulan($bulan_lalu)['bulan']; ?></td>
-            <td style="text-align: right; border: 1px solid grey;padding:4px"><?= angka($saldo_bulan_lalu); ?></td>
+            <td style="border: 1px solid grey;padding:4px">Saldo Sampai Bulan Lalu</td>
+            <td style="text-align: right; border: 1px solid grey;padding:4px"><?= angka($bulan_lalu); ?></td>
         </tr>
         <tr>
             <td style="text-align:center;border: 1px solid grey;padding:4px">2</td>
             <td style="border: 1px solid grey;padding:4px">Saldo Bulan <?= bulan($bulan)['bulan']; ?></td>
-            <td style="text-align: right; border: 1px solid grey;padding:4px"><?= angka($masuk - $keluar); ?></td>
+            <td style="text-align: right; border: 1px solid grey;padding:4px"><?= angka($bulan_ini); ?></td>
         </tr>
 
         <tr>
             <th colspan="2" style="text-align:right;border: 1px solid grey;padding:4px">TOTAL SALDO</th>
-            <th style="text-align:right;border: 1px solid grey;padding:4px"><?= angka($saldo_bulan_lalu + ($masuk - $keluar)); ?></th>
+            <th style="text-align:right;border: 1px solid grey;padding:4px"><?= angka((int)$bulan_lalu + (int)$bulan_ini); ?></th>
         </tr>
     </table>
     <h4>B. RINCIAN KEUANGAN</h4>
@@ -94,9 +94,11 @@
             <th style="border: 1px solid grey;padding:2px">Laba</th>
 
         </tr>
-
+        <?php $masuk = 0;
+        $keluar = 0; ?>
         <?php foreach ($data as $k => $i): ?>
-
+            <?php $masuk += (int)$i['masuk'];
+            $keluar += (int)$i['keluar']; ?>
             <tr>
                 <td style="text-align:center;border: 1px solid grey;padding:4px"><?= ($k + 1); ?></td>
                 <td style="border: 1px solid grey;padding:4px"><?= ($i['kategori'] == "Masuk" ? "Rental " . $i['pemakai'] : $i['barang']); ?></td>
@@ -117,7 +119,7 @@
 
     <div style="text-align: right; font-size:small;margin-top:20px"><span style="font-size: 12px;"><?= date('d/m/Y'); ?></span> - <?= $petugas; ?></div>
     <div style="text-align: right;">
-        <img width="100px;" src="<?= set_qr_code(base_url('public/rental/laporan/cetak/') . "/" . $order . "/" . $tahun . "/" . $bulan, 'rental', 'Rental'); ?>" alt="<?= $judul; ?>">
+        <img width="100px;" src="<?= set_qr_code(base_url('public/rental/laporan/cetak/') . "/" . upper_first($kategori) . "/" . $tahun . "/" . $bulan, 'rental', 'Rental'); ?>" alt="<?= $judul; ?>">
     </div>
 
 

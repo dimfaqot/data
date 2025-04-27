@@ -10,6 +10,7 @@ class Rental extends BaseController
 
     public function index($tahun = null, $bulan = null, $kategori = null)
     {
+
         if ($tahun == null) {
             $tahun = date('Y');
         }
@@ -17,6 +18,7 @@ class Rental extends BaseController
             $bulan = date('m');
         }
         if ($kategori == null) {
+
             $kategori = 'Bus';
         }
 
@@ -54,42 +56,40 @@ class Rental extends BaseController
 
     public function laporan($order, $tahun, $bulan)
     {
-        $kategori = session('role');
+        $kategori = strtolower(session('role'));
 
         if (session('role') == 'Root') {
             $kategori = clear(strtolower($order));
         }
 
         if (!$kategori) {
-            $kategori = $order;
-        }
-        $bulan_lalu = (int)$bulan - 1;
-        $bulan_lalu = bulan($bulan_lalu)['angka'];
-        $tahun_lalu = $tahun;
-
-        if ($bulan == "01") {
-            $bulan_lalu = "12";
-            $tahun_lalu = (int)$tahun - 1;
+            $kategori = strtolower($order);
         }
 
-        $db = db(strtolower($kategori), 'rental');
 
-        $q = $db->orderBy('tgl', 'ASC')->get()->getResultArray();
+        $db = \Config\Database::connect('rental');
+        $query = $db->query("
+    SELECT 
+        SUM(CASE WHEN MONTH(FROM_UNIXTIME(tgl)) < $bulan THEN masuk ELSE 0 END) 
+        - SUM(CASE WHEN MONTH(FROM_UNIXTIME(tgl)) < $bulan THEN keluar ELSE 0 END) AS bulan_lalu,
+        SUM(CASE WHEN MONTH(FROM_UNIXTIME(tgl)) = $bulan THEN masuk ELSE 0 END) 
+        - SUM(CASE WHEN MONTH(FROM_UNIXTIME(tgl)) = $bulan THEN keluar ELSE 0 END) AS bulan_ini
+    FROM $kategori
+    WHERE YEAR(FROM_UNIXTIME(tgl)) = $tahun
+");
 
-        $data = [];
-        $saldo_bulan_lalu = 0;
-        $masuk = 0;
-        $keluar = 0;
-        foreach ($q as $i) {
-            if (date('m', $i['tgl']) == $bulan && date('Y', $i['tgl']) == $tahun) {
-                $data[] = $i;
-                $masuk += (int)$i['masuk'];
-                $keluar += (int)$i['keluar'];
-            }
-            if (date('m', $i['tgl']) == $bulan_lalu && date('Y', $i['tgl']) == $tahun_lalu) {
-                $saldo_bulan_lalu += (int)$i['masuk'] - (int)$i['keluar'];
-            }
-        }
+        $result = $query->getRow();
+
+        // Query terpisah untuk mendapatkan seluruh data bulan ini
+        $query_data_bulan_ini = $db->query("
+        SELECT * FROM elf
+        WHERE YEAR(FROM_UNIXTIME(tgl)) = $tahun
+        AND MONTH(FROM_UNIXTIME(tgl)) = $bulan
+        ");
+
+        $data = $query_data_bulan_ini->getResultArray();
+
+
 
         $set = [
             'mode' => 'utf-8',
@@ -110,7 +110,7 @@ class Rental extends BaseController
         $judul = "LAPORAN " . strtoupper($order) . " BULAN " . strtoupper(bulan($bulan)['bulan']) . " TAHUN " . $tahun;
         // Dapatkan konten HTML
         $logo = '<img width="200" src="berkas/menu/rental.png" alt="Kop"/>';
-        $html = view('cetak/laporan_rental', ['judul' => $judul, 'logo' => $logo, 'tahun' => $tahun, 'bulan' => $bulan, 'order' => $order, 'data' => $data, 'petugas' => $petugas, 'bulan_lalu' => $bulan_lalu, "saldo_bulan_lalu" => $saldo_bulan_lalu, 'masuk' => $masuk, 'keluar' => $keluar]); // view('pdf_template') mengacu pada file view yang akan dirender menjadi PDF
+        $html = view('cetak/laporan_rental', ['judul' => $judul, 'logo' => $logo, 'tahun' => $tahun, 'bulan' => $bulan, 'kategori' => $kategori, 'data' => $data, 'petugas' => $petugas, 'bulan_lalu' => $result->bulan_lalu, "bulan_ini" => $result->bulan_ini]); // view('pdf_template') mengacu pada file view yang akan dirender menjadi PDF
 
         // Setel konten HTML ke mPDF
         $mpdf->WriteHTML($html);
