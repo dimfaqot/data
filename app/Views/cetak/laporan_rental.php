@@ -101,7 +101,7 @@
             $keluar += (int)$i['keluar']; ?>
             <tr>
                 <td style="text-align:center;border: 1px solid grey;padding:4px"><?= ($k + 1); ?></td>
-                <td style="border: 1px solid grey;padding:4px"><?= ($i['kategori'] == "Masuk" ? "Rental " . $i['pemakai'] : $i['barang']); ?></td>
+                <td style="border: 1px solid grey;padding:4px"><?= $i['pemakai']; ?></td>
                 <td style="text-align: right;border: 1px solid grey;padding:4px"><?= angka($i['masuk']); ?></td>
                 <td style="text-align:right; border: 1px solid grey;padding:4px"><?= angka($i['keluar']); ?></td>
                 <td style="text-align: right; border: 1px solid grey;padding:4px"><?= angka(($i['masuk'] - $i['keluar'])); ?></td>
