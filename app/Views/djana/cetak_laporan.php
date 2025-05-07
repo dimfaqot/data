@@ -96,10 +96,22 @@
             <td style="text-align: center;border:0px;"></td>
         </tr>
         <tr style="background-color: transparent;border:0px;">
-            <td style="text-align: center;border:0px;">M. Dimyati</td>
+            <td style="text-align: center;border:0px;">Dimyati</td>
             <td style="text-align: center;border:0px;">Fajar Zulfikar</td>
         </tr>
     </table>
+    <table style="border: 0px;">
+        <tr style="background-color: transparent;border:0px;">
+            <td style="text-align: center;border:0px;width:50%;">
+                <div style="text-align: center;">Mengetahui,</div>
+                <div style="text-align: center;">Kepala BKW</div>
+            </td>
+        </tr>
+        <tr style="background-color: transparent;border:0px;">
+            <td style="text-align: center;border:0px;padding-top:50px">Daroni</td>
+        </tr>
+    </table>
+
 
 </body>
 
