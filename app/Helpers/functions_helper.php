@@ -557,7 +557,6 @@ function last_no_id_santri($tahun_masuk, $sub)
         }
     }
 
-    $no_id .= "510033140043";
     return $no_id;
 }
 function last_no_id_ppdb($tahun_masuk, $sub)

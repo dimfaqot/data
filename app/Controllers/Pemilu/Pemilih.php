@@ -276,10 +276,10 @@ class Pemilih extends BaseController
 
         $dbs = db('santri', 'santri');
         $dbk = db('karyawan', 'karyawan');
-        if (strlen($no_id) > 9) {
-            $user = $dbs->where('no_id', $no_id)->get()->getRowArray();
-        } else {
+        if (strlen($no_id) > 6) {
             $user = $dbk->where('no_id', $no_id)->get()->getRowArray();
+        } else {
+            $user = $dbs->where('no_id', $no_id)->get()->getRowArray();
         }
 
         if (!$user) {
