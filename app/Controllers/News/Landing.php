@@ -17,7 +17,18 @@ class Landing extends BaseController
 
         // dd(password_hash("123456", PASSWORD_DEFAULT));
 
-
+        $db = db('santri', 'santri');
+        $q = $db->where('pondok', 'Sainsus')->get()->getResultArray();
+        dd($q);
+        $gagal = 0;
+        foreach ($q as $i) {
+            $i['pondok'] = "Takhassus";
+            $db->where('no_id', $i['no_id']);
+            if (!$db->update($i)) {
+                $gagal++;
+            }
+        }
+        dd($gagal);
         return view('news/landing', ['judul' => 'Ponpes Walisongo Sragen']);
     }
     public function login()

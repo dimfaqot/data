@@ -556,6 +556,8 @@ function last_no_id_santri($tahun_masuk, $sub)
             $no_id += $i;
         }
     }
+
+    $no_id .= "510033140043";
     return $no_id;
 }
 function last_no_id_ppdb($tahun_masuk, $sub)
@@ -1589,4 +1591,36 @@ function tahun($tahun)
         $q = $db->orderBy('tahun', 'DESC')->get()->getRowArray();
     }
     return $q;
+}
+
+function tgl_akhir($bulan, $tahun)
+{
+    // Konversi nama bulan Indonesia ke angka bulan
+    $bulanMap = [
+        'Januari'   => 1,
+        'Februari'  => 2,
+        'Maret'     => 3,
+        'April'     => 4,
+        'Mei'       => 5,
+        'Juni'      => 6,
+        'Juli'      => 7,
+        'Agustus'   => 8,
+        'September' => 9,
+        'Oktober'   => 10,
+        'November'  => 11,
+        'Desember'  => 12
+    ];
+
+    // Validasi input
+    if (!isset($bulanMap[$bulan])) {
+        return "Bulan tidak valid";
+    }
+
+    $bulanAngka = $bulanMap[$bulan];
+
+    // Dapatkan tanggal akhir bulan
+    $tanggalAkhir = cal_days_in_month(CAL_GREGORIAN, $bulanAngka, (int)$tahun);
+
+    // Format hasil
+    return "Sragen, {$tanggalAkhir} {$bulan} {$tahun}";
 }
