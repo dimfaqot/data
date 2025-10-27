@@ -41,7 +41,7 @@
                       <ul class="dropdown-menu px-2">
                           <?php foreach (menus() as $i) : ?>
                               <?php if (in_array($i['controller'], $santri)) : ?>
-                                  <li class="d-grid"><a style="border-radius: 3px;" class="<?= (url() == $i['controller'] ? 'btn_main' : 'btn_main_inactive'); ?> mb-1" href="<?= base_url(); ?><?= $i['controller']; ?><?= ($i['controller'] == 'santri' || $i['controller'] == 'ppdb' ? '/' . ($i['controller'] == 'santri' ? 'All' : tahun_santri('ppdb')) . '/Existing/1/SMP/updated_at/DESC/' . ($i["controller"] == "santri" ? "Aktif" : "Register") . '/All' : ($i['controller'] == 'mapel' ? '/MUL' : ($i['controller'] == 'nilai' ? '/' . date('Y') . '/MUL' : ''))); ?>"><i class="<?= $i['icon']; ?>"></i> <?= $i['menu']; ?></a></li>
+                                  <li class="d-grid"><a style="border-radius: 3px;" class="<?= (url() == $i['controller'] ? 'btn_main' : 'btn_main_inactive'); ?> mb-1" href="<?= base_url(); ?><?= $i['controller']; ?><?= ($i['controller'] == 'santri' || $i['controller'] == 'ppdb' ? '/' . ($i['controller'] == 'santri' ? 'All' : tahun_santri('ppdb')) . '/Existing/1/SMP/Induk/updated_at/DESC/' . ($i["controller"] == "santri" ? "Aktif" : "Register") . '/All' : ($i['controller'] == 'mapel' ? '/MUL' : ($i['controller'] == 'nilai' ? '/' . date('Y') . '/MUL' : ''))); ?>"><i class="<?= $i['icon']; ?>"></i> <?= $i['menu']; ?></a></li>
                               <?php endif; ?>
                           <?php endforeach; ?>
                       </ul>

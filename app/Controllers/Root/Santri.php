@@ -18,11 +18,10 @@ class Santri extends BaseController
         check_role();
     }
 
-    public function index($tahun, $filter, $page, $sub, $col, $asc, $status, $gender)
+    public function index($tahun, $filter, $page, $sub, $pondok, $col, $asc, $status, $gender)
     {
 
-        $db = db(menu()['tabel'], get_db(menu()['tabel']));
-
+        $db = db(menu()['tabel'], get_db(menu()['tabel']));;
         $limit = 0;
         $db->select('no_id,nama,gender,uid,status,tahun_masuk,tahun_keluar,pondok,tgl_lahir,sub,hp_ayah,updated_at,deleted');
 
@@ -35,6 +34,9 @@ class Santri extends BaseController
             $db->where('deleted', $filt);
         }
 
+        if ($pondok !== 'All') {
+            $db->where('pondok', $pondok);
+        }
         if ($tahun !== 'All') {
             $db->where('tahun_masuk', $tahun);
         }
@@ -143,14 +145,14 @@ class Santri extends BaseController
     }
 
 
-    public function detail($tahun, $filter, $page, $sub, $col, $asc, $status, $gender, $no_id, $sub_menu)
+    public function detail($tahun, $filter, $page, $sub, $pondok, $col, $asc, $status, $gender, $no_id, $sub_menu)
     {
 
         $db = db(menu()['tabel'], get_db(menu()['tabel']));
         $exist = $db->where('no_id', $no_id)->get()->getRowArray();
 
         if (!$exist) {
-            gagal(base_url(menu()['controller']) . '/' . $tahun . '/' . $filter . '/' . $page . '/' . $sub . '/' . $col . '/' . $asc . '/' . $status . '/' . $gender, 'Id tidak ditemukan.');
+            gagal(base_url(menu()['controller']) . '/' . $tahun . '/' . $filter . '/' . $page . '/' . $sub . '/' . $pondok . '/' . $col . '/' . $asc . '/' . $status . '/' . $gender, 'Id tidak ditemukan.');
         }
 
         $select = 'no_id,nisn,no_induk,nik,nama,gender,email,hp,kota_lahir,tgl_lahir';

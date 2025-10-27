@@ -755,6 +755,8 @@
     $(document).on('change', '.filter_by', function(e) {
         e.preventDefault();
         let val = $(this).val();
+        console.log(val);
+        return;
         <?php if (url() == 'karyawan' || url() == 'recruitment') : ?>
             location.href = "<?= base_url(menu()['controller']); ?>" + '/' + val + '/<?= url(5); ?>/<?= url(6); ?>/<?= url(7); ?>/<?= url(8); ?>/<?= url(9); ?>/<?= url(10); ?>';
         <?php elseif (url() == 'santri' || url() == 'ppdb') : ?>

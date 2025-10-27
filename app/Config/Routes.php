@@ -113,8 +113,8 @@ $routes->get('recruitment/cetak_interview/(:any)', 'Root\Recruitment::cetak_inte
 
 // santri
 $routes->get('/santri/detail/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:num)/(:any)', 'Root\Santri::detail/$1/$2/$3/$4/$5/$6/$7/$8/$9/$10');
-$routes->get('/santri/cetak/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)', 'Root\Santri::cetak/$1/$2/$3/$4/$5/$6/$7/$8/$9');
-$routes->get('/santri/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)', 'Root\Santri::index/$1/$2/$3/$4/$5/$6/$7/$8');
+$routes->get('/santri/cetak/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)', 'Root\Santri::cetak/$1/$2/$3/$4/$5/$6/$7/$8/$9/$9');
+$routes->get('/santri/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)', 'Root\Santri::index/$1/$2/$3/$4/$5/$6/$7/$8/$9');
 $routes->post('/santri/add', 'Root\Santri::add');
 $routes->post('/santri/update', 'Root\Santri::update');
 $routes->post('/santri/remove', 'Root\Santri::remove');
