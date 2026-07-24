@@ -1008,7 +1008,7 @@
         let order = $(this).data('order');
         let id = $(this).data('id');
 
-        let data = ['2006.jpg', '2013.jpg', '2021.jpg'];
+        let data = ['2006.jpg', '2013.jpg', '2021.jpg', '2024.png'];
 
         let html = "";
         html += '<div class="card shadow shadow-sm" style="width:100%;">';
